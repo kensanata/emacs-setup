@@ -1,0 +1,1 @@
+/Users/alex/src/oddmuse/contrib/vc-oddmuse.el
