@@ -1,2 +1,4 @@
 (autoload 'idle-highlight-mode "idle-highlight-mode" nil t)
-(set-face-background 'idle-highlight "lemon chiffon")
+(eval-after-load "idle-highlight"
+  (lambda ()
+    (set-face-background 'idle-highlight "lemon chiffon")))
