@@ -1,5 +1,7 @@
 ;;; Oddmuse
 
+(require 'oddmuse-curl)
+
 (setq oddmuse-username "AlexSchroeder")
 (add-to-list 'auto-mode-alist '("/Users/alex/.emacs.d/oddmuse" . oddmuse-mode))
 (add-to-list 'vc-handled-backends 'oddmuse)

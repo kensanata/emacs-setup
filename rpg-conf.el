@@ -1,3 +1,5 @@
+(require 'cl-macs)
+(require 'widget)
 
 (defconst fünf-winde-regexp "^|\\[\\[\\(.*?\\)\\]\\][ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*[0-9]+[ \t]*\\)"
   "Regular expression to parse the Status page.
@@ -64,7 +66,7 @@
            (lambda (name share)
              (let ((character (list name)))
                (push (widget-create 'checkbox nil) character)
-               (widget-insert " " name (make-string (- 20 (length name)) ? ))
+               (widget-insert " " name (make-string (max 0 (- 20 (length name))) ? ))
                (widget-insert "Share: ")
                (push (widget-create 'checkbox (string= share "1")) character)
                (widget-insert " 1 ")
