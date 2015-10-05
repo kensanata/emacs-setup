@@ -24,10 +24,14 @@
       mml2015-encrypt-to-self t
       mml2015-signers '("4529A45C"))
 
+;; Attempt to encrypt all the mails we'll be sending.
+(add-hook 'message-setup-hook 'mml-secure-message-encrypt)
+
+;; Add two key bindings for your Gmail experience.
 (add-hook 'gnus-summary-mode-hook 'my-gnus-summary-keys)
 
 (defun my-gnus-summary-keys ()
-  (local-set-key "e" 'gmail-archive)
+  (local-set-key "y" 'gmail-archive)
   (local-set-key "$" 'gmail-report-spam))
 
 (defun gmail-archive ()
