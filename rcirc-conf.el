@@ -32,8 +32,8 @@
 	;; ("ircnet.eversible.com" :channels ("#drsrm"))
 	;; ("irc.euirc.net" :channels ("#tanelorn"))
 	;; ("irc.lugs.ch"   :channels ("#hackerfunk"))
-	;; ("irc.perl.org" :port 6697 :encryption tls
-	;;  :channels ("#perlde"))
+	;; ("ssl.irc.perl.org" :port 7062 :encryption tls
+	;;  :channels ("#perlde" "#mojo"))
 	;; ("irc.sorcery.net" :channels ("#Stargazer"))
 	;; ("irc.otherworlders.org" :channels ("#pathfinder"))
 	;; "#enworld"
