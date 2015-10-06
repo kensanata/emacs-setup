@@ -1,8 +1,8 @@
 ;;; pink-bliss.el --- a pink color theme for Emacs
 
-;; Copyright (C) 2005, 2008  Alex Schroeder <alex@gnu.org>
+;; Copyright (C) 2005–2015  Alex Schroeder <alex@gnu.org>
 
-;; This file is not part of GNU Emacs. It no longer depends on color-theme.
+;; This file is not part of GNU Emacs.
 
 ;; This is free software; you can redistribute it and/or modify it under
 ;; the terms of the GNU General Public License as published by the Free
@@ -19,8 +19,8 @@
 ;; Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ;; MA 02111-1307, USA.
 
-;; URL: http://www.emacswiki.org/cgi-bin/emacs/PinkBliss
-;; pink-gnu.xpm: http://www.emacswiki.org/cgi-bin/emacs/download/pink-gnu.xpm
+;; URL: http://www.emacswiki.org/emacs/PinkBliss
+;; pink-gnu.xpm: http://www.emacswiki.org/emacs/download/pink-gnu.xpm
 
 ;;; Code:
 
@@ -80,6 +80,24 @@ It is very pink.")
  ;; gnus
  '(message-header-name ((t (:foreground "red"))))
  '(message-header-other ((t (:foreground "dark orange"))))
+ ;; magit
+ '(magit-section-highlight ((t (:background "pink"))))
+ '(magit-diff-hunk-heading ((t (:foreground "black" :background "MistyRose2"))))
+ '(magit-diff-hunk-heading-highlight ((t (:foreground "black" :background "MistyRose3"))))
+ '(magit-diff-context ((t (:inherit default))))
+ '(magit-diff-context-highlight ((t (:background "MistyRose2"))))
+ '(magit-diff-removed ((t (:background "RosyBrown2"))))
+ '(magit-diff-added ((t (:background "RosyBrown1"))))
+ '(magit-diff-removed-highlight ((t (:background "pink3"))))
+ '(magit-diff-added-highlight ((t (:background "pink1"))))
+ '(magit-diff-whitespace-warning ((t (:background "violet red"))))
+ '(magit-section-heading ((t (:foreground "firebrick"))))
+ '(magit-section-highlight ((t (:background "#fdc"))))
+ '(magit-diff-file-heading ((t (:foreground "firebrick4"))))
+ '(magit-diff-file-heading-highlight ((t (:background "#fdd"))))
+ '(magit-hash ((t (:inherit bold))))
+ '(magit-branch-local ((t (:foreground "PaleVioletRed2" :weight bold))))
+ '(magit-branch-remote ((t (:foreground "PaleVioletRed3" :weight bold))))
  )
 
 (custom-theme-set-variables
