@@ -17,7 +17,8 @@
     (other-window 1))
   (eshell arg))
 
-(setq eshell-save-history-on-exit t)
+(setq eshell-history-size 500
+      eshell-save-history-on-exit t)
 
 (add-hook 'eshell-mode-hook
 	  (lambda ()
