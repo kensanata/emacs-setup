@@ -163,7 +163,7 @@
 				   xp-per-person
 				   (widget-value (nth 5 character))))))
 	    (replace-match (concat "|[[" name "]]"
-                                   (make-string (- 20 (length name)) ? )
+                                   (make-string (max 0 (- 20 (length name))) ? )
                                    "| " (cond ((widget-value (nth 2 character)) "1")
                                               ((widget-value (nth 3 character)) "½")
                                               ((widget-value (nth 4 character)) "⅓")
