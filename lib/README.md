@@ -1,0 +1,3 @@
+The files in this directy are libraries loaded by the various config
+files in `../config`. If at all possible, those files will delay
+loading for as long as possible...
