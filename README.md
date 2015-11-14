@@ -7,7 +7,7 @@ My init file (`~/.emacs.d/init.el`) starts with the following:
 (load-file "~/.emacs.d/alex/init.el")
 ```
 
-== Security Issue? ==
+## Security Issue?
 
 There's one tricky issue in this setup: We're loading the
 pink-bliss-theme. Ordinarily, Emacs would ask you whether you consider
