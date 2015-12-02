@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'cl-macs)
+
 (deftheme pink-bliss
   "A theme based on the color pink.
 It is very pink.")
