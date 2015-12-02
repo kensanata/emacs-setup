@@ -10,8 +10,8 @@ My init file (`~/.emacs.d/init.el`) starts with the following:
 The idea is that the [config](config) subdirectory contains all the
 configurations and that the [lib](lib) subdirectory contains all the
 necessary libraries. When a library is available from ELPA or MELPA,
-however, there should not be a copy in the ##lib## subdirectory. These
-libraries you need to install yourself.
+however, there should not be a copy in the `lib` subdirectory. These
+libraries you need to install yourself (see below).
 
 ```
 (dolist (pkg '(session swiper))
