@@ -19,10 +19,14 @@ libraries you need to install yourself.
     (package-install pkg)))
 ```
 
-# Packages installed
+# Packages installed from ELPA/MELPA
 
 * git-gutter
 * emms
 * idle-highlight-mode
 * swiper (for ivy-mode)
 * session
+
+# Optional other packages
+
+* [oddmuse-curl](http://www.emacswiki.org/emacs?OddmuseCurl#toc1)
