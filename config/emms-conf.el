@@ -1,4 +1,5 @@
-;; Changes to my Windows setup.
+
+;; These changes only affect my Windows setup.
 ;; Sadly, I installed mpg123 instead of mpg321.
 
 (dolist (dir '("C:/Program Files/mp3info-0.8.5-win"
@@ -10,10 +11,12 @@
   (when (file-directory-p dir)
     (setq emms-source-file-default-directory dir)))
 
-(define-emms-simple-player mpg123 '(file url)
-  (emms-player-simple-regexp "mp3" "mp2")
-  "mpg123")
 (setq emms-player-list '(emms-player-mpg123))
-
-(require 'emms-setup)
-(emms-standard)
+(run-with-idle-timer
+ 10 nil
+ (lambda ()
+   (require 'emms-setup)
+   (emms-standard)
+   (define-emms-simple-player mpg123 '(file url)
+     (emms-player-simple-regexp "mp3" "mp2")
+     "mpg123")))

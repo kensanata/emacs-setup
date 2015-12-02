@@ -2,14 +2,15 @@
 (autoload 'rcirc "rcirc" t)
 
 ;;; bitlbee
-(autoload 'bitlbee-start "bitlbee" t)
-(setq bitlbee-executable "/usr/local/sbin/bitlbee")
-
-(global-set-key (kbd "C-c e")
-		(lambda ()
-		  (interactive)
-		  (bitlbee-start); needs time to start up
-		  (run-with-idle-timer 1 nil 'rcirc nil)))
+(if (not (file-exists-p "/usr/local/sbin/bitlbee"))
+    (global-set-key (kbd "C-c e") 'rcirc);; Windows
+  (autoload 'bitlbee-start "bitlbee" t)
+  (setq bitlbee-executable "/usr/local/sbin/bitlbee")
+  (global-set-key (kbd "C-c e")
+		  (lambda ()
+		    (interactive)
+		    (bitlbee-start); needs time to start up
+		    (run-with-idle-timer 1 nil 'rcirc nil))))
 
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
@@ -142,3 +143,80 @@
   (let ((process ad-return-value)
 	(nick (or nick rcirc-default-nick)))
     (rcirc-send-string process (concat "MODE " nick " +i"))))
+
+;; rcirc /op
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command op (input)
+     "Op myself on the current channel."
+     (interactive "s")
+     (rcirc-send-message process "chanserv"
+			 (concat "op " target))))
+
+;; rcirc /deop
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command deop (input)
+     "Deop myself on the current channel."
+     (interactive "s")
+     (rcirc-send-message process "chanserv"
+			 (concat "deop " target))))
+
+;; rcirc /mute
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command mute (input)
+     "Mute nick"
+     (interactive "s")
+     (rcirc-send-string process (format "MODE %s +q %s!*@*"
+					target input))))
+
+;; rcirc /unmute
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command unmute (input)
+     "Mute nick"
+     (interactive "s")
+     (rcirc-send-string process (format "MODE %s -q %s!*@*"
+					target input))))
+
+;; rcirc /kickban
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command kickban (input)
+     "Kickban a nick for two hours."
+     (interactive "s")
+     ;; (rcirc-send-string process (format "MODE %s +b %s!*@*" target input))
+     ;; (rcirc-send-string process (format "KICK %s %s kickban!" target input))
+     (rcirc-send-privmsg process "chanserv" (format "AKICK %s ADD %s !T 120 banned for 2h -- kensanata" target input))))
+
+;; rcirc /unban
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command unban (input)
+     "Unban a nick."
+     (interactive "s")
+     ;; (rcirc-send-string process (format "MODE %s -b %s!*@*" target input))
+     (rcirc-send-privmsg process "chanserv" (format "AKICK %s DEL %s!*@*" target input))))
+
+;; other
+
+(defun irc-version-summary ()
+  "Run this after you've sent a /CTCP #test VERSION."
+  (interactive)
+  (save-excursion
+    (let ((agents))
+      (while (re-search-forward "CTCP VERSION \\([a-z]\\([^- \n:/]+\\|[^- \n:/]*[-/][^- \n:/0-9]+\\)\\)" nil t)
+	(let* ((key (replace-regexp-in-string "-" ""
+		       (downcase (match-string-no-properties 1))))
+	       (cell (or (assoc key agents)
+			 (car (setq agents (cons (cons key 0) agents))))))
+	  (setcdr cell (1+ (cdr cell)))))
+      (setq agents (sort agents (lambda (a b) (> (cdr a) (cdr b)))))
+      (pop-to-buffer (get-buffer-create "*IRC Clients*"))
+      (erase-buffer)
+      (dolist (item agents)
+	(insert (format "%4d %s\n" (cdr item) (car item))))
+      (insert "----\n"
+	      (format "%4d total\n"
+		      (apply '+ (mapcar 'cdr agents)))))))

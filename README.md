@@ -18,3 +18,11 @@ libraries you need to install yourself.
   (unless (package-installed-p pkg)
     (package-install pkg)))
 ```
+
+# Packages installed
+
+* git-gutter
+* emms
+* idle-highlight-mode
+* swiper (for ivy-mode)
+* session

@@ -1,6 +1,6 @@
 ;;; Oddmuse
 
-(require 'oddmuse-curl)
+(require 'oddmuse-curl nil t)
 
 (setq oddmuse-username "AlexSchroeder")
 (add-to-list 'auto-mode-alist '("/Users/alex/.emacs.d/oddmuse" . oddmuse-mode))

@@ -1,1 +1,0 @@
-/Users/alex/src/oddmuse/contrib/oddmuse-curl.el

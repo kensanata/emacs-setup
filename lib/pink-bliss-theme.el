@@ -137,7 +137,7 @@ It is very pink.")
 	(green-limit #xa000)
 	(both-limit #xa000))
     (dolist (item color-name-rgb-alist)
-      (destructuring-bind (color red green blue) item
+      (cl-destructuring-bind (color red green blue) item
 	(when (and (not (color-gray-p color))
 		   ;; (< red red-limit)
 		   (< green green-limit)
