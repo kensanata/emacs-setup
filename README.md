@@ -21,11 +21,12 @@ libraries you need to install yourself (see below).
 
 # Packages installed from ELPA/MELPA
 
-* git-gutter
 * emms
+* expand-region
+* git-gutter
 * idle-highlight-mode
-* swiper (for ivy-mode)
 * session
+* swiper (for ivy-mode)
 
 # Optional other packages
 
