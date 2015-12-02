@@ -7,9 +7,10 @@
   (when (file-directory-p dir)
     (add-to-list 'exec-path dir)))
 
-(let ((dir (expand-file-name (concat (getenv "USERPROFILE") "/Music"))))
+(dolist (dir (list (concat (getenv "USERPROFILE") "/Music")
+		   "~/Music"))
   (when (file-directory-p dir)
-    (setq emms-source-file-default-directory dir)))
+    (setq emms-source-file-default-directory (expand-file-name dir))))
 
 (run-with-idle-timer
  10 nil
