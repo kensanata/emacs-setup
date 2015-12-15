@@ -101,8 +101,12 @@ same person.")
                     "notify-send" "-u" "normal" "-i" "gtk-dialog-info"
                     "-t" "8640000" "rcirc"
                     msg))
-    ((executable-find "growlnotify.com")
-     (start-process "page-me" "*debug*" "growlnotify.com" "/a:Emacs" "/n:IRC" msg))
+    ;; I'm not sure which setup required growlnotify.com -- currently
+    ;; my Emacs on Windows 7 Enterprise and a 64bit system gives me a
+    ;; "error in process filter: Spawning child process: exec format
+    ;; error"
+    ;; ((executable-find "growlnotify.com")
+    ;;  (start-process "page-me" "*debug*" "growlnotify.com" "/a:Emacs" "/n:IRC" msg))
     ((executable-find "growlnotify")
      (start-process "page-me" "*debug*" "growlnotify" "-a" "Emacs" "-m" msg))
     ((executable-find "osascript")
