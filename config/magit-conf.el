@@ -18,3 +18,6 @@ by changing them to C:/*"
 	       (match-string 3 buffer-file-name)) 't))))
 
 (add-hook 'git-commit-mode-hook 'un-cygwin-buffer-file-name)
+
+;; https://glyph.twistedmatrix.com/2015/11/editor-malware.html
+;; FIXME: should work on that!
