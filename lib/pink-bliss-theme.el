@@ -82,6 +82,9 @@ It is very pink.")
  ;; gnus
  '(message-header-name ((((min-colors 256)) (:foreground "red"))))
  '(message-header-other ((((min-colors 256)) (:foreground "dark orange"))))
+ ;; diff
+ '(diff-removed ((((min-colors 256)) (:background "lavender"))))
+ '(diff-added ((((min-colors 256)) (:background "light cyan"))))
  ;; ediff
  '(ediff-current-diff-A ((((min-colors 256)) (:background "papaya whip"))))
  '(ediff-current-diff-Ancestor ((((min-colors 256)) (:background "papaya whip"))))
