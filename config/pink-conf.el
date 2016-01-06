@@ -1,2 +1,3 @@
 (setq custom-theme-directory "~/.emacs.d/alex/lib")
-(load-theme 'pink-bliss t)
+;; Use M-x enable-theme and M-x disable-theme
+(load-theme 'pink-bliss t t)
