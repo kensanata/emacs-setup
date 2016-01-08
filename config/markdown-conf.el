@@ -8,6 +8,27 @@
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'markdown-mode-hook 'as/markdown-config)
 
+(eval-after-load "markdown-mode"
+  '(defalias 'markdown-add-xhtml-header-and-footer 'as/markdown-add-xhtml-header-and-footer))
+
+(defun as/markdown-add-xhtml-header-and-footer (title)
+    "Wrap XHTML header and footer with given TITLE around current buffer."
+    (goto-char (point-min))
+    (insert "<!DOCTYPE html5>\n"
+	    "<html>\n"
+	    "<head>\n<title>")
+    (insert title)
+    (insert "</title>\n")
+    (insert "<meta charset=\"utf-8\" />\n")
+    (when (> (length markdown-css-paths) 0)
+      (insert (mapconcat 'markdown-stylesheet-link-string markdown-css-paths "\n")))
+    (insert "\n</head>\n\n"
+	    "<body>\n\n")
+    (goto-char (point-max))
+    (insert "\n"
+	    "</body>\n"
+	    "</html>\n"))
+
 (defun as/markdown-config ()
   (local-set-key (kbd "M-q") 'ignore))
 
