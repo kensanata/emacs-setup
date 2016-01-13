@@ -27,7 +27,9 @@
       (concat (one-of "Hello" "Greetings" "Cheers" "Hoi")
 	      ", "
 	      (one-of (capitalize user-login-name)
-		      user-full-name
+		      (if (string= user-full-name "")
+			  "Bob"
+			user-full-name)
 		      "flesh man"
 		      "Bob"
 		      "user")
