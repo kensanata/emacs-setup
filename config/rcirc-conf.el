@@ -21,9 +21,11 @@
       rcirc-server-alist
       '(("irc.freenode.net" :port 6697 :encryption tls
 	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
-		    "#epfarms" "#emacswiki" "#perl" "#org-mode"
+		    "#emacswiki" "#perl"
+		    ;; "#org-mode" "#epfarms"
 		    ;; "#indieweb" "#raspbian" "#machomebrew"
-		    ;; "#julia" "#clojure" "#leiningen" "#clojurescript" "#go-nuts"
+		    ;; "#julia" "#clojure" "#leiningen" "#clojurescript"
+		    ;; "#go-nuts"
 		    ))
 	("megabombus.local" :channels ("&bitlbee" "&roleplaying"
                                        "&emacs" "&bsi"))
