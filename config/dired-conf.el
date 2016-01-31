@@ -10,5 +10,11 @@
       delete-by-moving-to-trash t
       ;; trash-directory "~/.Trash/emacs"
       dired-dwim-target t
-      dired-guess-shell-alist-user '(("." "open"))
+      ;; I installed Skim via Homebrew: brew search skim
+      ;; and created a shell script as follows:
+      ;; #!/bin/sh
+      ;; osascript -e "tell application \"Skim\"" -e "open \"$(pwd)/$1\"" -e "end tell"
+      dired-guess-shell-alist-user
+      '(("\\.pdf\\'" "skim")
+	("." "open"))
       dired-listing-switches "-alv")

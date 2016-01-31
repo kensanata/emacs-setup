@@ -1,5 +1,12 @@
 (add-hook 'latex-mode-hook 'asc:latex-mode-setup)
 
+;; limit to the commands I need
+(setq tex-compile-commands
+      '(("latexmk -pvc -view=none -pdf %f" t "%r.pdf")
+	("skim $f")
+	("pdflatex  %f" t "%r.pdf")
+	("makeindex %r" "%r.idx" "%r.ind")))
+
 (defun asc:latex-mode-setup ()
   "See `font-lock-keywords' for some explanation.
 This modifies `latex-font-lock-keywords'."
