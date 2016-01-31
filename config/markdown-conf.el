@@ -8,6 +8,9 @@
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'markdown-mode-hook 'as/markdown-config)
 
+(defun as/markdown-config ()
+  (local-set-key (kbd "M-q") 'ignore))
+
 (eval-after-load "markdown-mode"
   '(defalias 'markdown-add-xhtml-header-and-footer 'as/markdown-add-xhtml-header-and-footer))
 
@@ -28,9 +31,6 @@
     (insert "\n"
 	    "</body>\n"
 	    "</html>\n"))
-
-(defun as/markdown-config ()
-  (local-set-key (kbd "M-q") 'ignore))
 
 ;; I write a lot of Markdown but then I want to post the text on
 ;; Google+ so here's a quick export.
@@ -54,7 +54,8 @@
   (save-restriction
     (let (in-list skip-to)
       (narrow-to-region start end)
-      (while (re-search-forward "\\*\\|\n\\|\\`" nil t)
+      (while (and (re-search-forward "\\*\\|^\\|\\`" nil t)
+		  (or (not skip-to) (>= (point) skip-to)))
 	(goto-char (match-beginning 0))
 	(if (= (point) (match-end 0))
 	    (setq skip-to (1+ (point)))
@@ -75,7 +76,10 @@
 	      ((looking-at "^[0-9]+\\. ")
 	       (replace-match (if in-list "\\\\item " "\\\\begin{enumerate}\n\\\\item "))
 	       (setq in-list "enumerate"))
-	      ((and in-list (looking-at "^"))
-	       (replace-match (format "\\\\end{%s}\n" in-list))
+	      ((and in-list (looking-at "^.\\|\\'"))
+	       (insert (format "\\end{%s}\n" in-list))
 	       (setq in-list nil))
-	      (t (goto-char skip-to)))))))
+	      (t (goto-char skip-to))))
+      (goto-char start)
+      (while (search-forward " " nil t)
+	(replace-match "~")))))
