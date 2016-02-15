@@ -13,20 +13,21 @@ necessary libraries. When a library is available from ELPA or MELPA,
 however, there should not be a copy in the `lib` subdirectory. These
 libraries you need to install yourself (see below).
 
+# Packages installed from ELPA/MELPA
+
+Evaluate the following to install all the packages you need:
+
 ```
-(dolist (pkg '(session swiper))
+(dolist (pkg '(emms
+	       expand-region
+	       git-gutter
+	       idle-highlight-mode
+	       session
+	       swiper;; ivy-mode
+	       ))
   (unless (package-installed-p pkg)
     (package-install pkg)))
 ```
-
-# Packages installed from ELPA/MELPA
-
-* emms
-* expand-region
-* git-gutter
-* idle-highlight-mode
-* session
-* swiper (for ivy-mode)
 
 # Optional other packages
 
