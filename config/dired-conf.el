@@ -1,4 +1,5 @@
-(require 'dired-x)
+(eval-after-load "dired"
+  '(require 'dired-x))
 
 ;; Homebrew: brew install coreutils gives us GNU ls
 (add-to-list 'exec-path "/usr/local/opt/coreutils/libexec/gnubin")
