@@ -1,6 +1,10 @@
 (eval-after-load "dired"
   '(require 'dired-x))
 
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    (local-set-key "E" 'emms-play-dired)))
+
 ;; Homebrew: brew install coreutils gives us GNU ls
 (add-to-list 'exec-path "/usr/local/opt/coreutils/libexec/gnubin")
 
