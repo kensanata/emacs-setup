@@ -22,6 +22,7 @@ Evaluate the following to install all the packages you need:
 	       expand-region
 	       git-gutter
 	       idle-highlight-mode
+	       markdown-mode
 	       session
 	       swiper;; ivy-mode
 	       ))
