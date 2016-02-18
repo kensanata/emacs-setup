@@ -13,7 +13,6 @@
   (setq visible-bell t)
   (setq mouse-drag-copy-region t)
   (setq history-length 1000)
-  (set-face-attribute 'default nil :family "Consolas" :height 110)
 
   ;; Tramp
   ;; Download http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
