@@ -8,6 +8,8 @@
 (windmove-default-keybindings)
 (column-number-mode 1)
 (blink-cursor-mode -1)
+(scroll-bar-mode -1)
+
 ;; (auto-image-file-mode 1) -- corrupts SVG files containing UTF-8?
 
 ;; settings
