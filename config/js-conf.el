@@ -5,6 +5,10 @@
 	    (setq indent-tabs-mode nil
 		  js-indent-level 2)
 	    (idle-highlight-mode 1)
+	    (setq-local comment-auto-fill-only-comments t)
+	    (setq-local comment-multi-line t)
+	    (auto-fill-mode 1)
+	    (local-set-key (kbd "RET") 'c-indent-new-comment-line)
 	    ;; (rainbow-identifiers-mode)
 	    (when (string-match "\.svg$" (buffer-file-name))
 	      (save-excursion
