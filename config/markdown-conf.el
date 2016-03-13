@@ -5,14 +5,14 @@
 ;; paragraphs. That's why I need Visual Line Mode. I also need to
 ;; disable M-q. If I fill paragraphs, that introduces unwanted
 ;; newlines.
-(add-hook 'markdown-mode-hook 'visual-line-mode)
-(add-hook 'markdown-mode-hook 'as/markdown-config)
-
-(defun as/markdown-config ()
+(defun as/ia-writer ()
+  (visual-line-mode 1)
   (local-set-key (kbd "M-q") 'ignore))
 
 (eval-after-load "markdown-mode"
-  '(defalias 'markdown-add-xhtml-header-and-footer 'as/markdown-add-xhtml-header-and-footer))
+  '(defalias
+     'markdown-add-xhtml-header-and-footer
+     'as/markdown-add-xhtml-header-and-footer))
 
 (defun as/markdown-add-xhtml-header-and-footer (title)
     "Wrap XHTML header and footer with given TITLE around current buffer."
