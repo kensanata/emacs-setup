@@ -17,39 +17,7 @@
   "Fix bug #20971: http://debbugs.gnu.org/cgi/bugreport.cgi?bug=20971"
   (setq buffer-read-only nil))
 
-;; The rest is about a cute message in the *scratch* buffer.
-
-(defun one-of (&rest items)
-  "Return a random item from ITEMS."
-  (nth (random (length items)) items))
-
 (setq initial-scratch-message
-      (concat (one-of "Hello" "Greetings" "Cheers" "Hoi")
-	      ", "
-	      (one-of (capitalize user-login-name)
-		      (if (string= user-full-name "")
-			  "Bob"
-			user-full-name)
-		      "flesh man"
-		      "Bob"
-		      "user")
-	      "! "
-	      "I'm "
-	      (one-of "happy"
-		      "not unhappy"
-		      "surprised"
-		      "elated")
-	      " to see you again."
-	      "\n"
-	      "Today will be "
-	      (one-of "a good" "an excellent"
-		      "an interesting"
-		      "an ordinary")
-	      " day. "
-	      "Use it well.\n")
+      (concat ";; This Emacs is a config installed from\n"
+	      ";; https://github.com/kensanata/emacs-setup\n")
       inhibit-startup-screen t)
-
-(add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (with-current-buffer "*scratch*"
-	      (comment-region (point-min) (point-max)))))
