@@ -19,7 +19,7 @@
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-server-alist
-      '(("irc.freenode.net" :port 6697 :encryption tls
+      '(("chat.freenode.net" :port 6697 :encryption tls
 	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
 		    "#emacswiki" "#perl" "#bussard"
 		    ;; "#org-mode" "#epfarms"
