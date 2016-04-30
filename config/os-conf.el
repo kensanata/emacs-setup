@@ -18,3 +18,10 @@
   ;; Download http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
   ;; Docs http://the.earth.li/~sgtatham/putty/0.60/htmldoc/Chapter7.html#plink
   (setq tramp-auto-save-directory (getenv "TEMP")))
+
+(defun atreus-layout ()
+  "If using the Atreus on a Mac, we want the Alt key to be Meta."
+  (interactive)
+  (setq mac-option-modifier 'meta)
+  (setq default-input-method 'german-prefix)
+  (set-input-method 'german-prefix))

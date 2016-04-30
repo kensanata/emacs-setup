@@ -1,4 +1,5 @@
-(set-input-method 'german-prefix)
+(setq default-input-method 'german-prefix)
+
 (global-set-key (kbd "C-'") 'er/expand-region)
 
 (global-set-key (kbd "C-<tab>") 'hippie-expand)
