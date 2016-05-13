@@ -51,8 +51,9 @@
 			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN")
       rcirc-log-flag t
       rcirc-authinfo (with-temp-buffer
-		       (insert-file-contents-literally "~/.rcirc-authinfo")
-		       (read (current-buffer))))
+		       (when (file-readable-p "~/.rcirc-authinfo")
+			 (insert-file-contents-literally "~/.rcirc-authinfo")
+			 (read (current-buffer)))))
 
 (require 'cl)
 (setq rcirc-colors

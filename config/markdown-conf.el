@@ -1,3 +1,5 @@
+(asc:package-install 'markdown-mode)
+
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 

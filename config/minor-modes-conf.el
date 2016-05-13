@@ -1,3 +1,5 @@
+(asc:package-install 'swiper);; for ivy-mode
+
 ;; minor modes
 (blink-cursor-mode -1)
 (ivy-mode 1)

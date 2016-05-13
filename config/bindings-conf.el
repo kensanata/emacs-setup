@@ -1,5 +1,7 @@
 (setq default-input-method 'german-prefix)
 
+(asc:package-install 'expand-region)
+
 (global-set-key (kbd "C-'") 'er/expand-region)
 
 (global-set-key (kbd "C-<tab>") 'hippie-expand)
