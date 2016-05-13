@@ -1,4 +1,4 @@
-(defvar as/init-dir "~/.emacs.d/alex"
+(defvar as/init-dir "~/.emacs.d/emacs-setup"
   "The init dir where all the -conf.el files are.")
 
 ;; this is where to put elisp libraries from the Internet (including
