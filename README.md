@@ -1,10 +1,10 @@
 This repository contains my Emacs setup. It is installed as
-`~/.emacs.d/alex`.
+`~/.emacs.d/emacs-setup`.
 
 My init file (`~/.emacs.d/init.el`) starts with the following:
 
 ```
-(load-file "~/.emacs.d/alex/init.el")
+(load-file "~/.emacs.d/emacs-setup/init.el")
 ```
 
 The idea is that the [config](config) subdirectory contains all the
