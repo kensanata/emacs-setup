@@ -48,6 +48,41 @@
 	   (delete-char 1)
 	   (insert "_")))))
 
+;; And here's a transformation to Wiki Creole which can be useful when
+;; translating my GGGG for Emacs Wiki.
+(defun as/markdown-region-to-creole (start end)
+  (interactive "r")
+  (goto-char start)
+  (save-restriction
+    (let (in-code skip-to)
+      (narrow-to-region start end)
+      (while (and (re-search-forward "\\*\\|^\\|`\\|\\[" nil t)
+		  (or (not skip-to) (>= (point) skip-to)))
+	(goto-char (match-beginning 0))
+	(if (= (point) (match-end 0))
+	    (setq skip-to (1+ (point)))
+	  (setq skip-to (match-end 0)))
+	(cond ((looking-at "\\b\\*\\*\\|\\*\\*\\b")
+	       (delete-char 1)
+	       (forward-char 1))
+	      ((looking-at "\\b\\*\\|\\*\\b")
+	       (delete-char 1)
+	       (insert "/"))
+	      ((looking-at "^\\(#+\\) \\(.*\\)")
+	       (replace-match (concat (make-string (length (match-string 1)) ?=) " "
+				      (match-string 2) " "
+				      (make-string (length (match-string 1)) ?=))))
+	      ((looking-at "^[0-9]+\\. ")
+	       (replace-match "# "))
+	      ((looking-at "\\[\\([^]]*\\)\\](\\(\\S-*\\))")
+	       (replace-match (concat "[" (match-string 2) " " (replace-regexp-in-string "\n" " " (match-string 1)) "]")))
+	      ((looking-at "```.*")
+	       (replace-match (if in-code "}}}" "{{{"))
+	       (setq in-code (not in-code)))
+	      ((looking-at "`\\([^`\n]*\\)`")
+	       (replace-match (concat "##" (match-string 1) "##")))
+	      (t (goto-char skip-to)))))))
+    
 ;; Often Markdown gets added to a LaTeX project, too. So I eventually
 ;; need a LaTeX export.
 (defun as/markdown-region-to-latex (start end)
