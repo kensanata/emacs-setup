@@ -13,11 +13,12 @@
   (setq visible-bell t)
   (setq mouse-drag-copy-region t)
   (setq history-length 1000)
-
   ;; Tramp
   ;; Download http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
   ;; Docs http://the.earth.li/~sgtatham/putty/0.60/htmldoc/Chapter7.html#plink
-  (setq tramp-auto-save-directory (getenv "TEMP")))
+  (setq tramp-auto-save-directory (getenv "TEMP"))
+  ;; Printing
+  (setq ps-printer-name "\\\\fileserver06\\Zuerich_PDF-Datei"))
 
 (defun atreus-layout ()
   "If using the Atreus on a Mac, we want the Alt key to be Meta."
