@@ -19,31 +19,11 @@
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-server-alist
-      '(("chat.freenode.net" :port 6697 :encryption tls
-	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
-		    "#emacswiki" "#perl" "#bussard"
-		    ;; "#org-mode" "#epfarms"
-		    ;; "#indieweb" "#raspbian" "#machomebrew"
-		    ;; "#julia" "#clojure" "#leiningen" "#clojurescript"
-		    ;; "#go-nuts"
-		    ))
-	("megabombus.local" :channels ("&bitlbee" "&roleplaying"
-                                       "&emacs" "&bsi"))
-	;; ("irc.gimp.org" :channels ("#gimp-users"))
-	;; "#eclipse" "#eclipse-de" "#osgi" "#perl6" "#inkscape"
-	;; "#ubuntu" "#hcoop" "#biology" "#clojure" "#clojure.de"
-	;; ("ircnet.eversible.com" :channels ("#drsrm"))
-	;; ("irc.euirc.net" :channels ("#tanelorn"))
-	;; ("irc.lugs.ch"   :channels ("#hackerfunk"))
-	;; ("ssl.irc.perl.org" :port 7062 :encryption tls
-	;;  :channels ("#perlde" "#mojo"))
-	;; ("irc.sorcery.net" :channels ("#Stargazer"))
-	;; ("irc.otherworlders.org" :channels ("#pathfinder"))
-	;; "#enworld"
-	;; ("irc.sorcery.net" :channels ("#StargazersWorld"))
-	;; ("irc2.magicstar.net" :channels ("#magicstar" "#rpgnet"))
-	;; ("irc.oftc.net" :channels ("#bitlbee"))
-	)
+      `(("chat.freenode.net" :port 6697 :encryption tls
+	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse" "#emacswiki" "#perl" "#bussard"
+		    ,@(when (eq (window-system) 'w32) '("#sql" "#eclipse-scout"))))
+	,(unless (eq (window-system) 'w32)
+	   '("megabombus.local" :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"))))
       rcirc-decode-coding-system 'undecided
       rcirc-coding-system-alist
       '(("#nihongo" undecided . iso-2022-jp))
