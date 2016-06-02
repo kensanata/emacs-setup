@@ -10,7 +10,8 @@
 			       t "-conf\\.el\\'"))
   (load-file file))
 
-(server-start)
+;; It turns out that I rarely use emacsclient...
+;; (server-start)
 
 ;; fix read-only bug
 (defadvice isearch-occur (after isearch-occur-fix activate)
