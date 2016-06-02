@@ -1,1 +1,0 @@
-/Users/alex/src/idle-highlight-mode/idle-highlight-mode.el
