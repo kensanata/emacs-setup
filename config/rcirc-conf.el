@@ -20,10 +20,13 @@
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-server-alist
       `(("chat.freenode.net" :port 6697 :encryption tls
-	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse" "#emacswiki" "#perl" "#bussard"
-		    ,@(when (eq (window-system) 'w32) '("#sql" "#eclipse-scout"))))
+	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
+		    "##emacs.de" "#emacswiki" "#perl" "#bussard"
+		    ,@(when (eq (window-system) 'w32)
+			'("#sql" "#eclipse-scout"))))
 	,(unless (eq (window-system) 'w32)
-	   '("megabombus.local" :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"))))
+	   '("megabombus.local"
+	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"))))
       rcirc-decode-coding-system 'undecided
       rcirc-coding-system-alist
       '(("#nihongo" undecided . iso-2022-jp))
