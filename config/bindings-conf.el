@@ -19,4 +19,7 @@
 (global-set-key (kbd "C-x 8 3 / 5") "⅗")
 (global-set-key (kbd "C-x 8 4 / 5") "⅘")
 (global-set-key (kbd "C-x 8 5 / 6") "⅚")
-(global-set-key (kbd "C-x 8 - >") "→")
+(global-set-key (kbd "C-x 8 <right>") "→")
+(global-set-key (kbd "C-x 8 <left>") "←")
+(global-set-key (kbd "C-x 8 <up>") "↑")
+(global-set-key (kbd "C-x 8 <down>") "↓")
