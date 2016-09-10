@@ -170,3 +170,40 @@ cells by rows first."
 		  " " cell-separator "\n"))
 	(setq row (1+ row)))))
   (delete-region start end))
+
+(defun oddmuse-to-latex (start end)
+  (interactive "r")
+  (goto-char start)
+  (while (re-search-forward "\\*\\*\\(.+\\)\\*\\*" nil end)
+    (replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+  (goto-char start)
+  (while (re-search-forward "\\*\\(.+?\\)\\*" nil end)
+    (replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+  (goto-char start)
+  (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil end)
+    (replace-match (concat "\\\\href{https://alexschroeder.ch/wiki/" (match-string 1)
+			   "}{" (match-string 2) "}")))
+  (goto-char start)
+  (while (re-search-forward "^|= \\(.*\\) |" nil end)
+    (let ((str (match-string 1)))
+      (replace-match "")
+      (save-excursion
+	(save-match-data
+	  (let ((list (split-string str " |= " t)))
+	    (insert "\\begin{table}\n"
+		    "\\begin{tabular}{c"
+		    (make-string (1- (length list)) ?l) "}\n"
+		    (mapconcat 'identity list " & ") " \\\\"))))))
+  ;; FIXME: who adds the end of the table?
+  ;; \end{tabular}
+  ;; \end{table}
+  (goto-char start)
+  (while (re-search-forward "^|\\(.*\\)" nil end)
+    (let ((str (match-string 1)))
+      (replace-match "")
+      (save-excursion
+	(save-match-data
+	  (let ((list (split-string str " *| *" t)))
+	    (insert (mapconcat 'identity list " & ") " \\\\")))))))
+
+  
