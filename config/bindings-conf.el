@@ -14,6 +14,7 @@
 (global-set-key (kbd "C-x 8 1 / 3") "⅓")
 (global-set-key (kbd "C-x 8 1 / 5") "⅕")
 (global-set-key (kbd "C-x 8 1 / 6") "⅙")
+(global-set-key (kbd "C-x 8 1 / 8") "⅛")
 (global-set-key (kbd "C-x 8 2 / 3") "⅔")
 (global-set-key (kbd "C-x 8 2 / 5") "⅖")
 (global-set-key (kbd "C-x 8 3 / 5") "⅗")
