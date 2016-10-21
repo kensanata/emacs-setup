@@ -1,11 +1,19 @@
-(add-hook 'latex-mode-hook 'asc:latex-mode-setup)
-
 ;; limit to the commands I need
 (setq tex-compile-commands
       '(("latexmk -pvc -view=none -bibtex- -pdf %f" t "%r.pdf")
 	("skim $f")
 	("pdflatex  %f" t "%r.pdf")
 	("makeindex %r" "%r.idx" "%r.ind")))
+
+;; C-c =  toc
+;; C-c (  label
+;; C-c )  reference
+;; C-c <  index
+;; C-c >  display index
+(add-hook 'latex-mode-hook 'reftex-mode)
+
+(add-hook 'latex-mode-hook 'asc:latex-mode-setup)
+
 
 (defun asc:latex-mode-setup ()
   "See `font-lock-keywords' for some explanation.
