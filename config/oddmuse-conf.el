@@ -173,67 +173,70 @@ cells by rows first."
 
 (defun oddmuse-to-latex (start end)
   (interactive "r")
-  (goto-char start)
-  (while (re-search-forward "\\*\\*\\(.+\\)\\*\\*" nil end)
-    (replace-match (concat "\\\\textbf{" (match-string 1) "}")))
-  (goto-char start)
-  (while (re-search-forward "\\*\\(.+?\\)\\*" nil end)
-    (replace-match (concat "\\\\textbf{" (match-string 1) "}")))
-  (goto-char start)
-  (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil end)
-    (replace-match (concat "\\\\href{https://alexschroeder.ch/wiki/" (match-string 1)
-			   "}{" (match-string 2) "}")))
-  (goto-char start)
-  (while (re-search-forward "\\[\\(https?://\\S-+\\) \\(.+?\\)\\]" nil end)
-    (replace-match (concat "\\\\href{" (match-string 1)
-			   "}{" (match-string 2) "}")))
-  ;; italic must come after URLs
-  (goto-char start)
-  (while (re-search-forward "//\\(.+?\\)//" nil end)
-    ;; avoid URLs like protocol://foo
-    (unless (eq (char-before (match-beginning 0)) ?:)
-      (replace-match (concat "\\\\emph{" (match-string 1) "}"))))
-  (goto-char start)
-  (while (re-search-forward "\\(\\s-\\)/\\(.+?\\)/" nil end)
-    (replace-match (concat (match-string 1) "\\\\emph{" (match-string 2) "}")))
-  (goto-char start)
-  (while (re-search-forward "%" nil end)
-    (replace-match "\\\\%"))
-  (goto-char start)
-  (while (re-search-forward "^\\# " nil end)
+  (save-excursion
     (save-restriction
-      (narrow-to-region (match-beginning 0)
-			(progn
-			  (re-search-forward "\n\\s-*\n[^#]\\|\\'")
-			  (match-beginning 0)))
-      (goto-char (point-max))
-      (insert "\n\\end{enumerate}")
+      (narrow-to-region start end)
       (goto-char (point-min))
-      (insert "\\begin{enumerate}\n")
-      (while (re-search-forward "^\\# " nil end)
-	(replace-match (concat "  \\\\item ")))))
-  ;; tables
-  (goto-char start)
-  (while (re-search-forward "^|= \\(.*\\) |" nil end)
-    (let ((str (match-string 1)))
-      (replace-match "")
-      (save-excursion
-	(save-match-data
-	  (let ((list (split-string str " |= " t)))
-	    (insert "\\begin{table}\n"
-		    "\\begin{tabular}{c"
-		    (make-string (1- (length list)) ?l) "}\n"
-		    (mapconcat 'identity list " & ") " \\\\")))))
-    (while (re-search-forward "^|\\(.*\\)" nil end)
-      (let ((str (match-string 1)))
-	(replace-match "")
-	(save-excursion
-	  (save-match-data
-	    (let ((list (split-string str " *| *" t)))
-	      (insert (mapconcat 'identity list " & ") " \\\\"))))))
-    (end-of-line)
-    (newline)
-    (insert "\\end{tabular}\n"
-	    "\\end{table}\n")))
+      (while (re-search-forward "\\*\\*\\(.+\\)\\*\\*" nil t)
+	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "\\*\\(.+?\\)\\*" nil t)
+	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil t)
+	(replace-match (concat "\\\\href{https://alexschroeder.ch/wiki/" (match-string 1)
+			       "}{" (match-string 2) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "\\[\\(https?://\\S-+\\) \\(.+?\\)\\]" nil t)
+	(replace-match (concat "\\\\href{" (match-string 1)
+			       "}{" (match-string 2) "}")))
+      ;; italic must come after URLs
+      (goto-char (point-min))
+      (while (re-search-forward "//\\(.+?\\)//" nil t)
+	;; avoid URLs like protocol://foo
+	(unless (eq (char-before (match-beginning 0)) ?:)
+	  (replace-match (concat "\\\\emph{" (match-string 1) "}"))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\(\\s-\\)/\\(.+?\\)/" nil t)
+	(replace-match (concat (match-string 1) "\\\\emph{" (match-string 2) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "%" nil t)
+	(replace-match "\\\\%"))
+      (goto-char (point-min))
+      (while (re-search-forward "^\\# " nil t)
+	(save-restriction
+	  (narrow-to-region (match-beginning 0)
+			    (progn
+			      (re-search-forward "\n\\s-*\n[^#]\\|\\'")
+			      (match-beginning 0)))
+	  (goto-char (point-max))
+	  (insert "\n\\end{enumerate}")
+	  (goto-char (point-min))
+	  (insert "\\begin{enumerate}\n")
+	  (while (re-search-forward "^\\# " nil t)
+	    (replace-match (concat "  \\\\item ")))))
+      ;; tables
+      (goto-char (point-min))
+      (while (re-search-forward "^|= \\(.*\\) |" nil t)
+	(let ((str (match-string 1)))
+	  (replace-match "")
+	  (save-excursion
+	    (save-match-data
+	      (let ((list (split-string str " |= " t)))
+		(insert "\\begin{table}\n"
+			"\\begin{tabular}{c"
+			(make-string (1- (length list)) ?l) "}\n"
+			(mapconcat 'identity list " & ") " \\\\")))))
+	(while (re-search-forward "^|\\(.*\\)" nil t)
+	  (let ((str (match-string 1)))
+	    (replace-match "")
+	    (save-excursion
+	      (save-match-data
+		(let ((list (split-string str " *| *" t)))
+		  (insert (mapconcat 'identity list " & ") " \\\\"))))))
+	(end-of-line)
+	(newline)
+	(insert "\\end{tabular}\n"
+		"\\end{table}\n")))))
 
   
