@@ -12,6 +12,9 @@
 ;; C-c >  display index
 (add-hook 'latex-mode-hook 'reftex-mode)
 
+(setq reftex-index-macros
+      '(("\\key[]{*}" "idx" ?k "" nil nil)))
+
 (add-hook 'latex-mode-hook 'asc:latex-mode-setup)
 
 
