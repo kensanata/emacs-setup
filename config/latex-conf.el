@@ -13,14 +13,17 @@
 (add-hook 'latex-mode-hook 'reftex-mode)
 
 (setq reftex-index-macros
-      '(("\\key[]{*}" "idx" ?k "" nil nil)))
+      '(("\\key[]{*}" "idx" ?k "" nil nil)
+	("\\animal{*}" "idx" ?k "" t nil)))
 
 (add-hook 'latex-mode-hook 'asc:latex-mode-setup)
-
 
 (defun asc:latex-mode-setup ()
   "See `font-lock-keywords' for some explanation.
 This modifies `latex-font-lock-keywords'."
+  ;; (setq reftex-label-alist nil)
+  (add-to-list 'reftex-label-alist
+	       '("\\animal{*}" ?a "animal:" "%s" t nil 2))
   (local-set-key (kbd "C-c t") 'asc:latex-insert-tag)
   (local-set-key (kbd "C-z") 'tex-shell-here)
   (font-lock-add-keywords
