@@ -1,7 +1,7 @@
 (require 'cl-macs)
 (require 'widget)
 
-(defconst fünf-winde-regexp "^|\\[\\[\\(.*?\\)\\]\\][ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*[0-9]+[ \t]*\\)"
+(defconst fünf-winde-regexp "^|\\[\\[\\(.*?\\)\\]\\][ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*-?[0-9]+[ \t]*\\)"
   "Regular expression to parse the Status page.
 \(let ((name (match-string 1))
       (share (match-string 2))
