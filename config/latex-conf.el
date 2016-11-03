@@ -5,25 +5,38 @@
 	("pdflatex  %f" t "%r.pdf")
 	("makeindex %r" "%r.idx" "%r.ind")))
 
-;; C-c =  toc
-;; C-c (  label
-;; C-c )  reference
-;; C-c <  index
-;; C-c >  display index
-(add-hook 'latex-mode-hook 'reftex-mode)
-
 (setq reftex-index-macros
       '(("\\key[]{*}" "idx" ?k "" nil nil)
-	("\\animal{*}" "idx" ?k "" t nil)))
+	("\\hiref[]{}{*}" "idx" ?k "" nil nil)
+	("\\animal{*}" "idx" ?k "" t nil)
+	("\\ruins{*}" "idx" ?k "" t nil)
+	("\\jungles{*}" "idx" ?k "" t nil)
+	("\\deserts{*}" "idx" ?k "" t nil)
+	("\\forests{*}" "idx" ?k "" t nil)
+	("\\mountains{*}" "idx" ?k "" t nil)
+	("\\caves{*}" "idx" ?k "" t nil)
+	("\\savannas{*}" "idx" ?k "" t nil)
+	("\\swamps{*}" "idx" ?k "" t nil)))
 
 (add-hook 'latex-mode-hook 'asc:latex-mode-setup)
 
 (defun asc:latex-mode-setup ()
   "See `font-lock-keywords' for some explanation.
 This modifies `latex-font-lock-keywords'."
+  
+  ;; C-c =  toc
+  ;; C-c (  label
+  ;; C-c )  reference
+  ;; C-c <  index
+  ;; C-c >  display index
+  (reftex-mode 1)
   ;; (setq reftex-label-alist nil)
   (add-to-list 'reftex-label-alist
 	       '("\\animal{*}" ?a "animal:" "%s" t nil 2))
+
+  (flyspell-mode 1)
+  (auto-fill-mode 1)
+  
   (local-set-key (kbd "C-c t") 'asc:latex-insert-tag)
   (local-set-key (kbd "C-z") 'tex-shell-here)
   (font-lock-add-keywords

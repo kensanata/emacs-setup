@@ -356,7 +356,7 @@ default:
                      nil require nil
                      'oddmuse-wiki-history default)))
 
-(defun oddmuse-pagename (&optional arg)
+(defun oddmuse-pagename ()
   "Return the wiki and pagename the user wants to edit or follow.
 This cannot be the current pagename!  If given the optional
 argument ARG, read it from the minibuffer.  Otherwise, try to get
@@ -367,7 +367,8 @@ too. The pagename returned does not necessarily exist!
 Use this function when following links in regular wiki buffers,
 in Recent Changes, History Buffers, and also in text files and
 the like."
-  (let* ((wiki (or (and (not arg) oddmuse-wiki)
+  (let* ((arg current-prefix-arg)
+	 (wiki (or (and (not arg) oddmuse-wiki)
                    (oddmuse-read-wiki)))
 	 (pagename (or (and arg (oddmuse-read-pagename wiki))
 		       (oddmuse-pagename-at-point)

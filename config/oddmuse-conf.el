@@ -36,6 +36,8 @@
 	 utf-8 "frodo" "Alex")
 	("Greyheim" "https://campaignwiki.org/wiki/Greyheim"
 	 utf-8 "frodo" "Alex")
+	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds%C2%A0and%C2%A0Helmets"
+	 utf-8 "frodo" "Alex")
 	("Montag in Zürich" "https://campaignwiki.org/wiki/MontagInZ%C3%BCrich"
 	 utf-8 "frodo" "Alex")
 	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
@@ -176,6 +178,20 @@ cells by rows first."
   (save-excursion
     (save-restriction
       (narrow-to-region start end)
+      (goto-char (point-min))
+      (while (re-search-forward "\\([0-9]+\\) ?\\(ft\\.?\\|gold\\)" nil t)
+	(let ((num (match-string 1))
+	      (unit (match-string 2)))
+	  (when (string= unit "gold")
+	    (setq unit "gp"))
+	  (replace-match (concat "\\\\SI{" num "}{" unit "}"))))
+      (goto-char (point-min))
+      (while (re-search-forward "\n\n\\(HD.*\\)" nil t)
+	(let ((str (concat "\n\n\\begin{quote}\n"
+			   (match-string 1)
+			   "\n\\end{quote}")))
+	  (replace-match "")
+	  (insert str)))
       (goto-char (point-min))
       (while (re-search-forward "\\*\\*\\(.+\\)\\*\\*" nil t)
 	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
