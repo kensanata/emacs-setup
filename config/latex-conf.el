@@ -33,7 +33,10 @@ This modifies `latex-font-lock-keywords'."
   ;; (setq reftex-label-alist nil)
   (add-to-list 'reftex-label-alist
 	       '("\\animal{*}" ?a "animal:" "%s" t nil 2))
-
+  (add-to-list 'reftex-ref-style-alist
+	       '("Tufte" "hyperref" (("\\hyperref" ?h))))
+  (reftex-ref-style-activate "Tufte")
+  
   (flyspell-mode 1)
   (auto-fill-mode 1)
   
