@@ -6,6 +6,9 @@
 (when (file-directory-p "C:\\Program Files (x86)\\GNU\\GnuPG")
   (add-to-list 'exec-path "C:\\Program Files (x86)\\GNU\\GnuPG"))
 
+(when (file-directory-p "C:\\Program Files\\nodejs")
+  (add-to-list 'exec-path "C:\\Program Files\\nodejs"))
+
 (global-set-key (kbd "C-z") 'eshell-here)
 
 (defun eshell-here (&optional arg)
