@@ -181,13 +181,8 @@
 (defun wilderlande-xp (xp)
   (interactive "nXP pro Person: ")
   (save-excursion
-    (while (re-search-forward "^|\\(.*?\\)[ \t]*|[ \t]*\\([0-9]+\\)[ \t]*|[ \t]*\\([0-9]+\\)[ \t]*|" nil t)
+    (while (re-search-forward "^\\* \\(.*?\\) -- \\([0-9]+\\)$" nil t)
       (let ((name (match-string 1))
-	    (level (string-to-number (match-string 2)))
-	    (num (string-to-number (match-string 3)))
-	    (start (match-beginning 0))
-	    (end (match-end 0)))
+	    (num (string-to-number (match-string 2))))
 	(when (y-or-n-p (format "War %s dabei?" name))
-	  (delete-region start end)
-	  (insert (format "|%s | %d| %d|" name level
-			  (+  num xp))))))))
+	  (replace-match (format "* %s -- %d" name (+  num xp))))))))
