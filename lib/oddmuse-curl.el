@@ -911,8 +911,12 @@ Use a prefix argument to override this."
   (and buffer-file-name (basic-save-buffer))
   (oddmuse-run "Posting" oddmuse-post-command nil nil
 	       (get-buffer-create " *oddmuse-response*") t 302)
-  (oddmuse-revision-put oddmuse-wiki oddmuse-page-name
-    (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
+  (let ((revision (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
+    (oddmuse-revision-put oddmuse-wiki oddmuse-page-name revision)
+    ;; update revision
+    (vc-file-setprop buffer-file-name 'vc-working-revision revision)
+    ;; update mode-line
+    (vc-mode-line buffer-file-name 'oddmuse)))
 
 ;;;###autoload
 (defun oddmuse-preview (&optional arg)
