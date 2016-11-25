@@ -300,7 +300,7 @@ Example:
 (defun oddmuse-url (wiki pagename)
   "Get the URL of oddmuse wiki."
   (condition-case v
-      (concat (or (cadr (assoc wiki oddmuse-wikis)) (error)) "/"
+      (concat (or (cadr (assoc wiki oddmuse-wikis)) (error "Wiki not found in `oddmuse-wikis'")) "/"
 	      (url-hexify-string pagename))
     (error nil)))
 
@@ -535,7 +535,7 @@ as well."
 	    ((string-match "<title>Error</title>" status)
 	     (if (string-match "<h1>\\(.*\\)</h1>" status)
 		 (error "Error %s: %s" mesg (match-string 1 status))
-	       (error "Error %s: Cause unknown")))
+	       (error "Error %s: Cause unknown" status)))
 	    (t
 	     (message "%s...done" mesg))))))
 
@@ -737,7 +737,7 @@ Font-locking is controlled by `oddmuse-markup-functions'.
   (set (make-local-variable 'sgml-tag-alist)
        `(("b") ("code") ("em") ("i") ("strong") ("nowiki")
 	 ("pre" \n) ("tt") ("u")))
-  (set (make-local-variable 'skeleton-transformation) 'identity)
+  (set (make-local-variable 'skeleton-transformation-function) 'identity)
 
   (make-local-variable 'oddmuse-wiki)
   (make-local-variable 'oddmuse-page-name)
