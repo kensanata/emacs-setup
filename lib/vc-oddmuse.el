@@ -47,7 +47,8 @@ For a list of possible values, see `vc-state'."
 
 (defun vc-oddmuse-working-revision (file)
   "The current revision based on `oddmuse-revisions'."
-  (oddmuse-revision-get oddmuse-wiki oddmuse-page-name))
+  (with-oddmuse-file file
+    (oddmuse-revision-get wiki pagename)))
 
 (defun vc-oddmuse-checkout-model (files)
   "No locking."

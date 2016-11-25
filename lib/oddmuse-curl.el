@@ -830,8 +830,9 @@ Requires all the variables to be bound for
   (with-temp-buffer
     (oddmuse-run "Determining latest revision" oddmuse-get-history-command wiki pagename)
     (if (re-search-forward "^revision: \\([0-9]+\\)$" nil t)
-	(prog1 (match-string 1)
-	  (message "Determining latest revision...done"))
+	(let ((revision (match-string 1)))
+	  (message "Latest revision is %s" revision)
+	  revision)
       (message "This is a new page")
       "new")))
 
