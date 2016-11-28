@@ -6,8 +6,7 @@
  10 nil
  (lambda ()
    (setq Info-additional-directory-list
-	 (nconc '("/usr/local/opt/emacs-mac/share/info/emacs"
-		  "~/src/emacs-live/packs/stable/git-pack/lib/magit/Documentation")
+	 (nconc '("/usr/local/opt/emacs-mac/share/info/emacs")
 		(delete "/usr/local/opt/emacs-mac/share/info"
 			(file-expand-wildcards "/usr/local/opt/*/share/info"))))
    (message "Info-additional-directory-list was set")))
