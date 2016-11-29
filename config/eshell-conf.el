@@ -9,6 +9,10 @@
 (when (file-directory-p "C:\\Program Files\\nodejs")
   (add-to-list 'exec-path "C:\\Program Files\\nodejs"))
 
+(when (file-directory-p "C:\\Users\\asc\\AppData\\Roaming\\bin")
+  (add-to-list 'exec-path "C:\\Users\\asc\\AppData\\Roaming\\bin"))
+;; (executable-find "lein")
+
 (global-set-key (kbd "C-z") 'eshell-here)
 
 (defun eshell-here (&optional arg)
