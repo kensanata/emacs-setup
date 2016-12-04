@@ -1,6 +1,12 @@
 ;; Convenience stuff for working with Java source code and SQL
 ;; statements
 
+(add-hook 'java-mode-hook 'asc:java-init)
+
+(defun asc:java-init ()
+  (setq indent-tabs-mode nil
+	c-basic-offset 2))
+
 (defun asc:sql-quote (start end)
   (interactive "r")
   (setq end (copy-marker end))
