@@ -1,6 +1,10 @@
 ;; Oracle
 (setenv "NLS_LANG" "GERMAN_SWITZERLAND.UTF8")
 
+(setq sql-database "dev"
+      sql-user "devasc"
+      sql-password "devascpw")
+
 (add-hook 'sql-mode-hook 'asc:sql-init)
 
 (defun asc:sql-init ()
