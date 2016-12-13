@@ -255,4 +255,25 @@ cells by rows first."
 	(insert "\\end{tabular}\n"
 		"\\end{table}\n")))))
 
+
+(defun latex-to-oddmuse (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\([a-z]+\\){\\([^[}]+\\)}{\\([^[}]+\\)}" nil t)
+	(cond ((string= (match-string 1) "SI")
+	       (replace-match (concat (match-string 2) (match-string 3))))
+	      ((string= (match-string 1) "href")
+	       (replace-match (concat "[" (match-string 2) " " (match-string 3) "]")))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\([a-z]+\\){\\([^[}]+\\)}" nil t)
+	(cond ((string= (match-string 1) "section")
+	       (replace-match (concat "== " (match-string 2))))
+	      ((string= (match-string 1) "marginnote")
+	       (replace-match (concat " " (match-string 2))))
+	      ((member (match-string 1) '("label" "index" "forests" "begin" "end"
+					  "includegraphics"))
+	       (replace-match "")))))))
   
