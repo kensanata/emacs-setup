@@ -1,3 +1,4 @@
+(asc:package-install 'company)
 (global-company-mode 1)
 
 ;; support CamelCase as illustrated here:
