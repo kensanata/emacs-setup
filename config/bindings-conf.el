@@ -1,8 +1,10 @@
 (setq default-input-method 'german-prefix)
 
 (asc:package-install 'expand-region)
-
 (global-set-key (kbd "C-'") 'er/expand-region)
+
+(asc:package-install 'iedit)
+;; C-; is bound to iedit-mode
 
 (global-set-key (kbd "C-c g") 'magit-status)
 
