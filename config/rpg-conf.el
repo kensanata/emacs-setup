@@ -1,4 +1,8 @@
-(require 'cl-macs)
+(condition-case err
+    (require 'cl-macs)
+  (error
+   (require 'cl)))
+
 (require 'widget)
 
 (defconst fünf-winde-regexp "^|\\[\\[\\(.*?\\)\\]\\][ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*-?[0-9]+[ \t]*\\)"

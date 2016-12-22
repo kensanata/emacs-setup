@@ -30,7 +30,10 @@ be useless, in which case you should restart it using
 `gpg-restart-agent'."
   (gpg-reload-agent-info)
   (let ((pid (getenv "SSH_AGENT_PID")))
-    (unless (and pid (member (string-to-number pid) (list-system-processes)))
+    (when (and (fboundp 'list-system-processes)
+	       (or (not pid)
+		   (not (member (string-to-number pid)
+				(list-system-processes)))))
       (gpg-restart-agent))))
 
 (gpg-agent-startup)
