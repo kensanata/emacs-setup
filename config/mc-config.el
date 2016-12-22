@@ -1,6 +1,10 @@
 ;; I have not decided whether iedit and multiple-cursors do the same
 ;; thing or not.
+
+
 (asc:package-install 'iedit)
+;; C-; is bound to iedit-mode
+
 (asc:package-install 'multiple-cursors)
 (asc:package-install 'mc-extras)
 
