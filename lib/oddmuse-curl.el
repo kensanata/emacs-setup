@@ -864,10 +864,7 @@ people have been editing the wiki in the mean time."
       ;; check for a diff (this ends with display-buffer) and bury the
       ;; buffer if there are no hunks
       (when (file-exists-p buffer-file-name)
-        (diff-buffer-with-file)
-        (with-current-buffer (get-buffer "*Diff*")
-          (unless (next-property-change (point-min))
-            (kill-buffer))))
+	(message "Page loaded from the wiki but a local file also exists"))
       ;; this also changes the buffer name
       (basic-save-buffer)
       ;; this makes sure that the buffer name is set correctly
