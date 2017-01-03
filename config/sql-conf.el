@@ -3,7 +3,8 @@
 
 (setq sql-database "dev"
       sql-user "devasc"
-      sql-password "devascpw")
+      sql-password "devascpw"
+      sql-product 'oracle)
 
 (add-hook 'sql-mode-hook 'asc:sql-init)
 
