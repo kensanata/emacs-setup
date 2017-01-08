@@ -54,6 +54,7 @@
 
 (defun my-gnus-summary-keys ()
   (local-set-key "y" 'gmail-archive)
+  (local-set-key "d" 'gmail-trash)
   (local-set-key "$" 'gmail-report-spam))
 
 (defun gmail-archive ()
@@ -67,3 +68,9 @@ This moves them into the All Mail folder."
 This moves them into the Spam folder."
   (interactive)
   (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam"))
+
+(defun gmail-trash ()
+  "Delete the current or marked mails.
+This moves them into the Trash folder."
+  (interactive)
+  (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Trash"))
