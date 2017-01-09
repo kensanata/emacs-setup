@@ -4,6 +4,7 @@
 (add-hook 'java-mode-hook 'asc:java-init)
 
 (defun asc:java-init ()
+  (subword-mode 1)
   (setq indent-tabs-mode nil
 	c-basic-offset 2))
 
