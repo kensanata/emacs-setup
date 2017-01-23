@@ -19,7 +19,7 @@
 (setq ;; You need to replace this email address with your own!
       user-mail-address "kensanata@gmail.com"
       ;; You need to replace this key ID with your own key ID!
-      mml2015-signers '("4529A45C")
+      mml2015-signers '("ACECFEAE")
       ;; This tells Gnus to get email from Gmail via IMAP.
       gnus-select-method
       '(nnimap "gmail"
