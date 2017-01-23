@@ -29,31 +29,19 @@
 	 utf-8 "uihnscuskc" nil)
 	("Campaign Wiki" "https://campaignwiki.org/wiki"
 	 utf-8 "frodo" "Alex")
-	("DarkDungeonsSRD" "https://campaignwiki.org/wiki/DarkDungeonsSRD"
-	 utf-8 "frodo" "Alex")
-	("DungeonMaps" "https://campaignwiki.org/wiki/DungeonMaps"
-	 utf-8 "frodo" "Alex")
 	("Gridmapper" "https://campaignwiki.org/wiki/Gridmapper"
 	 utf-8 "frodo" "Alex")
 	("Greyheim" "https://campaignwiki.org/wiki/Greyheim"
 	 utf-8 "frodo" "Alex")
 	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds%C2%A0and%C2%A0Helmets"
 	 utf-8 "frodo" "Alex")
-	("Montag in Zürich" "https://campaignwiki.org/wiki/MontagInZ%C3%BCrich"
-	 utf-8 "frodo" "Alex")
 	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
 	 utf-8 "frodo" "Alex")
 	("Monsters" "https://campaignwiki.org/wiki/Monsters"
 	 utf-8 "frodo" "Alex")
-	("BeremAndBeyond" "https://campaignwiki.org/wiki/BeremAndBeyond"
-	 utf-8 "frodo" "Alex")
 	("Links to Wisdom" "https://campaignwiki.org/wiki/LinksToWisdom"
 	 utf-8 "frodo" "Alex")
-	("Karameikos" "https://campaignwiki.org/wiki/Karameikos"
-	 utf-8 "frodo" "Alex")
 	("Wilderlande" "https://campaignwiki.org/wiki/Wilderlande"
-	 utf-8 "frodo" "Alex")
-	("Rollenspiele" "https://campaignwiki.org/wiki/Rollenspiele"
 	 utf-8 "frodo" "Alex")
 	("Community Wiki" "http://www.communitywiki.org/cw"
 	 utf-8 "question" nil)
