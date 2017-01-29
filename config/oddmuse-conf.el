@@ -33,6 +33,8 @@
 	 utf-8 "frodo" "Alex")
 	("Greyheim" "https://campaignwiki.org/wiki/Greyheim"
 	 utf-8 "frodo" "Alex")
+	("Rasiermesserküste" "https://campaignwiki.org/wiki/Rasiermesserk%c3%bcste"
+	 utf-8 "frodo" "Alex")
 	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds%C2%A0and%C2%A0Helmets"
 	 utf-8 "frodo" "Alex")
 	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
