@@ -17,7 +17,7 @@ OK, you should just reload the environment file using
   (let ((file (expand-file-name "~/.gpg-agent-info")))
     (when (file-readable-p file)
       (with-temp-buffer
-	(insert-file file)
+	(insert-file-contents file)
 	(goto-char (point-min))
 	(while (re-search-forward "\\([A-Z_]+\\)=\\(.*\\)" nil t)
 	  (setenv (match-string 1) (match-string 2)))))))
