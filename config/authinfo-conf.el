@@ -41,7 +41,7 @@
 		       '("machine"
 			 "login"
 			 "password"
-			 "port"))))
+			 "port")))))
 
 (define-derived-mode authinfo-mode conf-space-mode "Auth Info"
   "Major mode to edit ~/.authinfo.gpg files."
@@ -50,26 +50,23 @@
   (add-hook 'post-command-hook 'authinfo-show-line t t))
 
 (defun authinfo-hide-buffer ()
-  "Hide every line using the `display' text property."
+  "Hide every line using an overlay."
+  (interactive)
   (save-excursion
     (goto-char (point-min))
     (let ((start (point))
 	  (done nil))
       (while (not done)
-	(put-text-property start (line-end-position)
-			   'display "* SECRET *")
+	(let ((o (make-overlay start (line-end-position))))
+	  (overlay-put o 'authinfo t)
+	  (overlay-put o 'display "* SECRET *"))
 	(setq done (= (forward-line 1) 1)
 	      start (point))))))
 
 (defun authinfo-show-buffer ()
-  "Show every line by removing the `display' text property."
-  (save-excursion
-    (goto-char (point-min))
-    (let ((start (point))
-	  (done nil))
-      (while (not done)
-	(remove-text-properties start (line-end-position) '(display))
-	(setq done (= (forward-line 1) 1))))))
+  "Show every line by removing the overlays."
+  (interactive)
+  (remove-overlays nil nil 'authinfo t))
 
 (defvar-local authinfo-last-position 0
   "The last position.
@@ -83,13 +80,23 @@ This is used to hide the old line.")
   "Hide the old line and show the new line, if on a new line."
   (when (or (< (line-end-position) authinfo-last-position)
 	    (> (line-beginning-position) authinfo-last-position))
-    (remove-text-properties (line-beginning-position)
-			    (line-end-position)
-			    '(display))
-    (save-excursion
-      (goto-char authinfo-last-position)
-      (put-text-property (line-beginning-position)
-			 (line-end-position)
-			 'display "* SECRET *"))))
+    ;; show currrent line
+    (dolist (o (overlays-at (point)))
+      (when (overlay-get o 'authinfo)
+	(overlay-put o 'display nil)))
+    ;; hide old line
+    (let ((done nil))
+      (dolist (o (overlays-at authinfo-last-position))
+	(when (overlay-get o 'authinfo)
+	  (overlay-put o 'display "* SECRET *")
+	  (setq done t)))
+      ;; if there was no existing overlay, make a new one
+      (unless done
+	(save-excursion
+	  (goto-char authinfo-last-position)
+	  (let ((o (make-overlay (line-beginning-position)
+				 (line-end-position))))
+	    (overlay-put o 'authinfo t)
+	    (overlay-put o 'display "* SECRET *")))))))
 
 (provide 'authinfo)
