@@ -20,83 +20,58 @@
 
 ;;; Commentary:
 ;;
-;; I keep some passwords in my ~/.authinfo.gpg file. When I look for a
-;; password, I open the file and search for the correct host name
-;; (i.e. the machine name). Sometimes there are people near my screen
-;; and I don't feel comfortable looking for passwords in such an
-;; environment, specially if there is an entire page full of them.
-;; This mode is trying to limit such exposure.
+;; I keep some passwords in my ~/.authinfo.gpg file. When I looked for
+;; a password, I used to open the file and search for the correct host
+;; name (i.e. the machine name). Sometimes there were people near my
+;; screen and I did not feel comfortable looking for passwords in such
+;; an environment, specially if there is an entire page full of them.
+;; So now I want to use C-c p to copy a password and have it removed
+;; from the clipboard after a few seconds.
 ;;
 ;; Things I might want to add in the future:
-;; - hide passwords even if we show the line
-;; - provide a keybinding to copy invisible passwords
-;; - add a timer to wipe the clipboard containing the password after 10s
+;; - completion of hosts and usernames
 
 ;;; Code
 
-(eval-after-load "conf-mode"
-  '(add-to-list 'conf-space-keywords-alist
-		(cons "\\.authinfo"
-		      (regexp-opt
-		       '("machine"
-			 "login"
-			 "password"
-			 "port")))))
+(require 'auth-source)
+(require 'cl)
 
-(define-derived-mode authinfo-mode conf-space-mode "Auth Info"
-  "Major mode to edit ~/.authinfo.gpg files."
-  (authinfo-hide-buffer)
-  (add-hook 'pre-command-hook 'authinfo-remember-position)
-  (add-hook 'post-command-hook 'authinfo-show-line t t))
+(global-set-key (kbd "C-c p") 'authinfo-copy-password)
 
-(defun authinfo-hide-buffer ()
-  "Hide every line using an overlay."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((start (point))
-	  (done nil))
-      (while (not done)
-	(let ((o (make-overlay start (line-end-position))))
-	  (overlay-put o 'authinfo t)
-	  (overlay-put o 'display "* SECRET *"))
-	(setq done (= (forward-line 1) 1)
-	      start (point))))))
+(defvar authinfo-copied-passwords nil)
 
-(defun authinfo-show-buffer ()
-  "Show every line by removing the overlays."
-  (interactive)
-  (remove-overlays nil nil 'authinfo t))
+(defun authinfo-copy-password (host user)
+  "Copy the password entry for a particular entry.
 
-(defvar-local authinfo-last-position 0
-  "The last position.
-This is used to hide the old line.")
+Remove the password from the kill ring after 10s.
+The passwords to be removed are temporarily stored in
+`authinfo-copied-passwords'."
+  (interactive "sHost: \nsUser: ")
+  (let ((found (nth 0 (auth-source-search :max 1
+					  :host host
+					  :user user))))
+    (when found
+      (let ((secret (plist-get found :secret)))
+	(when (functionp secret)
+	  (setq secret (funcall secret)))
+	(push secret authinfo-copied-passwords)
+	(kill-new secret)
+	(run-with-idle-timer 10 nil 'authinfo-clean-kill-ring)
+	(message "Copied password")))))
 
-(defun authinfo-remember-position ()
-  "Remember the current position to hide the old line."
-  (setq authinfo-last-position (point)))
-  
-(defun authinfo-show-line ()
-  "Hide the old line and show the new line, if on a new line."
-  (when (or (< (line-end-position) authinfo-last-position)
-	    (> (line-beginning-position) authinfo-last-position))
-    ;; show currrent line
-    (dolist (o (overlays-at (point)))
-      (when (overlay-get o 'authinfo)
-	(overlay-put o 'display nil)))
-    ;; hide old line
-    (let ((done nil))
-      (dolist (o (overlays-at authinfo-last-position))
-	(when (overlay-get o 'authinfo)
-	  (overlay-put o 'display "* SECRET *")
-	  (setq done t)))
-      ;; if there was no existing overlay, make a new one
-      (unless done
-	(save-excursion
-	  (goto-char authinfo-last-position)
-	  (let ((o (make-overlay (line-beginning-position)
-				 (line-end-position))))
-	    (overlay-put o 'authinfo t)
-	    (overlay-put o 'display "* SECRET *")))))))
+(defun authinfo-clean-kill-ring ()
+  "Remove all passwords from the kill-ring.
+
+The passwords to be removed are temporarily stored in
+`authinfo-copied-passwords'."
+  ;; some experiments on W32 seem to indicate that this is the one
+  (when (member (gui-get-selection 'CLIPBOARD) authinfo-copied-passwords)
+    (gui-set-selection 'CLIPBOARD "SECRET"))
+  ;; the kill-ring gets saved, too
+  (setq kill-ring (delete-if (lambda (s)
+			       (member s authinfo-copied-passwords))
+			     kill-ring)
+	authinfo-copied-passwords nil)
+  (message "Cleared passwords from the kill ring"))
 
 (provide 'authinfo)
