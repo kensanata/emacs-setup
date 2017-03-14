@@ -46,10 +46,8 @@
 Remove the password from the kill ring after 10s.
 The passwords to be removed are temporarily stored in
 `authinfo-copied-passwords'."
-  (interactive "sHost: \nsUser: ")
-  (let ((found (nth 0 (auth-source-search :max 1
-					  :host host
-					  :user user))))
+  (interactive (authinfo-prompt))
+  (let ((found (nth 0 (auth-source-search :host host :user user))))
     (when found
       (let ((secret (plist-get found :secret)))
 	(when (functionp secret)
@@ -73,5 +71,29 @@ The passwords to be removed are temporarily stored in
 			     kill-ring)
 	authinfo-copied-passwords nil)
   (message "Cleared passwords from the kill ring"))
+
+(defvar authinfo-host-history nil)
+
+(defun authinfo-prompt ()
+  "Prompt for host and username."
+  (let* ((hosts (delete-duplicates
+		 (loop for spec in
+		       (auth-source-search :max most-positive-fixnum)
+		       collect (plist-get spec :host))
+		 :test 'string=))
+	 (host (completing-read "Host: " hosts nil t nil
+				'authinfo-host-history))
+	 (users (delete-duplicates
+		 (loop for spec in
+		       (auth-source-search :host host
+					   :max most-positive-fixnum)
+		       collect (plist-get spec :user))
+		 :test 'string=))
+	 (user (if (> (length users) 1)
+		   (completing-read (format "User for %s: " host)
+				    users nil t nil
+				    'authinfo-host-history)
+		 (car users))))
+    (list host user)))
 
 (provide 'authinfo)
