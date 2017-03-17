@@ -383,10 +383,13 @@ the like."
 
 (defun oddmuse-current-free-link-contents ()
   "The page name in a free link at point.
-This returns \"foo\" for [[foo]] and [[foo|bar]]."
+This returns \"foo\" for the following:
+- [[foo]]
+- [[foo|bar]]
+- [[image:foo]]"
   (save-excursion
     (let* ((pos (point))
-           (start (when (search-backward "[[" nil t)
+           (start (when (re-search-backward "\\[\\[\\(image:\\)?" nil t)
 		    (match-end 0)))
            (end (when (search-forward "]]" (line-end-position) t)
 		  (match-beginning 0))))
@@ -794,6 +797,7 @@ both the character before and after point have it, don't break."
 (define-key oddmuse-mode-map (kbd "C-c C-r") 'oddmuse-rc)
 (define-key oddmuse-mode-map (kbd "C-c C-s") 'oddmuse-search)
 (define-key oddmuse-mode-map (kbd "C-c C-t") 'sgml-tag)
+(define-key oddmuse-mode-map (kbd "C-c <") 'eimp-decrease-image-size)
 
 ;; This has been stolen from simple-wiki-edit
 ;;;###autoload
