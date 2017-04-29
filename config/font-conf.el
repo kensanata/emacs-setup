@@ -1,4 +1,4 @@
-
+;; See https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
 (cond ((and (eq (window-system) 'w32)
 	    (find-font (font-spec :name "Consolas")))
        (set-face-attribute 'default nil :family "Consolas" :height 130))
