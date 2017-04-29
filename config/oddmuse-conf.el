@@ -170,7 +170,7 @@ cells by rows first."
     (save-restriction
       (narrow-to-region start end)
       (goto-char (point-min))
-      (while (re-search-forward "\\([0-9]+\\) ?\\(ft\\.?\\|gold\\)" nil t)
+      (while (re-search-forward "\\([0-9]+\\) ?\\(ft\\.?\\|gold\\|[sgp]p\\)\\b" nil t)
 	(let ((num (match-string 1))
 	      (unit (match-string 2)))
 	  (when (string= unit "gold")
@@ -190,20 +190,18 @@ cells by rows first."
       (while (re-search-forward "\\*\\(.+?\\)\\*" nil t)
 	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
       (goto-char (point-min))
-      (while (re-search-forward "\\/\\(.+?\\)\\/" nil t)
-	(replace-match (concat "\\\\emph{" (match-string 1) "}")))
-      (goto-char (point-min))
       (while (re-search-forward "\\([0-9]\\)\\(st\\|nd\\|rd\\|th\\)" nil t)
 	(replace-match (concat (match-string 1) "\\\\" (match-string 2))))
-      (goto-char (point-min))
-      (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil t)
-	(replace-match (concat "\\\\href{https://alexschroeder.ch/wiki/" (match-string 1)
-			       "}{" (match-string 2) "}")))
       (goto-char (point-min))
       (while (re-search-forward "\\[\\(https?://\\S-+\\) \\(.+?\\)\\]" nil t)
 	(replace-match (concat "\\\\href{" (match-string 1)
 			       "}{" (match-string 2) "}")))
       ;; italic must come after URLs
+      (goto-char (point-min))
+      (while (re-search-forward "\\/\\(.+?\\)\\/" nil t)
+	;; avoid URLs like protocol://foo
+	(unless (eq (char-before (match-beginning 0)) ?:)
+	  (replace-match (concat "\\\\emph{" (match-string 1) "}"))))
       (goto-char (point-min))
       (while (re-search-forward "//\\(.+?\\)//" nil t)
 	;; avoid URLs like protocol://foo
@@ -212,6 +210,12 @@ cells by rows first."
       (goto-char (point-min))
       (while (re-search-forward "\\(\\s-\\)/\\(.+?\\)/" nil t)
 	(replace-match (concat (match-string 1) "\\\\emph{" (match-string 2) "}")))
+      (goto-char (point-min))
+      ;; hyperref must also come after emph
+      (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil t)
+	(replace-match (format "\\\\hyperref[sec:%s]{%s}"
+			       (downcase (match-string 1))
+			       (match-string 2))))
       (goto-char (point-min))
       (while (re-search-forward "%" nil t)
 	(replace-match "\\\\%"))
