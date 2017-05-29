@@ -11,15 +11,17 @@
 (defvar putty-directory "c:/Program Files/PuTTY"
   "The directory containing pscp.exe and plink.exe on Windows.")
 
+(setq tramp-default-method "ssh")
+(if (not (eq window-system 'w32))
+  (setq tramp-default-method "plink")
+  (when (and (not (string-match putty-directory (getenv "PATH")))
+	     (file-directory-p putty-directory))
+    (setenv "PATH" (concat putty-directory ";" (getenv "PATH")))))
+
 (defun sibirocobombus ()
   (interactive)
   "Connect to my favorite server using Tramp."
-  (if (not (eq window-system 'w32))
-      (find-file "/ssh:alex@alexschroeder.ch#882:")
-    (when (and (not (string-match putty-directory (getenv "PATH")))
-	       (file-directory-p putty-directory))
-      (setenv "PATH" (concat putty-directory ";" (getenv "PATH"))))
-    (find-file "/plink:alex@alexschroeder.ch#882:")))
+  (find-file "/alex@alexschroeder.ch#882:"))
 
 (defun the-shire ()
   (interactive)
