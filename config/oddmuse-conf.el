@@ -287,5 +287,11 @@ cells by rows first."
 	       (replace-match ""))))
       (goto-char (point-min))
       (while (search-forward "\\%" nil t)
-	(replace-match "%")))))
+	(replace-match "%"))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\(st\\|nd\\|rd\\|th\\)\\b" nil t)
+	(replace-match (match-string 1)))
+      (goto-char (point-min))
+      (while (search-forward "~" nil t)
+	(replace-match " ")))))
   
