@@ -26,7 +26,16 @@
 			'("#sql" "#eclipse-scout"))))
 	,(unless (eq (window-system) 'w32)
 	   '("megabombus.local"
-	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"))))
+	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"
+			"#rpg-traveller"
+			"#rpg-osr"
+			"#rpg-game-design"
+			"#rpg-indie-games"
+			"#rpg-game-masters"
+			"#rpg-announcements"
+			"#rpg-general"
+			"#osr-general"))))
+      rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
       rcirc-coding-system-alist
       '(("#nihongo" undecided . iso-2022-jp))
