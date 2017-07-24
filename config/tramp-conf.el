@@ -12,7 +12,7 @@
   "The directory containing pscp.exe and plink.exe on Windows.")
 
 (setq tramp-default-method "ssh")
-(if (not (eq window-system 'w32))
+(when (eq window-system 'w32)
   (setq tramp-default-method "plink")
   (when (and (not (string-match putty-directory (getenv "PATH")))
 	     (file-directory-p putty-directory))
