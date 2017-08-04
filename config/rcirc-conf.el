@@ -1,5 +1,8 @@
 ;;; rcirc, write such as not to require rcirc at startup
 (autoload 'rcirc "rcirc" t)
+(asc:package-install 'rcirc-color)
+(asc:package-install 'rcirc-styles)
+(asc:package-install 'rcirc-notify)
 
 ;;; bitlbee
 (if (not (file-exists-p "/usr/local/sbin/bitlbee"))
@@ -12,6 +15,13 @@
 		    (bitlbee-start); needs time to start up
 		    (run-with-idle-timer 1 nil 'rcirc nil))))
 
+(defun test-bitlbee ()
+  (interactive)
+  (let ((rcirc-server-alist
+	 '(("localhost" :port 7000
+	    :channels ("&bitlbee")))))
+    (rcirc nil)))
+
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
       rcirc-fill-column 79; side-by-side on my laptop
@@ -19,11 +29,16 @@
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-server-alist
-      `(("chat.freenode.net" :port 6697 :encryption tls
+      ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
+      ;; sometimes we have to use 71.11.84.232
+      ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
+      `(("71.11.84.232" :port 7000 :encryption tls
 	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
 		    "##emacs.de" "#emacswiki" "#perl" "#bussard"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
+	("irc.oftc.net" :port 6697 :encryption tls
+	 :channels ("#bitlbee"))
 	,(unless (eq (window-system) 'w32)
 	   '("megabombus.local"
 	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"
@@ -46,6 +61,10 @@
 		       (when (file-readable-p "~/.rcirc-authinfo")
 			 (insert-file-contents-literally "~/.rcirc-authinfo")
 			 (read (current-buffer)))))
+
+;; no more splitting of messages at 420 characters
+(eval-after-load 'rcirc
+  '(defalias 'rcirc-split-message 'list))
 
 (require 'cl)
 (setq rcirc-colors
@@ -95,6 +114,11 @@
 
 (add-hook 'rcirc-mode-hook
 	  (lambda ()
+	    ;; rcirc-omit-mode always *toggles*, so we first 'disable' it
+	    ;; and then let the function toggle it *and* set things up.
+	    (setq rcirc-omit-mode nil)
+	    (rcirc-omit-mode)
+	    ;; tracking enabled
 	    (rcirc-track-minor-mode 1)
 	    (local-set-key (kbd "M-q") 'rcirc-unfill)))
 

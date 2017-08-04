@@ -1018,13 +1018,12 @@ With universal argument, reload."
   (interactive "P")
   (let* ((wiki (or (and (not current-prefix-arg) oddmuse-wiki)
                    (oddmuse-read-wiki)))
-	 (name (concat "*" wiki ": recent changes*")))
+	 (name (concat "*" wiki ": Recent Changes*")))
     (if (and (get-buffer name) (not current-prefix-arg))
         (pop-to-buffer (get-buffer name))
       (set-buffer (get-buffer-create name))
-      (erase-buffer)
-      (oddmuse-run "Load recent changes" oddmuse-rc-command wiki)
-      (oddmuse-rc-buffer)
+      (oddmuse-rc-reload)
+      (oddmuse-rc-mode)
       ;; set local variable after `oddmuse-mode' killed them
       (set (make-local-variable 'oddmuse-wiki) wiki))))
 
@@ -1057,9 +1056,29 @@ With universal argument, reload."
 	    (insert fill-prefix description)
 	    (fill-paragraph))
 	  (newline))))
-    (goto-char (point-min))
-    (oddmuse-mode)))
+    (goto-char (point-min))))
 
+(defun oddmuse-rc-reload ()
+  "Reload Recent Changes for an Oddmuse wiki.
+You probably want to make sure that the buffer is in
+`oddmuse-rc-mode' and that `oddmuse-wiki' is set."
+  (interactive)
+  (erase-buffer)
+  (oddmuse-run "Load recent changes" oddmuse-rc-command wiki)
+  (oddmuse-rc-buffer))
+
+(define-derived-mode oddmuse-rc-mode oddmuse-mode "RC"
+  "Show Recent Changes for an Oddmuse wiki."
+  (setq buffer-read-only t))
+
+(define-key oddmuse-rc-mode-map (kbd "g") 'oddmuse-rc-reload)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-e") 'oddmuse-edit)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-f") 'oddmuse-follow)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-l") 'oddmuse-match)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-n") 'oddmuse-new)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-r") 'oddmuse-rc)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-s") 'oddmuse-search)
+ 
 (defun oddmuse-history (wiki pagename)
   "Show the history for PAGENAME on WIKI.
 Compared to `vc-oddmuse-print-log' this only prints the revisions
