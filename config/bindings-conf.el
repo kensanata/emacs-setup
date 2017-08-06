@@ -27,3 +27,4 @@
 (global-set-key (kbd "C-x 8 <down>") "↓")
 (global-set-key (kbd "C-x 8 [") "｢")
 (global-set-key (kbd "C-x 8 ]") "｣")
+(global-set-key (kbd "C-x 8 y") "✓")
