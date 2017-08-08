@@ -3,6 +3,8 @@
 ;; bitblee uses K&R with tabs and 120 columns
 (add-hook 'c-mode-hook
 	  (lambda ()
+	    (local-set-key (kbd "C-<tab>") 'command-complete)
+	    (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
 	    (setq c-basic-offset 8
 		  set-fill-column 120)))
 
