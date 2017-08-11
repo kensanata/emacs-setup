@@ -2,8 +2,7 @@
 
 (ivy-mode 1)
 
-(global-set-key (kbd "C-s") 'swiper);; instead of isearch
-(global-set-key (kbd "C-r") 'swiper);; instead of isearch-backward
+(global-set-key (kbd "C-o") 'swiper);; instead of open-line (mnemonic: "occur")
 
 (setq projectile-completion-system 'ivy)
 
