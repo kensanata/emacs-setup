@@ -19,24 +19,4 @@
            (with-current-buffer buf
              (not (eq major-mode 'dired-mode))))
 	 bs-sort-buffer-interns-are-last)
-	("gnus" "^\\*\\(Group\\|Summary\\|Article\\|Server\\|\\(un\\)?sent\\b\\)" nil "" nil nil)
-        ("rcirc" nil nil nil
-         (lambda (buf)
-           (with-current-buffer buf
-             (not (eq major-mode 'rcirc-mode))))
-	 rcirc-sort-buffers)))
-
-(defun rcirc-sort-name (buf)
-  "Return server process and buffer name of BUF as a string."
-  (when (boundp 'rcirc-server-buffer)
-    (with-current-buffer buf
-      (downcase (concat (if rcirc-server-buffer
-			    (buffer-name rcirc-server-buffer)
-			  " ")
-			" "
-			(or rcirc-target ""))))))
-
-(defun rcirc-sort-buffers (a b)
-  "Sort buffers A and B using `rcirc-sort-name'."
-  (string< (rcirc-sort-name a)
-	   (rcirc-sort-name b)))
+	("gnus" "^\\*\\(Group\\|Summary\\|Article\\|Server\\|\\(un\\)?sent\\b\\)" nil "" nil nil)))

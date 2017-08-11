@@ -15,12 +15,15 @@
 		    (bitlbee-start); needs time to start up
 		    (run-with-idle-timer 1 nil 'rcirc nil))))
 
-(defun test-bitlbee ()
+(global-set-key (kbd "C-c r") 'rcirc-menu)
+
+(setq bitlbee-executable "~/src/bitlbee/bitlbee")
+
+(defun bitlbee-debug ()
   (interactive)
-  (let ((rcirc-server-alist
-	 '(("localhost" :port 7000
-	    :channels ("&bitlbee")))))
-    (rcirc nil)))
+  (let ((bitlbee-executable "gdb --args ~/src/bitlbee/bitlbee"))
+    (bitlbee-start)
+    (switch-to-buffer "*bitlbee*")))
 
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
@@ -28,6 +31,10 @@
       rcirc-default-nick "kensanata"
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
+      rcirc-authinfo (with-temp-buffer
+		       (when (file-readable-p "~/.rcirc-authinfo")
+			 (insert-file-contents-literally "~/.rcirc-authinfo")
+			 (read (current-buffer))))
       rcirc-server-alist
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
       ;; sometimes we have to use 71.11.84.232
@@ -37,11 +44,18 @@
 		    "##emacs.de" "#emacswiki" "#perl" "#bussard"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
-	("irc.oftc.net" :port 6697 :encryption tls
+	;; WTF now same problem here? Can't use irc.oftc.net.
+	("81.18.73.124" :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
+	("irc.gitter.im" :port 6697 :encryption tls
+	 :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
+	 :channels ("#kensanata/elisp"
+		    "#kensanata/oddmuse"))
 	,(unless (eq (window-system) 'w32)
 	   '("megabombus.local"
 	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"
+			"#oddmuse"
+			"#bitlbee"
 			"#rpg-traveller"
 			"#rpg-osr"
 			"#rpg-game-design"
@@ -52,15 +66,8 @@
 			"#osr-general"))))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
-      rcirc-coding-system-alist
-      '(("#nihongo" undecided . iso-2022-jp))
       rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
-			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN")
-      rcirc-log-flag t
-      rcirc-authinfo (with-temp-buffer
-		       (when (file-readable-p "~/.rcirc-authinfo")
-			 (insert-file-contents-literally "~/.rcirc-authinfo")
-			 (read (current-buffer)))))
+			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"))
 
 ;; no more splitting of messages at 420 characters
 (eval-after-load 'rcirc
@@ -81,7 +88,11 @@
 		(setq candidates (cons color candidates))))))
 	candidates))
 
+(add-to-list 'load-path "~/src/elpa/packages/rcirc-color")
 (eval-after-load 'rcirc '(require 'rcirc-color))
+(add-to-list 'load-path "~/src/elpa/packages/rcirc-menu")
+(eval-after-load 'rcirc '(require 'rcirc-menu))
+
 (eval-after-load 'rcirc '(require 'rcirc-styles))
 (eval-after-load 'rcirc '(require 'rcirc-notify))
 
@@ -217,6 +228,19 @@
      (interactive "s")
      ;; (rcirc-send-string process (format "MODE %s -b %s!*@*" target input))
      (rcirc-send-privmsg process "chanserv" (format "AKICK %s DEL %s!*@*" target input))))
+
+;; rcirc /occur
+
+(eval-after-load 'rcirc
+  '(defun-rcirc-command occur (regexp)
+     "Run `multi-occur' for all buffers in `rcirc-mode'."
+     (interactive "sList lines matching regexp: ")
+     (multi-occur (let (result)
+		    (dolist (buf (buffer-list))
+		      (with-current-buffer buf
+			(when (eq major-mode 'rcirc-mode)
+			  (setq result (cons buf result)))))
+		    result) regexp)))
 
 ;; other
 
