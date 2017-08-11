@@ -11,6 +11,7 @@
 (winner-mode 1)
 (windmove-default-keybindings)
 (column-number-mode 1)
+(electric-pair-mode 1)
 
 ;; (auto-image-file-mode 1) -- corrupts SVG files containing UTF-8?
 
