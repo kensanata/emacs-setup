@@ -57,6 +57,8 @@
   "Returns non-nil if bitlbee is running"
   (if (get-buffer-process bitlbee-buffer-name) t nil))
 
+(setq ansi-color-for-comint-mode t)
+
 (defun bitlbee-start ()
   "Start the bitlbee server"
   (interactive)
@@ -64,7 +66,10 @@
     (make-directory (expand-file-name bitlbee-user-directory) t)
     (let ((proc (start-process-shell-command "bitlbee" bitlbee-buffer-name bitlbee-executable (bitlbee-command-line))))
       (set-process-sentinel proc 'bitlbee-sentinel-proc))
-      (message "started bitlbee")))
+    (with-current-buffer bitlbee-buffer-name
+      (comint-mode)
+      (setq comint-prompt-regexp "(gdb) "))
+    (message "started bitlbee")))
 
 (defun bitlbee-stop ()
   "Stop the bitlbee server"
