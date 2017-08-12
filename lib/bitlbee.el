@@ -59,6 +59,8 @@
 
 (setq ansi-color-for-comint-mode t)
 
+(autoload 'comint-mode "comint")
+
 (defun bitlbee-start ()
   "Start the bitlbee server"
   (interactive)
