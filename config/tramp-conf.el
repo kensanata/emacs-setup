@@ -21,7 +21,7 @@
 (defun sibirocobombus ()
   (interactive)
   "Connect to my favorite server using Tramp."
-  (find-file "/alex@alexschroeder.ch#882:"))
+  (find-file "/alex@192.71.233.105#882:"))
 
 (defun the-shire ()
   (interactive)

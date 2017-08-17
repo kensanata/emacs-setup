@@ -28,6 +28,7 @@
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
       rcirc-fill-column 79; side-by-side on my laptop
+      rcirc-max-message-length 0; live dangerously!
       rcirc-default-nick "kensanata"
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
@@ -67,7 +68,8 @@
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
       rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
-			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"))
+			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"
+			  "urlinfo"))
 
 ;; no more splitting of messages at 420 characters
 (eval-after-load 'rcirc
@@ -88,9 +90,7 @@
 		(setq candidates (cons color candidates))))))
 	candidates))
 
-(add-to-list 'load-path "~/src/elpa/packages/rcirc-color")
 (eval-after-load 'rcirc '(require 'rcirc-color))
-(add-to-list 'load-path "~/src/elpa/packages/rcirc-menu")
 (eval-after-load 'rcirc '(require 'rcirc-menu))
 
 (eval-after-load 'rcirc '(require 'rcirc-styles))
