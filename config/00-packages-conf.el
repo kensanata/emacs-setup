@@ -13,7 +13,6 @@
 
 (defun asc:package-install (pkg)
   "Install package.
-
 If we're getting an error saying that the package is unavailable,
 we'll refresh package content and try again. If we don't do this,
 then the system will never work on a fresh install because the
