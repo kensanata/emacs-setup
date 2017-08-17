@@ -6,7 +6,7 @@
   (local-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (setq c-basic-offset 8
-	set-fill-column 120))
+	fill-column 120))
 
 (eval-after-load "cc-vars"
   (lambda ()
