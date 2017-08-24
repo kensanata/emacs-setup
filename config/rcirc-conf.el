@@ -3,6 +3,7 @@
 (asc:package-install 'rcirc-color)
 (asc:package-install 'rcirc-styles)
 (asc:package-install 'rcirc-notify)
+(require 'rcirc-emojis)
 
 ;;; bitlbee
 (if (not (file-exists-p "/usr/local/sbin/bitlbee"))

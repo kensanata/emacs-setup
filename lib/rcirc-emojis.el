@@ -1,4 +1,4 @@
-;;; rcirc-smiley -- completions for emoji shortcuts like :smile:
+;;; rcirc-emojis -- completions for emoji shortcuts like :smile:
 
 ;; Copyright (C) 2017  Alex Schroeder <alex@gnu.org>
 ;; 
@@ -264,5 +264,5 @@ framework and can therefore be used as an element in
 	   '(rcirc-emoji-shortcut-completion-at-point)))
       (completion-at-point))))
 
-(provide 'rcirc-smileys)
-;;; rcirc-smileys.el ends here
+(provide 'rcirc-emojis)
+;;; rcirc-emojis.el ends here
