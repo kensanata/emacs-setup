@@ -14,7 +14,11 @@
 		  (lambda ()
 		    (interactive)
 		    (bitlbee-start); needs time to start up
-		    (run-with-idle-timer 1 nil 'rcirc nil))))
+		    (run-with-idle-timer
+		     1 nil
+		     (lambda ()
+		       (rcirc nil)
+		       (rcirc-menu))))))
 
 (global-set-key (kbd "C-c r") 'rcirc-menu)
 
