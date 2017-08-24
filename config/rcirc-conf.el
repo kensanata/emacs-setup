@@ -126,11 +126,7 @@
 
 (add-hook 'rcirc-mode-hook
 	  (lambda ()
-	    ;; rcirc-omit-mode always *toggles*, so we first 'disable' it
-	    ;; and then let the function toggle it *and* set things up.
-	    (setq rcirc-omit-mode nil)
-	    (rcirc-omit-mode)
-	    ;; tracking enabled
+	    (rcirc-omit-mode 1)
 	    (rcirc-track-minor-mode 1)
 	    (local-set-key (kbd "M-q") 'rcirc-unfill)))
 
