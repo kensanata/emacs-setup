@@ -1,5 +1,5 @@
 ;;; rcirc, write such as not to require rcirc at startup
-(autoload 'rcirc "rcirc" t)
+(autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
 (asc:package-install 'rcirc-color)
 (asc:package-install 'rcirc-styles)
 (asc:package-install 'rcirc-notify)
