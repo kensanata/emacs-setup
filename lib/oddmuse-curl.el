@@ -1064,9 +1064,10 @@ With universal argument, reload."
 You probably want to make sure that the buffer is in
 `oddmuse-rc-mode' and that `oddmuse-wiki' is set."
   (interactive)
-  (erase-buffer)
-  (oddmuse-run "Load recent changes" oddmuse-rc-command wiki)
-  (oddmuse-rc-buffer))
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (oddmuse-run "Load recent changes" oddmuse-rc-command oddmuse-wiki)
+    (oddmuse-rc-buffer)))
 
 (define-derived-mode oddmuse-rc-mode oddmuse-mode "RC"
   "Show Recent Changes for an Oddmuse wiki."
