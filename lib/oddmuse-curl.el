@@ -914,10 +914,11 @@ Use a prefix argument to override this."
 	       (get-buffer-create " *oddmuse-response*") t 302)
   (let ((revision (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
     (oddmuse-revision-put oddmuse-wiki oddmuse-page-name revision)
-    ;; update revision
-    (vc-file-setprop buffer-file-name 'vc-working-revision revision)
-    ;; update mode-line
-    (vc-mode-line buffer-file-name 'oddmuse)))
+    (when buffer-file-name
+      ;; update revision
+      (vc-file-setprop buffer-file-name 'vc-working-revision revision)
+      ;; update mode-line
+      (vc-mode-line buffer-file-name 'oddmuse))))
 
 ;;;###autoload
 (defun oddmuse-preview (&optional arg)
