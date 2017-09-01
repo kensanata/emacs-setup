@@ -6,5 +6,6 @@
 
 (setq projectile-completion-system 'ivy)
 
-(global-flycheck-mode 1)
-(global-set-key (kbd "C-c ,") #'avy-flycheck-goto-error)
+;; This takes makes editing LaTeX very slow
+;; (global-flycheck-mode 1)
+;; (global-set-key (kbd "C-c ,") #'avy-flycheck-goto-error)
