@@ -10,15 +10,20 @@
     (global-set-key (kbd "C-c e") 'rcirc);; Windows
   (autoload 'bitlbee-start "bitlbee" t)
   (setq bitlbee-executable "/usr/local/sbin/bitlbee")
-  (global-set-key (kbd "C-c e")
-		  (lambda ()
-		    (interactive)
-		    (bitlbee-start); needs time to start up
-		    (run-with-idle-timer
-		     1 nil
-		     (lambda ()
-		       (rcirc nil)
-		       (rcirc-menu))))))
+  (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
+
+(defun asc:rcirc-and-bitlbee-start ()
+  "Start both bitlbee and `rcirc'."
+  (interactive)
+  (if (bitlbee-start); needs time to start up
+      (run-with-idle-timer
+       1 nil
+       (lambda ()
+	 (rcirc nil)
+	 (rcirc-menu)))
+    ;; alternatively, just run it
+    (rcirc nil)
+    (rcirc-menu)))
 
 (global-set-key (kbd "C-c r") 'rcirc-menu)
 
