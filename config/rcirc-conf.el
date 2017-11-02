@@ -27,7 +27,7 @@
 
 (global-set-key (kbd "C-c r") 'rcirc-menu)
 
-(setq bitlbee-executable "~/src/bitlbee/bitlbee")
+;; (setq bitlbee-executable "~/src/bitlbee/bitlbee")
 
 (defun bitlbee-debug ()
   (interactive)
