@@ -1,8 +1,9 @@
 ;;; rcirc, write such as not to require rcirc at startup
-(autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
+;; (autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
 (asc:package-install 'rcirc-color)
 (asc:package-install 'rcirc-styles)
 (asc:package-install 'rcirc-notify)
+(asc:package-install 'rcirc-menu)
 (require 'rcirc-emojis)
 
 ;;; bitlbee
@@ -50,13 +51,15 @@
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
       ;; sometimes we have to use 71.11.84.232
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
-      `(("71.11.84.232" :port 7000 :encryption tls
+      `((,(if (eq (window-system) 'w32) "chat.freenode.net" "71.11.84.232")
+	 :port 7000 :encryption tls
 	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
 		    "##emacs.de" "#emacswiki" "#perl" "#bussard"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
 	;; WTF now same problem here? Can't use irc.oftc.net.
-	("81.18.73.124" :port 6697 :encryption tls
+	(,(if (eq (window-system) 'w32)"irc.oftc.net" "81.18.73.124")
+	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
 	("irc.gitter.im" :port 6697 :encryption tls
 	 :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
@@ -135,7 +138,9 @@
 
 (add-hook 'rcirc-mode-hook
 	  (lambda ()
-	    (rcirc-omit-mode 1)
+	    (if (help-function-arglist 'rcirc-omit-mode)
+		(rcirc-omit-mode 1)
+	      (rcirc-omit-mode))
 	    (rcirc-track-minor-mode 1)
 	    (local-set-key (kbd "M-q") 'rcirc-unfill)))
 
