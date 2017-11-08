@@ -1,6 +1,7 @@
 (when (require 'package nil t)
   (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			   ("melpa" . "https://melpa.org/packages/")))
+			   ("melpa" . "https://melpa.org/packages/")
+			   ("SC" . "http://joseito.republika.pl/sunrise-commander/")))
   (package-initialize))
 
 ;; We might have already added idle-highlight-mode to various hooks
