@@ -8,7 +8,7 @@
 
 ;;; bitlbee
 (if (not (file-exists-p "/usr/local/sbin/bitlbee"))
-    (global-set-key (kbd "C-c e") 'rcirc);; Windows
+    (global-set-key (kbd "C-c e") 'asc:rcirc-start);; Windows
   (autoload 'bitlbee-start "bitlbee" t)
   (setq bitlbee-executable "/usr/local/sbin/bitlbee")
   (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
@@ -19,14 +19,15 @@
   (if (bitlbee-start); needs time to start up
       (run-with-idle-timer
        1 nil
-       (lambda ()
-	 (rcirc nil)
-	 (rcirc-menu)))
+       'asc:rcirc-start)
     ;; alternatively, just run it
-    (rcirc nil)
-    (rcirc-menu)))
+    'asc:rcirc-start))
 
-(global-set-key (kbd "C-c r") 'rcirc-menu)
+(defun asc:rcirc-start ()
+  "Start `rcirc'."
+  (interactive)
+  (rcirc nil)
+  (rcirc-menu))
 
 ;; (setq bitlbee-executable "~/src/bitlbee/bitlbee")
 
