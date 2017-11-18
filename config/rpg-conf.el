@@ -1,7 +1,11 @@
-(require 'cl-macs)
+(condition-case err
+    (require 'cl-macs)
+  (error
+   (require 'cl)))
+
 (require 'widget)
 
-(defconst fünf-winde-regexp "^|\\[\\[\\(.*?\\)\\]\\][ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*[0-9]+[ \t]*\\)"
+(defconst rpg-regexp "^|\\(.*?\\)[ \t]*|[ \t]*\\(0\\|1\\|1/2\\|½\\|1/3\\|⅓\\)[ \t]*|\\([ \t]*[0-9]+[ \t]*\\)|\\([ \t]*-?[0-9]+[ \t]*\\)"
   "Regular expression to parse the Status page.
 \(let ((name (match-string 1))
       (share (match-string 2))
@@ -9,59 +13,59 @@
       (gold (match-string 4)))
       ...\)")
 
-(defvar fünf-winde-buf nil
+(defvar rpg-buf nil
   "Source buffer.")
 
-(defvar fünf-winde-xp nil
+(defvar rpg-xp nil
   "XP share.")
 
-(defvar fünf-winde-gold nil
+(defvar rpg-gold nil
   "Gold share.")
 
-(defvar fünf-winde-gold-zu-xp nil
+(defvar rpg-gold-zu-xp nil
   "Gold to XP share")
 
-(defvar fünf-winde-party nil
+(defvar rpg-party nil
   "Charakters in the party.")
 
-(defun fünf-winde-xp-and-gold ()
+(defun rpg-xp-and-gold ()
   "Hand out Gold and XP."
   (interactive)
   (let ((buf (current-buffer))
 	names shares)
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward fünf-winde-regexp nil t)
+      (while (re-search-forward rpg-regexp nil t)
 	(let ((name (match-string 1))
 	      (share (match-string 2)))
           (push name names)
           (push share shares))))
     (switch-to-buffer "*Fünf Winde*")
     (kill-all-local-variables)
-    (set (make-local-variable 'fünf-winde-buf) buf)
-    (make-local-variable 'fünf-winde-xp)
-    (make-local-variable 'fünf-winde-gold)
-    (make-local-variable 'fünf-winde-gold-zu-xp)
-    (make-local-variable 'fünf-winde-party)
+    (set (make-local-variable 'rpg-buf) buf)
+    (make-local-variable 'rpg-xp)
+    (make-local-variable 'rpg-gold)
+    (make-local-variable 'rpg-gold-zu-xp)
+    (make-local-variable 'rpg-party)
     (let ((inhibit-read-only t))
       (erase-buffer))
     (remove-overlays)
-    (setq fünf-winde-xp
+    (setq rpg-xp
 	  (widget-create 'integer
 			 :size 13
 			 :format "XP total:   %v\n"
 			 0))
-    (setq fünf-winde-gold-zu-xp
+    (setq rpg-gold-zu-xp
 	  (widget-create 'integer
 			 :size 13
 			 :format "Gold zu XP: %v\n"
 			 0))
-    (setq fünf-winde-gold
+    (setq rpg-gold
 	  (widget-create 'integer
 			 :size 13
 			 :format "Gold total: %v\n"
 			 0))
-    (setq fünf-winde-party 
+    (setq rpg-party 
           (mapcar*
            (lambda (name share)
              (let ((character (list name)))
@@ -87,12 +91,12 @@
     (widget-insert "\n")
     (widget-create 'push-button
 		   :notify (lambda (&rest ignore)
-			     (fünf-winde-process
-			      fünf-winde-buf
-			      (widget-value fünf-winde-xp)
-			      (widget-value fünf-winde-gold-zu-xp)
-			      (widget-value fünf-winde-gold)
-			      fünf-winde-party))
+			     (rpg-process
+			      rpg-buf
+			      (widget-value rpg-xp)
+			      (widget-value rpg-gold-zu-xp)
+			      (widget-value rpg-gold)
+			      rpg-party))
 		   "Go!")
     (widget-insert "\n")
     (use-local-map widget-keymap)
@@ -106,14 +110,14 @@
     (goto-char (point-min))
     (widget-forward 1)))
 
-(defun fünf-winde-xp-shares (party)
+(defun rpg-xp-shares (party)
   (let ((shares 0))
     (dolist (character party)
       (when (widget-value (nth 1 character))
         (setq shares (1+ shares))))
     shares))
 
-(defun fünf-winde-gold-shares (party)
+(defun rpg-gold-shares (party)
   (let ((shares 0))
     (dolist (character party)
       (when (widget-value (nth 1 character))
@@ -124,12 +128,12 @@
 			      (t 0))))))
     shares))
 
-(defun fünf-winde-process (buf total-xp gold-zu-xp total-gold party)
+(defun rpg-process (buf total-xp gold-zu-xp total-gold party)
   (switch-to-buffer buf)
   (save-excursion
-    (let ((xp-shares (fünf-winde-xp-shares party))
+    (let ((xp-shares (rpg-xp-shares party))
 	  (xp-per-person nil)
-	  (gold-shares (fünf-winde-gold-shares party))
+	  (gold-shares (rpg-gold-shares party))
 	  (gold-per-person nil)
 	  (gold-zu-xp-per-person nil))
       (when (zerop xp-shares)
@@ -142,7 +146,7 @@
 	    xp-per-person (/ total-xp xp-shares)
 	    gold-zu-xp-per-person (/ gold-zu-xp gold-shares))
       (goto-char (point-min))
-      (while (re-search-forward fünf-winde-regexp nil t)
+      (while (re-search-forward rpg-regexp nil t)
 	(let* ((name (match-string 1))
                ;; ignore share
 	       (xp (match-string 3))
@@ -169,7 +173,7 @@
 				   (* gold-zu-xp-per-person share)
 				   xp-per-person
 				   (widget-value (nth 5 character))))))
-	    (replace-match (concat "|[[" name "]]"
+	    (replace-match (concat "|" name
                                    (make-string (max 0 (- 20 (length name))) ? )
                                    "| " (cond ((widget-value (nth 2 character)) "1")
                                               ((widget-value (nth 3 character)) "½")
@@ -181,13 +185,8 @@
 (defun wilderlande-xp (xp)
   (interactive "nXP pro Person: ")
   (save-excursion
-    (while (re-search-forward "^|\\(.*?\\)[ \t]*|[ \t]*\\([0-9]+\\)[ \t]*|[ \t]*\\([0-9]+\\)[ \t]*|" nil t)
+    (while (re-search-forward "^\\* \\(.*?\\) -- \\([0-9]+\\)$" nil t)
       (let ((name (match-string 1))
-	    (level (string-to-number (match-string 2)))
-	    (num (string-to-number (match-string 3)))
-	    (start (match-beginning 0))
-	    (end (match-end 0)))
+	    (num (string-to-number (match-string 2))))
 	(when (y-or-n-p (format "War %s dabei?" name))
-	  (delete-region start end)
-	  (insert (format "|%s | %d| %d|" name level
-			  (+  num xp))))))))
+	  (replace-match (format "* %s -- %d" name (+  num xp))))))))

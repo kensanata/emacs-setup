@@ -6,6 +6,13 @@
 (when (file-directory-p "C:\\Program Files (x86)\\GNU\\GnuPG")
   (add-to-list 'exec-path "C:\\Program Files (x86)\\GNU\\GnuPG"))
 
+(when (file-directory-p "C:\\Program Files\\nodejs")
+  (add-to-list 'exec-path "C:\\Program Files\\nodejs"))
+
+(when (file-directory-p "C:\\Users\\asc\\AppData\\Roaming\\bin")
+  (add-to-list 'exec-path "C:\\Users\\asc\\AppData\\Roaming\\bin"))
+;; (executable-find "lein")
+
 (global-set-key (kbd "C-z") 'eshell-here)
 
 (defun eshell-here (&optional arg)
@@ -34,7 +41,8 @@
 	    (local-set-key (kbd "C-a") 'eshell-bol)
 	    (local-set-key (kbd "C-w") 'asc:kill-region)
 	    (local-set-key (kbd "<up>") 'previous-line)
-	    (local-set-key (kbd "<down>") 'next-line)))
+	    (local-set-key (kbd "<down>") 'next-line)
+	    (idle-highlight-mode 1)))
 
 (defalias 'eshell/emacs 'find-file)
 (defalias 'eshell/less 'find-file)

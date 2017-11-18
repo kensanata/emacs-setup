@@ -300,7 +300,7 @@ Example:
 (defun oddmuse-url (wiki pagename)
   "Get the URL of oddmuse wiki."
   (condition-case v
-      (concat (or (cadr (assoc wiki oddmuse-wikis)) (error)) "/"
+      (concat (or (cadr (assoc wiki oddmuse-wikis)) (error "Wiki not found in `oddmuse-wikis'")) "/"
 	      (url-hexify-string pagename))
     (error nil)))
 
@@ -356,7 +356,7 @@ default:
                      nil require nil
                      'oddmuse-wiki-history default)))
 
-(defun oddmuse-pagename (&optional arg)
+(defun oddmuse-pagename ()
   "Return the wiki and pagename the user wants to edit or follow.
 This cannot be the current pagename!  If given the optional
 argument ARG, read it from the minibuffer.  Otherwise, try to get
@@ -367,7 +367,8 @@ too. The pagename returned does not necessarily exist!
 Use this function when following links in regular wiki buffers,
 in Recent Changes, History Buffers, and also in text files and
 the like."
-  (let* ((wiki (or (and (not arg) oddmuse-wiki)
+  (let* ((arg current-prefix-arg)
+	 (wiki (or (and (not arg) oddmuse-wiki)
                    (oddmuse-read-wiki)))
 	 (pagename (or (and arg (oddmuse-read-pagename wiki))
 		       (oddmuse-pagename-at-point)
@@ -382,10 +383,13 @@ the like."
 
 (defun oddmuse-current-free-link-contents ()
   "The page name in a free link at point.
-This returns \"foo\" for [[foo]] and [[foo|bar]]."
+This returns \"foo\" for the following:
+- [[foo]]
+- [[foo|bar]]
+- [[image:foo]]"
   (save-excursion
     (let* ((pos (point))
-           (start (when (search-backward "[[" nil t)
+           (start (when (re-search-backward "\\[\\[\\(image:\\)?" nil t)
 		    (match-end 0)))
            (end (when (search-forward "]]" (line-end-position) t)
 		  (match-beginning 0))))
@@ -534,7 +538,7 @@ as well."
 	    ((string-match "<title>Error</title>" status)
 	     (if (string-match "<h1>\\(.*\\)</h1>" status)
 		 (error "Error %s: %s" mesg (match-string 1 status))
-	       (error "Error %s: Cause unknown")))
+	       (error "Error %s: Cause unknown" status)))
 	    (t
 	     (message "%s...done" mesg))))))
 
@@ -736,7 +740,7 @@ Font-locking is controlled by `oddmuse-markup-functions'.
   (set (make-local-variable 'sgml-tag-alist)
        `(("b") ("code") ("em") ("i") ("strong") ("nowiki")
 	 ("pre" \n) ("tt") ("u")))
-  (set (make-local-variable 'skeleton-transformation) 'identity)
+  (set (make-local-variable 'skeleton-transformation-function) 'identity)
 
   (make-local-variable 'oddmuse-wiki)
   (make-local-variable 'oddmuse-page-name)
@@ -793,6 +797,7 @@ both the character before and after point have it, don't break."
 (define-key oddmuse-mode-map (kbd "C-c C-r") 'oddmuse-rc)
 (define-key oddmuse-mode-map (kbd "C-c C-s") 'oddmuse-search)
 (define-key oddmuse-mode-map (kbd "C-c C-t") 'sgml-tag)
+(define-key oddmuse-mode-map (kbd "C-c <") 'eimp-decrease-image-size)
 
 ;; This has been stolen from simple-wiki-edit
 ;;;###autoload
@@ -829,8 +834,9 @@ Requires all the variables to be bound for
   (with-temp-buffer
     (oddmuse-run "Determining latest revision" oddmuse-get-history-command wiki pagename)
     (if (re-search-forward "^revision: \\([0-9]+\\)$" nil t)
-	(prog1 (match-string 1)
-	  (message "Determining latest revision...done"))
+	(let ((revision (match-string 1)))
+	  (message "Latest revision is %s" revision)
+	  revision)
       (message "This is a new page")
       "new")))
 
@@ -862,10 +868,7 @@ people have been editing the wiki in the mean time."
       ;; check for a diff (this ends with display-buffer) and bury the
       ;; buffer if there are no hunks
       (when (file-exists-p buffer-file-name)
-        (diff-buffer-with-file)
-        (with-current-buffer (get-buffer "*Diff*")
-          (unless (next-property-change (point-min))
-            (kill-buffer))))
+	(message "Page loaded from the wiki but a local file also exists"))
       ;; this also changes the buffer name
       (basic-save-buffer)
       ;; this makes sure that the buffer name is set correctly
@@ -909,8 +912,13 @@ Use a prefix argument to override this."
   (and buffer-file-name (basic-save-buffer))
   (oddmuse-run "Posting" oddmuse-post-command nil nil
 	       (get-buffer-create " *oddmuse-response*") t 302)
-  (oddmuse-revision-put oddmuse-wiki oddmuse-page-name
-    (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
+  (let ((revision (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
+    (oddmuse-revision-put oddmuse-wiki oddmuse-page-name revision)
+    (when buffer-file-name
+      ;; update revision
+      (vc-file-setprop buffer-file-name 'vc-working-revision revision)
+      ;; update mode-line
+      (vc-mode-line buffer-file-name 'oddmuse))))
 
 ;;;###autoload
 (defun oddmuse-preview (&optional arg)
@@ -1011,13 +1019,12 @@ With universal argument, reload."
   (interactive "P")
   (let* ((wiki (or (and (not current-prefix-arg) oddmuse-wiki)
                    (oddmuse-read-wiki)))
-	 (name (concat "*" wiki ": recent changes*")))
+	 (name (concat "*" wiki ": Recent Changes*")))
     (if (and (get-buffer name) (not current-prefix-arg))
         (pop-to-buffer (get-buffer name))
       (set-buffer (get-buffer-create name))
-      (erase-buffer)
-      (oddmuse-run "Load recent changes" oddmuse-rc-command wiki)
-      (oddmuse-rc-buffer)
+      (oddmuse-rc-reload)
+      (oddmuse-rc-mode)
       ;; set local variable after `oddmuse-mode' killed them
       (set (make-local-variable 'oddmuse-wiki) wiki))))
 
@@ -1050,9 +1057,30 @@ With universal argument, reload."
 	    (insert fill-prefix description)
 	    (fill-paragraph))
 	  (newline))))
-    (goto-char (point-min))
-    (oddmuse-mode)))
+    (goto-char (point-min))))
 
+(defun oddmuse-rc-reload ()
+  "Reload Recent Changes for an Oddmuse wiki.
+You probably want to make sure that the buffer is in
+`oddmuse-rc-mode' and that `oddmuse-wiki' is set."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (oddmuse-run "Load recent changes" oddmuse-rc-command oddmuse-wiki)
+    (oddmuse-rc-buffer)))
+
+(define-derived-mode oddmuse-rc-mode oddmuse-mode "RC"
+  "Show Recent Changes for an Oddmuse wiki."
+  (setq buffer-read-only t))
+
+(define-key oddmuse-rc-mode-map (kbd "g") 'oddmuse-rc-reload)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-e") 'oddmuse-edit)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-f") 'oddmuse-follow)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-l") 'oddmuse-match)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-n") 'oddmuse-new)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-r") 'oddmuse-rc)
+(define-key oddmuse-rc-mode-map (kbd "C-c C-s") 'oddmuse-search)
+ 
 (defun oddmuse-history (wiki pagename)
   "Show the history for PAGENAME on WIKI.
 Compared to `vc-oddmuse-print-log' this only prints the revisions

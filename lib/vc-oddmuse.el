@@ -47,7 +47,8 @@ For a list of possible values, see `vc-state'."
 
 (defun vc-oddmuse-working-revision (file)
   "The current revision based on `oddmuse-revisions'."
-  (oddmuse-revision-get oddmuse-wiki oddmuse-page-name))
+  (with-oddmuse-file file
+    (oddmuse-revision-get wiki pagename)))
 
 (defun vc-oddmuse-checkout-model (files)
   "No locking."
@@ -117,7 +118,7 @@ This uses `oddmuse-directory', `wiki' and `pagename' as bound by
 	  "/" pagename
 	  ".~" rev "~"))
 
-(defun vc-oddmuse-diff (files &optional rev1 rev2 buffer)
+(defun vc-oddmuse-diff (files &optional rev1 rev2 buffer async)
   "Report the differences for FILES."
   (setq buffer (or buffer (get-buffer-create "*vc-diff*")))
   (dolist (file files)
@@ -136,8 +137,8 @@ This uses `oddmuse-directory', `wiki' and `pagename' as bound by
       (diff-no-select
        (if rev1 (oddmuse-revision-filename rev1) file)
        (if rev2 (oddmuse-revision-filename rev2) file)
-       nil
        (vc-switches 'oddmuse 'diff)
+       async
        buffer))))
 
 (defun vc-oddmuse-revert (file &optional contents-done)

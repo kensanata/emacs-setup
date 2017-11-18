@@ -44,7 +44,7 @@
 (defvar bitlbee-user-directory "~/.bitlbee"
   "The directory where user configuration goes")
 
-(defvar bitlbee-options "-n -D -v "
+(defvar bitlbee-options "-n -F -v "
   "The options passed to Bitlbee on the command line.")
 
 (defvar bitlbee-executable "bitlbee"
@@ -57,17 +57,27 @@
   "Returns non-nil if bitlbee is running"
   (if (get-buffer-process bitlbee-buffer-name) t nil))
 
+(setq ansi-color-for-comint-mode t)
+
+(autoload 'comint-mode "comint" t)
+
 (defun bitlbee-start ()
-  "Start the bitlbee server"
+  "Start the bitlbee server.
+This returns nil if bitlbee is already running."
   (interactive)
-  (if (bitlbee-running-p) (message "bitlbee is already running")
+  (if (bitlbee-running-p)
+      (prog1 nil
+	(message "Bitlbee is already running"))
     (make-directory (expand-file-name bitlbee-user-directory) t)
     (let ((proc (start-process-shell-command "bitlbee" bitlbee-buffer-name bitlbee-executable (bitlbee-command-line))))
       (set-process-sentinel proc 'bitlbee-sentinel-proc))
-      (message "started bitlbee")))
+    (with-current-buffer bitlbee-buffer-name
+      (comint-mode)
+      (setq comint-prompt-regexp "(gdb) "))
+    (message "Bitlbee started")))
 
 (defun bitlbee-stop ()
-  "Stop the bitlbee server"
+  "Stop the Bitlbee server"
   (interactive)
   (let ((proc (get-buffer-process bitlbee-buffer-name)))
     (when proc (kill-process proc t))))

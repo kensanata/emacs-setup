@@ -1,10 +1,11 @@
+(setenv "LANG" "de_CH.UTF-8")
+
 (when (eq (window-system) 'w32)
   
   (add-to-list 'dynamic-library-alist '(png "libpng15-15.dll"))
   (add-to-list 'exec-path "C:/cygwin64/bin")
   (add-to-list 'exec-path "C:/Program Files (x86)/Growl for Windows")
   (setenv "RSH" "SSH")
-  (setenv "LANG" "de_CH.UTF8")
   (setenv "CYGWIN" "nodosfilewarning")
   (prefer-coding-system 'utf-8)
   (setq default-file-name-coding-system 'cp1252)

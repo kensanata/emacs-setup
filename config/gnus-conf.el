@@ -2,27 +2,49 @@
 ;; Emoji characters
 (add-to-list 'auto-coding-alist '("/#[^/]+#\\'" . utf-8))
 
-;; (add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
-;; (add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"));; beware the bleeding edge
-;; (require 'gnus-load)
-
-(setq gnus-select-method
-      '(nnimap "raspberrypi"
-	       (nnimap-address "mail.alexschroeder.ch")
-	       (nnimap-server-port 993)
-	       (nnimap-stream ssl))
-      nntp-authinfo-file "~/.authinfo.gpg"
-      gnus-agent nil;; that seems to confuse nnimap
-      gnus-summary-line-format
+;; Summary buffer format
+(setq gnus-summary-line-format
       "%U%R%z %&user-date; %I%(%[%4L: %-15,15n%]%) %s\n"
       gnus-thread-indent-level 1
-      gnus-user-date-format-alist '((t . " %Y-%m-%d"))
-      ;; Unnecessary when using Gmail
-      ;; gnus-message-archive-group "nnml+mail:mail.misc"
+      gnus-user-date-format-alist '((t . " %Y-%m-%d")))
+
+;; Completion of email adresses
+(setq message-mail-alias-type 'ecomplete)
+
+;; (add-hook 'message-mode-hook 'longlines-mode)
+
+;; The following is based on my Gmail Gnus GPG Guide (GGGG):
+;; https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg
+
+(setq ;; You need to replace this email address with your own!
+      user-mail-address "kensanata@gmail.com"
+      ;; You need to replace this key ID with your own key ID!
+      mml2015-signers '("ACECFEAE")
+      ;; This tells Gnus to get email from Gmail via IMAP.
+      gnus-select-method
+      '(nnimap "gmail"
+               ;; It could also be imap.googlemail.com if that's your server.
+               (nnimap-address "imap.gmail.com")
+               (nnimap-server-port 993)
+               (nnimap-stream ssl))
+      ;; This tells Gnus to use the Gmail SMTP server. This
+      ;; automatically leaves a copy in the Gmail Sent folder.
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      ;; Tell message mode to use SMTP.
+      message-send-mail-function 'smtpmail-send-it
+      ;; This is where we store the password.
+      nntp-authinfo-file "~/.authinfo.gpg"
+      ;; Gmail system labels have the prefix [Gmail], which matches
+      ;; the default value of gnus-ignored-newsgroups. That's why we
+      ;; redefine it.
+      gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
+      ;; The agent seems to confuse nnimap, therefore we'll disable it.
+      gnus-agent nil
+      ;; We don't want local, unencrypted copies of emails we write.
       gnus-message-archive-group nil
-      gnus-gcc-mark-as-read t
-      mml2015-encrypt-to-self t
-      mml2015-signers '("4529A45C"))
+      ;; We want to be able to read the emails we wrote.
+      mml-secure-openpgp-encrypt-to-self t)
 
 ;; Attempt to encrypt all the mails we'll be sending.
 (add-hook 'message-setup-hook 'mml-secure-message-encrypt)
@@ -32,6 +54,7 @@
 
 (defun my-gnus-summary-keys ()
   (local-set-key "y" 'gmail-archive)
+  (local-set-key "d" 'gmail-trash)
   (local-set-key "$" 'gmail-report-spam))
 
 (defun gmail-archive ()
@@ -46,75 +69,8 @@ This moves them into the Spam folder."
   (interactive)
   (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam"))
 
-;; ManageSieve says 2000 is deprecated
-;; uploading the sieve doesn't work with STARTTLS?
-;; (setq sieve-manage-default-port 4190)
-
-(setq gnus-spotlight-mail-spool "/Volumes/Extern/Archives/Mail")
-
-;; If search finds nothing, perhaps you didn't have /Volumnes/Extern
-;; mounted when you started Gnus and now your table is borked. Call
-;; M-x gnus-spotlight/make-directory-table to fix it.
-
-(eval-after-load "gnus"
-  '(progn
-     (require 'gnus-spotlight)
-     (gnus-spotlight-insinuate)))
-
-(defun read-until-not-in-mail-misc ()
-  "Start reading messages in a Gnus Summary buffer
-until the article is not available in nnml+mail:mail.misc.
-You could call this from nnimap+imap.gmail.com:[Gmail]/All Mail, for example."
+(defun gmail-trash ()
+  "Delete the current or marked mails.
+This moves them into the Trash folder."
   (interactive)
-  (find-in-mail-misc); error if not found
-  (while (and (forward-line) (not (looking-at "$")))
-    (find-in-mail-misc)))
-
-(defun find-in-mail-misc ()
-  "Figure out if this mail is also available in nnml+mail:mail.misc.
-Call from a Gnus Summary buffer."
-  (interactive)
-  (let (id number)
-    (gnus-summary-select-article)
-    (gnus-summary-toggle-header 1)
-    (gnus-with-article-headers
-      (message-narrow-to-head)
-      (goto-char (point-min))
-      (if (re-search-forward "^Message-ID: *\\(.*\\)" nil t)
-	  (setq id (match-string 1))
-	(error "Unable to find Message-ID header")))
-    (gnus-summary-toggle-header -1)
-    (with-current-buffer (get-buffer-create " *nnml id*")
-      (setq number (nnml-find-id "mail.misc" id "nnml+mail")))
-    (if number
-	(message "Found %d" number)
-      (case (read-char "Not found in mail.misc: (e)xpire, (m)ove there, (i)gnore or (q)uit? ")
-	((?e) (gnus-summary-mark-as-expirable 1)
-	 ;; avoid skipping a line...
-	 (forward-line -1))
-	((?i) (message "Ignoring..."))
-	((?m) (gnus-summary-move-article 1 "nnml+mail:mail.misc"))
-	((?q) (error "Quit"))))))
-
-;;; Mail writing, sending, SMTP
-(setq mail-user-agent 'gnus-user-agent
-      message-mail-alias-type 'ecomplete
-      ;; obsolete -- using `gnus-message-archive-group' instead
-      ;; gnus-outgoing-message-group "nnimap+imap.gmail.com:[Gmail]/Sent Mail"
-      send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'smtpmail-send-it
-      ;; user-mail-address "alex@gnu.org"
-      user-mail-address "kensanata@gmail.com"
-      ;; smtpmail-default-smtp-server "fencepost.gnu.org"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      ;; smtpmail-smtp-server "smtp.gmail.com"
-      ;; smtpmail-smtp-server "fencepost.gnu.org"
-      ;; requires an entry in ~/.authinfo.gpg
-      ;; machine fencepost.gnu.org login alex password "*secret*" port 25
-      ;; using smtpmail-smtp-server "alexschroeder.ch"
-      ;; results in 550 relay not permitted
-      smtpmail-starttls-credentials 'starttls
-      gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
-
-;; (add-hook 'message-mode-hook 'longlines-mode)
+  (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Trash"))

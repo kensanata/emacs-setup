@@ -1,6 +1,7 @@
 ;;; Oddmuse
 
-(require 'oddmuse-curl nil t)
+(when (require 'shr nil t)
+  (require 'oddmuse-curl nil t))
 
 (setq oddmuse-username "AlexSchroeder")
 (add-to-list 'auto-mode-alist '("/Users/alex/.emacs.d/oddmuse" . oddmuse-mode))
@@ -28,29 +29,21 @@
 	 utf-8 "uihnscuskc" nil)
 	("Campaign Wiki" "https://campaignwiki.org/wiki"
 	 utf-8 "frodo" "Alex")
-	("DarkDungeonsSRD" "https://campaignwiki.org/wiki/DarkDungeonsSRD"
-	 utf-8 "frodo" "Alex")
-	("DungeonMaps" "https://campaignwiki.org/wiki/DungeonMaps"
-	 utf-8 "frodo" "Alex")
 	("Gridmapper" "https://campaignwiki.org/wiki/Gridmapper"
 	 utf-8 "frodo" "Alex")
 	("Greyheim" "https://campaignwiki.org/wiki/Greyheim"
 	 utf-8 "frodo" "Alex")
-	("Montag in Zürich" "https://campaignwiki.org/wiki/MontagInZ%C3%BCrich"
+	("Rasiermesserküste" "https://campaignwiki.org/wiki/Rasiermesserk%c3%bcste"
+	 utf-8 "frodo" "Alex")
+	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds%C2%A0and%C2%A0Helmets"
 	 utf-8 "frodo" "Alex")
 	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
 	 utf-8 "frodo" "Alex")
 	("Monsters" "https://campaignwiki.org/wiki/Monsters"
 	 utf-8 "frodo" "Alex")
-	("BeremAndBeyond" "https://campaignwiki.org/wiki/BeremAndBeyond"
-	 utf-8 "frodo" "Alex")
 	("Links to Wisdom" "https://campaignwiki.org/wiki/LinksToWisdom"
 	 utf-8 "frodo" "Alex")
-	("Karameikos" "https://campaignwiki.org/wiki/Karameikos"
-	 utf-8 "frodo" "Alex")
 	("Wilderlande" "https://campaignwiki.org/wiki/Wilderlande"
-	 utf-8 "frodo" "Alex")
-	("Rollenspiele" "https://campaignwiki.org/wiki/Rollenspiele"
 	 utf-8 "frodo" "Alex")
 	("Community Wiki" "http://www.communitywiki.org/cw"
 	 utf-8 "question" nil)
@@ -170,3 +163,165 @@ cells by rows first."
 		  " " cell-separator "\n"))
 	(setq row (1+ row)))))
   (delete-region start end))
+
+(defun oddmuse-to-latex (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (while (re-search-forward "\\([0-9]+\\) ?\\(ft\\.?\\|gold\\|[sgp]p\\)\\b" nil t)
+	(let ((num (match-string 1))
+	      (unit (match-string 2)))
+	  (when (string= unit "gold")
+	    (setq unit "gp"))
+	  (replace-match (concat "\\\\SI{" num "}{" unit "}"))))
+      (goto-char (point-min))
+      (while (re-search-forward "\n\n\\(HD.*\\)" nil t)
+	(let ((str (concat "\n\n\\begin{quote}\n"
+			   (match-string 1)
+			   "\n\\end{quote}")))
+	  (replace-match "")
+	  (insert str)))
+      (goto-char (point-min))
+      (while (re-search-forward "\\*\\*\\(.+\\)\\*\\*" nil t)
+	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "\\*\\(.+?\\)\\*" nil t)
+	(replace-match (concat "\\\\textbf{" (match-string 1) "}")))
+      (goto-char (point-min))
+      (while (re-search-forward "\\([0-9]\\)\\(st\\|nd\\|rd\\|th\\)" nil t)
+	(replace-match (concat (match-string 1) "\\\\" (match-string 2))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\[\\(https?://\\S-+\\) \\(.+?\\)\\]" nil t)
+	(replace-match (concat "\\\\href{" (match-string 1)
+			       "}{" (match-string 2) "}")))
+      ;; italic must come after URLs
+      (goto-char (point-min))
+      (while (re-search-forward "\\/\\(.+?\\)\\/" nil t)
+	;; avoid URLs like protocol://foo
+	(unless (eq (char-before (match-beginning 0)) ?:)
+	  (replace-match (concat "\\\\emph{" (match-string 1) "}"))))
+      (goto-char (point-min))
+      (while (re-search-forward "//\\(.+?\\)//" nil t)
+	;; avoid URLs like protocol://foo
+	(unless (eq (char-before (match-beginning 0)) ?:)
+	  (replace-match (concat "\\\\emph{" (match-string 1) "}"))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\(\\s-\\)/\\(.+?\\)/" nil t)
+	(replace-match (concat (match-string 1) "\\\\emph{" (match-string 2) "}")))
+      (goto-char (point-min))
+      ;; hyperref must also come after emph
+      (while (re-search-forward "\\[\\[\\(.+?\\)|\\(.+?\\)\\]\\]" nil t)
+	(replace-match (format "\\\\hyperref[sec:%s]{%s}"
+			       (downcase (match-string 1))
+			       (match-string 2))))
+      (goto-char (point-min))
+      (while (re-search-forward "%" nil t)
+	(replace-match "\\\\%"))
+      (goto-char (point-min))
+      (while (re-search-forward "^\\# " nil t)
+	(save-restriction
+	  (narrow-to-region (match-beginning 0)
+			    (progn
+			      (re-search-forward "\n\\s-*\n[^#]\\|\\'")
+			      (match-beginning 0)))
+	  (goto-char (point-max))
+	  (insert "\n\\end{enumerate}")
+	  (goto-char (point-min))
+	  (insert "\\begin{enumerate}\n")
+	  (while (re-search-forward "^\\# " nil t)
+	    (replace-match (concat "  \\\\item ")))))
+      ;; tables
+      (goto-char (point-min))
+      (while (re-search-forward "^|= \\(.*\\) |" nil t)
+	(let ((str (match-string 1)))
+	  (replace-match "")
+	  (save-excursion
+	    (save-match-data
+	      (let ((list (split-string str " |= " t)))
+		(insert "\\begin{table}\n"
+			"\\begin{tabular}{c"
+			(make-string (1- (length list)) ?l) "}\n"
+			(mapconcat 'identity list " & ") " \\\\")))))
+	(while (re-search-forward "^|\\(.*\\)" nil t)
+	  (let ((str (match-string 1)))
+	    (replace-match "")
+	    (save-excursion
+	      (save-match-data
+		(let ((list (split-string str " *| *" t)))
+		  (insert (mapconcat 'identity list " & ") " \\\\"))))))
+	(end-of-line)
+	(newline)
+	(insert "\\end{tabular}\n"
+		"\\end{table}\n")))))
+
+
+(defun latex-to-oddmuse (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (while (re-search-forward "^\\\\[a-z]+{" nil t)
+	(forward-char -1)
+	(latex-forward-sexp 1)
+	(when (= (char-after) ?\n)
+	  (delete-region (match-beginning 0) (1+ (point)))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\([^\\\\]\\)%.*\n" nil t)
+	(replace-match (match-string 1)))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\([a-z]+\\){\\([^[}]+\\)}{\\([^[}]+\\)}" nil t)
+	(cond ((string= (match-string 1) "SI")
+	       (replace-match (concat (match-string 2) (match-string 3))))
+	      ((or (string= (match-string 1) "href")
+		   (string= (match-string 1) "hiref"))
+	       (replace-match (concat "[" (match-string 2) " " (match-string 3) "]") t t))
+	      (t (goto-char (match-end 1)))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\([a-z]+\\)\\[\\([^[}]+\\)\\]{\\([^[}]+\\)}" nil t)
+	(cond ((string= (match-string 1) "hyperref")
+	       (let ((orig (match-string 3))
+		     (s (capitalize (match-string 3))))
+		 (save-match-data
+		   (cond ((string-match "^giant \\(.*?\\)s?$" s)
+			  (setq s (format "%s, Giant" (match-string 1 s))))
+			 ((string-match "\\(.*?\\)s?$" s)
+			  (setq s (format "%s" (match-string 1 s))))))
+		 (if (string= s orig)
+		     (replace-match (format "[[%s]]" s))
+		   (replace-match (format "[[%s|%s]]" s orig)))))))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\marginnote" nil t)
+	(replace-match " ")
+	(save-excursion
+	  (latex-forward-sexp 1)
+	  (delete-char -1))
+	(delete-char 1))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\([a-z]+\\){\\([^[}]+\\)}" nil t)
+	(cond ((string= (match-string 1) "section")
+	       (replace-match (concat "== " (match-string 2))))
+	      ((string= (match-string 1) "key")
+	       (replace-match (concat "*" (match-string 2) "*")))
+	      ((string= (match-string 1) "textbf")
+	       (replace-match (concat "*" (match-string 2) "*")))
+	      ((string= (match-string 1) "emph")
+	       (replace-match (concat "/" (match-string 2) "/")))
+	      ((member (match-string 1) '("label" "index" "forests" "begin" "end"
+					  "includegraphics" "averagevalue"))
+	       (replace-match ""))))
+      (goto-char (point-min))
+      (while (search-forward "\\%" nil t)
+	(replace-match "%"))
+      (goto-char (point-min))
+      (while (re-search-forward "\\\\\\(st\\|nd\\|rd\\|th\\)\\b" nil t)
+	(replace-match (match-string 1)))
+      (goto-char (point-min))
+      (while (search-forward "~" nil t)
+	(replace-match " "))
+      (goto-char (point-min))
+      (while (re-search-forward "``\\([^']*\\)''" nil t)
+	(replace-match (format "\"%s\"" (match-string 1)))))))
+  
