@@ -55,7 +55,7 @@
       `((,(if (eq (window-system) 'w32) "chat.freenode.net" "71.11.84.232")
 	 :port 7000 :encryption tls
 	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
-		    "##emacs.de" "#emacswiki" "#perl" "#bussard"
+		    "##emacs.de" "#emacswiki" "#perl" "#bussard" "#mastodon"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
 	;; WTF now same problem here? Can't use irc.oftc.net.
