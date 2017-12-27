@@ -7,11 +7,14 @@
 (require 'rcirc-emojis)
 
 ;;; bitlbee
-(if (not (file-exists-p "/usr/local/sbin/bitlbee"))
-    (global-set-key (kbd "C-c e") 'asc:rcirc-start);; Windows
-  (autoload 'bitlbee-start "bitlbee" t)
-  (setq bitlbee-executable "/usr/local/sbin/bitlbee")
-  (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
+(cond ((file-exists-p "/usr/sbin/bitlbee");; PureOS
+       (global-set-key (kbd "C-c e") 'asc:rcirc-start))
+      ((file-exists-p "/usr/local/sbin/bitlbee");; Mac
+       (autoload 'bitlbee-start "bitlbee" t)
+       (setq bitlbee-executable "/usr/local/sbin/bitlbee")
+       (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
+      (t;; Windows
+       (global-set-key (kbd "C-c e") 'asc:rcirc-start)))
 
 (defun asc:rcirc-and-bitlbee-start ()
   "Start both bitlbee and `rcirc'."
@@ -52,14 +55,23 @@
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
       ;; sometimes we have to use 71.11.84.232
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
-      `((,(if (eq (window-system) 'w32) "chat.freenode.net" "71.11.84.232")
+      `(("chat.freenode.net"
 	 :port 7000 :encryption tls
-	 :channels ("#emacs" "#emacs-ops" "#rcirc" "#wiki" "#oddmuse"
-		    "##emacs.de" "#emacswiki" "#perl" "#bussard" "#mastodon"
+	 :channels ("#emacs"
+		    "#emacs-ops"
+		    "#rcirc"
+		    "#wiki"
+		    "#oddmuse"
+		    "##emacs.de"
+		    "#emacswiki"
+		    "#perl"
+		    "#bussard"
+		    "#mastodon"
+		    "#purism"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
 	;; WTF now same problem here? Can't use irc.oftc.net.
-	(,(if (eq (window-system) 'w32)"irc.oftc.net" "81.18.73.124")
+	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
 	("irc.gitter.im" :port 6697 :encryption tls
@@ -67,7 +79,7 @@
 	 :channels ("#kensanata/elisp"
 		    "#kensanata/oddmuse"))
 	,(unless (eq (window-system) 'w32)
-	   '("megabombus.local"
+	   '("localhost"
 	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"
 			"#oddmuse"
 			"#bitlbee"
