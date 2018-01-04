@@ -5,8 +5,8 @@
 
 (asc:package-install 'emms)
 
-(dolist (dir '("C:/Program Files/mp3info-0.8.5-win"
-	       "C:/Program Files (x86)/mpg123-1.22.0-x86-64"))
+(dolist (dir '("C:/Portable Programs/mp3info-0.8.5-win"
+	       "C:/Portable Programs/mpg123-1.22.0-x86-64"))
   (when (file-directory-p dir)
     (add-to-list 'exec-path dir)))
 
