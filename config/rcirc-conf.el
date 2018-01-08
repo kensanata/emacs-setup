@@ -74,10 +74,10 @@
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
-	("irc.gitter.im" :port 6697 :encryption tls
-	 :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
-	 :channels ("#kensanata/elisp"
-		    "#kensanata/oddmuse"))
+	;; ("irc.gitter.im" :port 6697 :encryption tls
+	;;  :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
+	;;  :channels ("#kensanata/elisp"
+	;; 	    "#kensanata/oddmuse"))
 	,(unless (eq (window-system) 'w32)
 	   '("localhost"
 	     :channels ("&bitlbee" "&roleplaying" "&emacs" "&bsi"
