@@ -1,6 +1,8 @@
 ;; Emacs, Cygwin, whatever... Magit learns to live with Cygwin names.
 ;; https://github.com/magit/magit/issues/1318
 
+(asc:package-install 'magit)
+
 (defadvice magit-expand-git-file-name
     (before magit-expand-git-file-name-cygwin activate)
   "Handle Cygwin directory names such as /cygdrive/c/*
