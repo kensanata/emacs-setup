@@ -3,6 +3,9 @@
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 
+;; skip first entry of TOC (which is going to be the document title)
+(setq markdown-toc-user-toc-structure-manipulation-fn 'cdr)
+
 ;; The Markdown files I write using IA Writer use newlines to separate
 ;; paragraphs. That's why I need Visual Line Mode. I also need to
 ;; disable M-q. If I fill paragraphs, that introduces unwanted
