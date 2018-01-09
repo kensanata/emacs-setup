@@ -25,7 +25,7 @@
   "Yadda yadda." t)
 
 (setq oddmuse-wikis
-      '(("Emacs Wiki" "http://www.emacswiki.org/cgi-bin/emacs"
+      '(("Emacs Wiki" "https://www.emacswiki.org/emacs"
 	 utf-8 "uihnscuskc" nil)
 	("Campaign Wiki" "https://campaignwiki.org/wiki"
 	 utf-8 "frodo" "Alex")
@@ -35,7 +35,7 @@
 	 utf-8 "frodo" "Alex")
 	("Rasiermesserküste" "https://campaignwiki.org/wiki/Rasiermesserk%c3%bcste"
 	 utf-8 "frodo" "Alex")
-	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds%C2%A0and%C2%A0Helmets"
+	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds_and_Helmets"
 	 utf-8 "frodo" "Alex")
 	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
 	 utf-8 "frodo" "Alex")
