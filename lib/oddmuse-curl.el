@@ -55,7 +55,7 @@
   :group 'oddmuse)
 
 (defcustom oddmuse-wikis
-  '(("EmacsWiki" "http://www.emacswiki.org/cgi-bin/emacs"
+  '(("EmacsWiki" "https://www.emacswiki.org/emacs"
      utf-8 "uihnscuskc" nil))
   "Alist mapping wiki names to URLs.
 

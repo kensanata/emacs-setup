@@ -25,7 +25,7 @@
   "Yadda yadda." t)
 
 (setq oddmuse-wikis
-      '(("Emacs Wiki" "http://www.emacswiki.org/cgi-bin/emacs"
+      '(("Emacs Wiki" "https://www.emacswiki.org/emacs"
 	 utf-8 "uihnscuskc" nil)
 	("Campaign Wiki" "https://campaignwiki.org/wiki"
 	 utf-8 "frodo" "Alex")
