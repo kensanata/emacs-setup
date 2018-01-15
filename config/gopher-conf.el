@@ -1,4 +1,4 @@
-(autoload 'gopher "gopher")
+(autoload 'gopher "gopher" nil t)
 
 (add-hook 'gopher-edit-mode-hook
 	  'asc:gopher-edit-setup)
@@ -12,3 +12,8 @@
 	  "```\n"
 	  "\n"
 	  "Tags: [[tag:todo]]"))
+
+(defun asc:sdf-phlogs ()
+  "Visit http://phlogosphere.org/ using gopher."
+  (interactive)
+  (gopher-goto-url "phlogosphere.org"))
