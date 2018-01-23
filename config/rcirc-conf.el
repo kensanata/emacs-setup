@@ -68,9 +68,11 @@
 		    "#bussard"
 		    "#mastodon"
 		    "#purism"
+		    "#gopherproject"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
-	;; WTF now same problem here? Can't use irc.oftc.net.
+	("irc.sdf.org" ;; no TLS
+	 :channels ("#gopher"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
