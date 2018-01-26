@@ -69,6 +69,7 @@
 		    "#mastodon"
 		    "#purism"
 		    "#gopherproject"
+		    "#tokipona"
 		    ,@(when (eq (window-system) 'w32)
 			'("#sql" "#eclipse-scout"))))
 	("irc.sdf.org" ;; no TLS
