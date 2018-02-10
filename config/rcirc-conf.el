@@ -118,14 +118,14 @@
         (dolist (item color-name-rgb-alist)
 	  (setq color (car item))
 	  (unless (color-gray-p color)
-	    (let ((y2 (rcirc-colors-Y color)))
-	      ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
-	      ;; Y(b) is the brightness (luminance) of the brighter
-	      ;; color and Y(d) is the brightness of the darker color.
-	      (when (< 4.5
-		       (apply '/
-			      (mapcar (lambda (n) (+ n 0.05))
-				      (sort (list y1 y2) '>))))
+	    ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
+	    ;; Y(b) is the brightness (luminance) of the brighter
+	    ;; color and Y(d) is the brightness of the darker color.
+	    (let* ((y2 (rcirc-colors-Y color))
+		   (r (if (> y1 y2)
+			  (/ (+ y1 0.05) (+ y2 0.05))
+			(/ (+ y2 0.05) (+ y1 0.05)))))
+	      (when (> r 4.5)
 		(setq candidates (cons color candidates))))))
 	  candidates))
 
