@@ -32,14 +32,6 @@
   (rcirc nil)
   (rcirc-menu))
 
-;; (setq bitlbee-executable "~/src/bitlbee/bitlbee")
-
-(defun bitlbee-debug ()
-  (interactive)
-  (let ((bitlbee-executable "gdb --args ~/src/bitlbee/bitlbee"))
-    (bitlbee-start)
-    (switch-to-buffer "*bitlbee*")))
-
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
       rcirc-fill-column 79; side-by-side on my laptop
@@ -104,20 +96,38 @@
 (eval-after-load 'rcirc
   '(defalias 'rcirc-split-message 'list))
 
+;; prepare a suitable list of colors
+;; https://stackoverflow.com/questions/3116260/given-a-background-color-how-to-get-a-foreground-color-that-makes-it-readable-o#3118280
 (require 'cl)
+(defun rcirc-colors-Y (color)
+  (let ((gamma 2.2))
+    (destructuring-bind (r g b) (color-name-to-rgb color)
+      (let* ((r1 (expt r gamma))
+	     (g1 (expt g gamma))
+	     (b1 (expt b gamma)))
+	(+ (* r1 0.2126)
+	   (* 0.7151 g1)
+	   (* 0.0721 b1))))))
+
+;; To check out the list, evaluate (list-colors-display rcirc-colors)
+;; To reset map (setq rcirc-color-mapping (make-hash-table :test 'equal))
 (setq rcirc-colors
-      (let (candidates)
+      (let ((candidates nil)
+	    (color nil)
+	    (y1 (rcirc-colors-Y (face-background 'default))))
         (dolist (item color-name-rgb-alist)
-	  (destructuring-bind (color r g b) item
-	    (let ((d (sqrt (+ (* (/ r 512) (/ r 512))
-			      (* (/ g 512) (/ g 512))
-			      (* (/ b 512) (/ b 512))))))
-	      (if (and (not (= r g))
-		       (not (= r b)); grey
-		       (> d 10)
-		       (< d 150))
+	  (setq color (car item))
+	  (unless (color-gray-p color)
+	    (let ((y2 (rcirc-colors-Y color)))
+	      ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
+	      ;; Y(b) is the brightness (luminance) of the brighter
+	      ;; color and Y(d) is the brightness of the darker color.
+	      (when (< 4.5
+		       (apply '/
+			      (mapcar (lambda (n) (+ n 0.05))
+				      (sort (list y1 y2) '>))))
 		(setq candidates (cons color candidates))))))
-	candidates))
+	  candidates))
 
 (eval-after-load 'rcirc '(require 'rcirc-color))
 (eval-after-load 'rcirc '(require 'rcirc-menu))
