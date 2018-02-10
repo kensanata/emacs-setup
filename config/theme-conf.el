@@ -3,3 +3,5 @@
 (condition-case err
     (load-theme 'pink-bliss t t)
   (error))
+
+(load-theme 'zenburn t)
