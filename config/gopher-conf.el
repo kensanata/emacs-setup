@@ -1,4 +1,5 @@
 (autoload 'gopher "gopher" nil t)
+(autoload 'gopher-goto-url "gopher" nil t)
 
 (add-hook 'gopher-edit-mode-hook
 	  'asc:gopher-edit-setup)
