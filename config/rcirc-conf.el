@@ -13,7 +13,13 @@
        (autoload 'bitlbee-start "bitlbee" t)
        (setq bitlbee-executable "/usr/local/sbin/bitlbee")
        (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
-      (t;; Windows
+      ((file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
+       (autoload 'bitlbee-start "bitlbee" t)
+       (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
+	     bitlbee-options "-n -D -v -d /home/asc/.bitlbee")
+       "c:/cygwin64/var/lib/bitlbee"
+       (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
+      (t
        (global-set-key (kbd "C-c e") 'asc:rcirc-start)))
 
 (defun asc:rcirc-and-bitlbee-start ()
