@@ -66,7 +66,15 @@
 	  'append))
 	((member oddmuse-wiki '("Fünf Winde" "BeremAndBeyond" "Wilderlande"))
 	 (turn-on-auto-fill)
-	 (ispell-change-dictionary "swiss"))))
+	 ;; see spell-conf.el
+	 (german))))
+
+(defun oddmuse-comment ()
+  "Switch between article and talk pages."
+  (interactive)
+  (if (string-match "^Comments_on_\\(.*\\)" oddmuse-page-name)
+      (oddmuse-follow oddmuse-wiki (match-string 1 oddmuse-page-name))
+    (oddmuse-follow oddmuse-wiki (concat "Comments_on_" oddmuse-page-name))))
 
 (defun oddmuse-toc () (interactive) (occur "^=.*"))
 
@@ -105,6 +113,13 @@ strings.")
       (mapcar (lambda (s)
 		(insert " [[tag:" s "]]"))
 	      tags))))
+
+(defun oddmuse-sign ()
+  "Add signature."
+  (interactive)
+  (insert "-- Alex Schroeder "
+	  (format-time-string "%Y-%m-%d %H:%M" (current-time))
+	  "\n"))
 
 (setq oddmuse-tags '("RPG" "Old School" "RSP" "Map"
 		     "Software" "Copyright"
@@ -255,7 +270,6 @@ cells by rows first."
 	(newline)
 	(insert "\\end{tabular}\n"
 		"\\end{table}\n")))))
-
 
 (defun latex-to-oddmuse (start end)
   (interactive "r")
