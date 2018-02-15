@@ -5,9 +5,9 @@
   (asc:flyspell))
 
 (defun english ()
-  "Switch ispell dictionary to 'american'."
+  "Switch ispell dictionary to 'british'."
   (interactive)
-  (ispell-change-dictionary "american")
+  (ispell-change-dictionary "british")
   (asc:flyspell))
 
 (defun asc:flyspell ()
