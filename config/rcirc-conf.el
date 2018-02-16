@@ -114,24 +114,26 @@
 
 ;; To check out the list, evaluate (list-colors-display rcirc-colors)
 ;; To reset map (setq rcirc-color-mapping (make-hash-table :test 'equal))
-(eval-after-load 'rcirc
-  '(setq rcirc-colors
-	 (let ((candidates nil)
-	       (color nil)
-	       (y1 (rcirc-colors-Y (face-background 'default))))
-	   (dolist (item color-name-rgb-alist)
-	     (setq color (car item))
-	     (unless (color-gray-p color)
-	       ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
-	       ;; Y(b) is the brightness (luminance) of the brighter
-	       ;; color and Y(d) is the brightness of the darker color.
-	       (let* ((y2 (rcirc-colors-Y color))
-		      (r (if (> y1 y2)
-			     (/ (+ y1 0.05) (+ y2 0.05))
-			   (/ (+ y2 0.05) (+ y1 0.05)))))
-		 (when (> r 4.5)
-		   (setq candidates (cons color candidates))))))
-	   candidates)))
+
+(setq rcirc-colors
+      (let* ((candidates nil)
+	     (color nil)
+	     (y1 (rcirc-colors-Y (face-background 'default)))
+	     (upper-limit (* 0.8 (- 1 y1)))
+	     (lower-limit (* 0.6 (- 1 y1))))
+	(dolist (item color-name-rgb-alist)
+	  (setq color (car item))
+	  (unless (color-gray-p color)
+	    ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
+	    ;; Y(b) is the brightness (luminance) of the brighter
+	    ;; color and Y(d) is the brightness of the darker color.
+	    (let* ((y2 (rcirc-colors-Y color))
+		   (r (if (> y1 y2)
+			  (/ (+ y1 0.05) (+ y2 0.05))
+			(/ (+ y2 0.05) (+ y1 0.05)))))
+	      (when (and (> r 4.5) (> y2 lower-limit) (< y2 upper-limit))
+		(setq candidates (cons color candidates))))))
+	candidates))
 
 (eval-after-load 'rcirc '(require 'rcirc-color))
 (eval-after-load 'rcirc '(require 'rcirc-menu))
@@ -192,20 +194,20 @@
 
 ;; define faces
 
-(defface rcirc-nick-in-message
-  '((((background dark)) :background "dim gray")
-    (t :background "lemon chiffon"))
-  "My nick when mentioned by others.")
-(defface rcirc-my-nick '((t :foreground "purple"))
-  "My own nick for rcirc.")
-(defface rcirc-track-nick '((t :inherit rcirc-my-nick))
-  "The face used indicate activity directed at you.")
-(defface rcirc-nick-in-message-full-line '((t))
-  "The face used emphasize the entire message when your nick is mentioned.")
-(defface rcirc-track-keyword '((t (:inherit bold)))
-  "The face used indicate activity directed at you.")
-(defface rcirc-prompt '((t :foreground "orchid"))
-  "My prompt for rcirc.")
+;; (defface rcirc-nick-in-message
+;;   '((((background dark)) :background "dim gray")
+;;     (t :background "lemon chiffon"))
+;;   "My nick when mentioned by others.")
+;; (defface rcirc-my-nick '((t :foreground "plum"))
+;;   "My own nick for rcirc.")
+;; (defface rcirc-track-nick '((t :inherit rcirc-my-nick))
+;;   "The face used indicate activity directed at you.")
+;; (defface rcirc-nick-in-message-full-line '((t))
+;;   "The face used emphasize the entire message when your nick is mentioned.")
+;; (defface rcirc-track-keyword '((t (:inherit bold)))
+;;   "The face used indicate activity directed at you.")
+;; (defface rcirc-prompt '((t :foreground "orchid"))
+;;   "My prompt for rcirc.")
 
 ;;; mode invisible
 
