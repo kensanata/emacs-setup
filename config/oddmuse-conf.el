@@ -64,7 +64,7 @@
 	  '(("!!\\S-.*?\\S-?!!" . 'bold)
 	    ("!\\S-.*?\\S-?!" 0 '(face bold nobreak t)))
 	  'append))
-	((member oddmuse-wiki '("Fünf Winde" "BeremAndBeyond" "Wilderlande"))
+	((member oddmuse-wiki '("Rasiermesserküste" "Wilderlande"))
 	 (turn-on-auto-fill)
 	 ;; see spell-conf.el
 	 (german))))
