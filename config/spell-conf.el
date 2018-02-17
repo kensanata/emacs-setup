@@ -2,13 +2,15 @@
   "Switch ispell dictionary to 'swiss'."
   (interactive)
   (ispell-change-dictionary "swiss8")
-  (asc:flyspell))
+  (asc:flyspell)
+  (set-input-method 'german-prefix))
 
 (defun english ()
   "Switch ispell dictionary to 'british'."
   (interactive)
   (ispell-change-dictionary "british")
-  (asc:flyspell))
+  (asc:flyspell)
+  (set-input-method nil))
 
 (defun asc:flyspell ()
   "Ensure flyspell is running."
