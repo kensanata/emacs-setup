@@ -33,7 +33,26 @@
   (eshell arg))
 
 (setq eshell-history-size 500
-      eshell-save-history-on-exit t)
+      eshell-save-history-on-exit t
+      eshell-hist-ignoredups t
+      eshell-last-dir-ring-size 500)
+
+;; eldoc
+(asc:package-install 'esh-help)
+(eval-after-load "eshell" '(setup-esh-help-eldoc))
+
+;; completion
+(asc:package-install 'bash-completion)
+(setq eshell-default-completion-function 'eshell-bash-completion)
+
+;; plan 9
+(autoload 'eshell-smart-initialize "em-smart" "Setup Eshell smart display." t)
+
+(defun eshell-bash-completion ()
+  (setq-local bash-completion-nospace t)
+  (while (pcomplete-here
+	  (nth 2 (bash-completion-dynamic-complete-nocomint
+		  (save-excursion (eshell-bol) (point)) (point))))))
 
 (add-hook 'eshell-mode-hook
 	  (lambda ()
@@ -42,7 +61,11 @@
 	    (local-set-key (kbd "C-w") 'asc:kill-region)
 	    (local-set-key (kbd "<up>") 'previous-line)
 	    (local-set-key (kbd "<down>") 'next-line)
-	    (idle-highlight-mode 1)))
+	    (idle-highlight-mode 1)
+	    (eldoc-mode 1)
+	    (eshell-smart-initialize)
+	    (setenv "PAGER" "cat")
+	    (setenv "EDITOR" "emacsclient")))
 
 (defalias 'eshell/emacs 'find-file)
 (defalias 'eshell/less 'find-file)
@@ -53,5 +76,3 @@
   (interactive "r")
   (let ((inhibit-read-only t))
     (kill-region (region-beginning) (region-end))))
-
-(setq eshell-last-dir-ring-size 500)
