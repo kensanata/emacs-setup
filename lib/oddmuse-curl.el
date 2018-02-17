@@ -984,9 +984,13 @@ Use a prefix argument to search a different wiki."
       (erase-buffer)
       (oddmuse-run "Searching" oddmuse-search-command wiki)
       (oddmuse-rc-buffer)
+      (oddmuse-search-mode)
       (dolist (re (split-string regexp))
 	(highlight-regexp (hi-lock-process-phrase re)))
       (set (make-local-variable 'oddmuse-wiki) wiki))))
+
+(defun oddmuse-search-reload ()
+  (error "FIXME:not implemented"))
 
 ;;;###autoload
 (defun oddmuse-match (regexp)
@@ -1008,9 +1012,12 @@ Use a prefix argument to search a different wiki."
 	(erase-buffer)
 	(dolist (line lines)
 	  (insert "[[" (replace-regexp-in-string "_" " " line) "]]\n")))
-      (oddmuse-mode)
+      (oddmuse-match-mode)
       (set (make-local-variable 'oddmuse-wiki) wiki)
       (display-buffer (current-buffer)))))
+
+(defun oddmuse-match-reload ()
+  (error "FIXME:not implemented"))
 
 ;;;###autoload
 (defun oddmuse-rc (&optional include-minor-edits)
@@ -1023,6 +1030,7 @@ With universal argument, reload."
     (if (and (get-buffer name) (not current-prefix-arg))
         (pop-to-buffer (get-buffer name))
       (set-buffer (get-buffer-create name))
+      (setq oddmuse-wiki wiki)
       (oddmuse-rc-reload)
       (oddmuse-rc-mode)
       ;; set local variable after `oddmuse-mode' killed them
@@ -1069,18 +1077,33 @@ You probably want to make sure that the buffer is in
     (oddmuse-run "Load recent changes" oddmuse-rc-command oddmuse-wiki)
     (oddmuse-rc-buffer)))
 
-(define-derived-mode oddmuse-rc-mode oddmuse-mode "RC"
-  "Show Recent Changes for an Oddmuse wiki."
+(define-derived-mode oddmuse-view-mode oddmuse-mode ""
+  "A minor mode to view Oddmuse data like search results."
   (setq buffer-read-only t))
 
+(define-key oddmuse-view-mode-map (kbd "C-c C-e") 'oddmuse-edit)
+(define-key oddmuse-view-mode-map (kbd "C-c C-f") 'oddmuse-follow)
+(define-key oddmuse-view-mode-map (kbd "C-c C-l") 'oddmuse-match)
+(define-key oddmuse-view-mode-map (kbd "C-c C-n") 'oddmuse-new)
+(define-key oddmuse-view-mode-map (kbd "C-c C-r") 'oddmuse-rc)
+(define-key oddmuse-view-mode-map (kbd "C-c C-s") 'oddmuse-search)
+(define-key oddmuse-view-mode-map (kbd "q") 'bury-buffer)
+
+(define-derived-mode oddmuse-rc-mode oddmuse-view-mode "RC"
+  "Show Recent Changes for an Oddmuse wiki.")
+
 (define-key oddmuse-rc-mode-map (kbd "g") 'oddmuse-rc-reload)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-e") 'oddmuse-edit)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-f") 'oddmuse-follow)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-l") 'oddmuse-match)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-n") 'oddmuse-new)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-r") 'oddmuse-rc)
-(define-key oddmuse-rc-mode-map (kbd "C-c C-s") 'oddmuse-search)
- 
+
+(define-derived-mode oddmuse-search-mode oddmuse-view-mode "Search"
+  "Show search results for an Oddmuse wiki.")
+
+(define-key oddmuse-search-mode-map (kbd "g") 'oddmuse-search-reload)
+
+(define-derived-mode oddmuse-match-mode oddmuse-view-mode "Match"
+  "Show match results for an Oddmuse wiki.")
+
+(define-key oddmuse-match-mode-map (kbd "g") 'oddmuse-match-reload)
+
 (defun oddmuse-history (wiki pagename)
   "Show the history for PAGENAME on WIKI.
 Compared to `vc-oddmuse-print-log' this only prints the revisions
