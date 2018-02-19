@@ -16,8 +16,7 @@
       ((file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
        (autoload 'bitlbee-start "bitlbee" t)
        (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
-	     bitlbee-options "-n -D -v -d /home/asc/.bitlbee")
-       "c:/cygwin64/var/lib/bitlbee"
+	     bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
        (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
       (t
        (global-set-key (kbd "C-c e") 'asc:rcirc-start)))
@@ -54,7 +53,7 @@
       ;; sometimes we have to use 71.11.84.232
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
       `(("chat.freenode.net"
-	 :port 7000 :encryption tls
+	 :port 6697 :encryption tls
 	 :channels ("#emacs"
 		    "#emacs-ops"
 		    "#rcirc"
