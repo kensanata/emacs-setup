@@ -76,6 +76,9 @@
       (oddmuse-follow oddmuse-wiki (match-string 1 oddmuse-page-name))
     (oddmuse-follow oddmuse-wiki (concat "Comments_on_" oddmuse-page-name))))
 
+(add-hook 'oddmuse-mode-hook
+	  (lambda () (local-set-key (kbd "C-c c") 'oddmuse-comment)))
+
 (defun oddmuse-toc () (interactive) (occur "^=.*"))
 
 (defvar oddmuse-tags nil
