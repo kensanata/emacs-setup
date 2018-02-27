@@ -1087,6 +1087,7 @@ You probably want to make sure that the buffer is in
 (define-key oddmuse-view-mode-map (kbd "C-c C-n") 'oddmuse-new)
 (define-key oddmuse-view-mode-map (kbd "C-c C-r") 'oddmuse-rc)
 (define-key oddmuse-view-mode-map (kbd "C-c C-s") 'oddmuse-search)
+(define-key oddmuse-view-mode-map (kbd "RET") 'oddmuse-follow)
 (define-key oddmuse-view-mode-map (kbd "q") 'bury-buffer)
 
 (define-derived-mode oddmuse-rc-mode oddmuse-view-mode "RC"
