@@ -4,6 +4,14 @@
 			   ("SC" . "http://joseito.republika.pl/sunrise-commander/")))
   (package-initialize))
 
+(when (fboundp 'package-install)
+  (condition-case err
+      (or (package-installed-p 'use-package)
+	  (package-install 'use-package))
+    ((error "message" format-args)
+     (package-refresh-contents)
+     (package-install 'use-package))))
+
 ;; We might have already added idle-highlight-mode to various hooks
 ;; and when we come here and discover that it isn't in fact already
 ;; installed, we have a problem: at least one of these hooks will be
