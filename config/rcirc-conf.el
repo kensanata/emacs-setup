@@ -44,6 +44,7 @@
       rcirc-default-nick "kensanata"
       rcirc-keywords '("ken" "kens" "kensa" "alex")
       rcirc-nick-prefix-chars "~&@%+!"
+      rcirc-timeout-seconds 1200
       rcirc-authinfo (with-temp-buffer
 		       (when (file-readable-p "~/.rcirc-authinfo")
 			 (insert-file-contents-literally "~/.rcirc-authinfo")
