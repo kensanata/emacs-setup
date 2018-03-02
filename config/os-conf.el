@@ -2,7 +2,7 @@
 
 (when (eq (window-system) 'w32)
   
-  (add-to-list 'dynamic-library-alist '(png "libpng15-15.dll"))
+  ;; (add-to-list 'dynamic-library-alist '(png "libpng15-15.dll"))
   (add-to-list 'exec-path "C:/cygwin64/bin")
   (add-to-list 'exec-path "C:/Program Files (x86)/Growl for Windows")
   (setenv "RSH" "SSH")
