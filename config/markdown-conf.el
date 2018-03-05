@@ -4,7 +4,15 @@
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 
 ;; skip first entry of TOC (which is going to be the document title)
-(setq markdown-toc-user-toc-structure-manipulation-fn 'cdr)
+(setq markdown-toc-user-toc-structure-manipulation-fn
+      'as/markdown-without-main-title)
+
+(defun as/markdown-without-main-title (toc-structure)
+  "Skip the first entry and decrease the level of all other entries."
+  (setq toc-structure (cdr toc-structure))
+  (dolist (item toc-structure)
+    (setcar item (1- (car item))))
+  toc-structure)
 
 ;; The Markdown files I write using IA Writer use newlines to separate
 ;; paragraphs. That's why I need Visual Line Mode. I also need to
