@@ -334,6 +334,7 @@ instead of `rcirc-markup-urls'."
 			'face 'rcirc-url
 			'follow-link t
 			'rcirc-url url
+			'help-echo url;; seems to have no effect
 			'display text
 			'action (lambda (button)
 				  (browse-url (button-get button 'rcirc-url))))
