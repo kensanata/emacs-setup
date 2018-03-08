@@ -309,3 +309,39 @@
       (insert "----\n"
 	      (format "%4d total\n"
 		      (apply '+ (mapcar 'cdr agents)))))))
+
+;; no more visible URLs
+(eval-after-load 'rcirc
+  (lambda ()
+    (setq rcirc-markup-text-functions
+	  (delq 'rcirc-markup-urls rcirc-markup-text-functions))
+    (add-to-list 'rcirc-markup-text-functions 'rcirc-url-buttons)))
+
+(defun rcirc-url-buttons (sender response)
+  "Turn URLs in into buttons.
+This is a function to add to `rcirc-markup-text-functions'
+instead of `rcirc-markup-urls'."
+  (while (re-search-forward rcirc-url-regexp nil t)
+    (let* ((start (match-beginning 0))
+           (end (match-end 0))
+           (url (match-string-no-properties 0))
+	   (text (cond ((string-match "\\.\\(png\\|jpe?g\\)$" url)
+			"PIC")
+		       ((string-match "\\.gif$" url)
+			"GIF");; these are usually worse than pics
+		       (t "LINK"))))
+      (make-text-button start end
+			'face 'rcirc-url
+			'follow-link t
+			'rcirc-url url
+			'display text
+			'action (lambda (button)
+				  (browse-url (button-get button 'rcirc-url))))
+      ;; record the url if it is not already the latest stored url
+      (when (not (string= url (caar rcirc-urls)))
+        (push (cons url start) rcirc-urls)))))
+
+;; Sadly, these buttons with the display property set no longer work
+;; for mouse buttons. (rcirc-markup-urls nil nil) http://example.html
+;; http://example.png http://example.jpg http://example.gif
+;; http://example
