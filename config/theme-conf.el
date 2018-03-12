@@ -4,4 +4,7 @@
     (load-theme 'pink-bliss t t)
   (error))
 
-;; (load-theme 'foggy-night t)
+(load-theme 'foggy-night t)
+(set-face-background 'cursor "#aaa")
+(defface rcirc-late-fix-face '((t (:foreground "white" :underline t)))
+  "Overwriting the default")
