@@ -148,7 +148,7 @@ See `oddmuse-format-command' for the formatting options.")
 	  " --form %q=1"
           " --form recent_edit=%m"
 	  " --form oldtime=%o"
-          " --form text='<-'"
+          " --form text='<%f'"
           " '%w'")
   "Command to use for publishing pages.
 It must accept the page on stdin and print the HTTP status code
@@ -450,13 +450,15 @@ It's either a [[free link]] or a WikiWord based on
 %w `url' as provided by `oddmuse-wikis'
 %t `pagename'
 %s `summary' as provided by the user
-%u `username' as provided by `oddmuse-wikis' or `oddmuse-username' if not provided
+%u `username' as provided by `oddmuse-wikis'
+   or `oddmuse-username' if not provided
 %m `oddmuse-minor'
 %p `oddmuse-password'
 %q `question' as provided by `oddmuse-wikis'
 %o `oddmuse-ts'
 %v `oddmuse-revision'
-%r `regexp' as provided by the user"
+%r `regexp' as provided by the user
+%f `filename' for a file to upload"
   (dolist (pair '(("%w" . url)
 		  ("%t" . pagename)
 		  ("%s" . summary)
@@ -466,7 +468,8 @@ It's either a [[free link]] or a WikiWord based on
 		  ("%q" . question)
 		  ("%o" . oddmuse-ts)
 		  ("%v" . oddmuse-revision)
-		  ("%r" . regexp)))
+		  ("%r" . regexp)
+		  ("%f" . filename)))
     (let* ((key (car pair))
 	   (sym (cdr pair))
 	   value)
@@ -482,7 +485,7 @@ It's either a [[free link]] or a WikiWord based on
 	  (setq command (replace-regexp-in-string key value command t t))))))
   (replace-regexp-in-string "&" "%26" command t t))
 
-(defun oddmuse-run (mesg command wiki &optional pagename buf send-buffer expected-code)
+(defun oddmuse-run (mesg command wiki &optional pagename buf)
   "Print MESG and run COMMAND on the current buffer.
 WIKI identifies the entry in `oddmuse-wiki' to be used and
 defaults to the variable `oddmuse-wiki'.
@@ -499,18 +502,8 @@ MESG should be appropriate for the following uses:
 Save output in BUF and report an appropriate error.  If BUF is
 not provided, use the current buffer.
 
-SEND-BUFFER indicates whether the commands needs the content of
-the current buffer on STDIN---such as when posting---or whether
-it just runs by itself such as when loading a page.
-
-If SEND-BUFFER is not nil, the command output is compared to
-EXPECTED-CODE. The command is supposed to print the HTTP status
-code on stdout, so usually we want to provide either 302 or 200
-as EXPECTED-CODE.
-
-In addition to that, we check the HTML in the buffer for
-indications of an error. If we find any, that will get reported
-as well."
+We check the HTML in the buffer for indications of an error. If
+we find any, that will get reported."
   (let* ((max-mini-window-height 1)
 	 (wiki (or wiki oddmuse-wiki))
 	 (pagename (or pagename oddmuse-page-name))
@@ -525,17 +518,9 @@ as well."
     (setq buf (or buf (current-buffer))
 	  command (oddmuse-format-command command))
     (message "%s using %s..." mesg command)
-    (when (numberp expected-code)
-      (setq expected-code (number-to-string expected-code)))
-    (if send-buffer
-	(shell-command-on-region (point-min) (point-max) command buf)
-      (shell-command command buf))
+    (shell-command command buf)
     (let ((status (with-current-buffer buf (buffer-string))))
-      (cond ((and send-buffer
-		  expected-code
-		  (not (string= expected-code status)))
-	     (error "Error %s: HTTP Status Code %s" mesg status))
-	    ((string-match "<title>Error</title>" status)
+      (cond ((string-match "<title>Error</title>" status)
 	     (if (string-match "<h1>\\(.*\\)</h1>" status)
 		 (error "Error %s: %s" mesg (match-string 1 status))
 	       (error "Error %s: Cause unknown" status)))
@@ -910,8 +895,11 @@ Use a prefix argument to override this."
     (when (not (member oddmuse-page-name list))
       (puthash oddmuse-wiki (cons oddmuse-page-name list) oddmuse-pages-hash)))
   (and buffer-file-name (basic-save-buffer))
-  (oddmuse-run "Posting" oddmuse-post-command nil nil
-	       (get-buffer-create " *oddmuse-response*") t 302)
+  (let ((filename buffer-file-name))
+    ;; bind the current filename to `filename' so that it will get
+    ;; picked up by `oddmuse-post-command'
+    (oddmuse-run "Posting" oddmuse-post-command nil nil
+		 (get-buffer-create " *oddmuse-response*")))
   (let ((revision (oddmuse-get-latest-revision oddmuse-wiki oddmuse-page-name)))
     (oddmuse-revision-put oddmuse-wiki oddmuse-page-name revision)
     (when buffer-file-name
@@ -931,7 +919,7 @@ browser."
   (oddmuse-set-missing-variables)
   (let ((buf (get-buffer-create " *oddmuse-response*")))
     (and buffer-file-name (basic-save-buffer))
-    (oddmuse-run "Previewing" oddmuse-preview-command nil nil buf t)
+    (oddmuse-run "Previewing" oddmuse-preview-command nil nil buf)
     (if arg
 	(with-current-buffer buf
 	  (let ((file (make-temp-file "oddmuse-preview-" nil ".html")))
