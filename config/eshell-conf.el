@@ -38,12 +38,12 @@
       eshell-last-dir-ring-size 500)
 
 ;; eldoc
-(asc:package-install 'esh-help)
-(eval-after-load "eshell" '(setup-esh-help-eldoc))
+;; (asc:package-install 'esh-help)
+;; (eval-after-load "eshell" '(setup-esh-help-eldoc))
 
 ;; completion
-(asc:package-install 'bash-completion)
-(setq eshell-default-completion-function 'eshell-bash-completion)
+;; (asc:package-install 'bash-completion)
+;; (setq eshell-default-completion-function 'eshell-bash-completion)
 
 ;; plan 9
 (autoload 'eshell-smart-initialize "em-smart" "Setup Eshell smart display." t)
