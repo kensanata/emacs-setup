@@ -29,7 +29,7 @@
        1 nil
        'asc:rcirc-start)
     ;; alternatively, just run it
-    'asc:rcirc-start))
+    (asc:rcirc-start)))
 
 (defun asc:rcirc-start ()
   "Start `rcirc'."
