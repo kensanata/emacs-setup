@@ -35,7 +35,9 @@
 (setq eshell-history-size 500
       eshell-save-history-on-exit t
       eshell-hist-ignoredups t
-      eshell-last-dir-ring-size 500)
+      eshell-last-dir-ring-size 500
+      ;; match eshell prompts to ssh connection with a port (include `#')
+      eshell-prompt-regexp "^[^$\n]* [#$] ")
 
 ;; eldoc
 ;; (asc:package-install 'esh-help)
