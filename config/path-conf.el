@@ -9,3 +9,6 @@
   (asc:add-to-env "PATH" path))
 
 (asc:add-to-PATH "~/.local/bin/")
+
+;; local man path: 
+(setenv "MANPATH" ":/home/alex/perl5/man")
