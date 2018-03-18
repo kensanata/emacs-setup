@@ -14,3 +14,4 @@
 
 ;; move line with M-up and M-down
 (asc:package-install 'move-text)
+(move-text-default-bindings)
