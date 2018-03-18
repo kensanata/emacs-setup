@@ -165,7 +165,7 @@ See `oddmuse-format-command' for the formatting options.")
           " --form recent_edit=%m"
 	  " --form oldtime=%o"
 	  " --form Preview=Preview"; the only difference
-          " --form text='<-'"
+          " --form text='<%f'"
           " '%w'")
   "Command to use for previewing pages.
 It must accept the page on stdin and print the HTML on stdout.
@@ -917,8 +917,11 @@ Use a prefix argument to view the preview using an external
 browser."
   (interactive "P")
   (oddmuse-set-missing-variables)
-  (let ((buf (get-buffer-create " *oddmuse-response*")))
-    (and buffer-file-name (basic-save-buffer))
+  (unless buffer-file-name
+    (setq buffer-file-name (concat oddmuse-directory "/" wiki "/" pagename)))
+  (basic-save-buffer)
+  (let ((buf (get-buffer-create " *oddmuse-response*"))
+	(filename buffer-file-name))
     (oddmuse-run "Previewing" oddmuse-preview-command nil nil buf)
     (if arg
 	(with-current-buffer buf
