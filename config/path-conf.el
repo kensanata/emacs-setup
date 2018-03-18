@@ -12,3 +12,7 @@
 
 ;; local man path: 
 (setenv "MANPATH" ":/home/alex/perl5/man")
+
+;; Perl 5
+(asc:add-to-PATH "~/perl5/bin/")
+(setenv "PERL5LIB" "/home/alex/perl5/lib/perl5")
