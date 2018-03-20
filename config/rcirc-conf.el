@@ -72,6 +72,9 @@
 			'("#sql" "#eclipse-scout"))))
 	("irc.sdf.org" ;; no TLS
 	 :channels ("#gopher"))
+	("flame.de.eu.darkmyst.org"
+	 :port 6697 :encryption tls
+	 :channels ("#rpg-hub"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
