@@ -85,6 +85,9 @@
 	;;  :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
 	;;  :channels ("#kensanata/elisp"
 	;; 	    "#kensanata/oddmuse"))
+	("campaignwiki.org"
+	 :port 6697 :encryption tls
+	 :channels ("#chat"))
 	("localhost"
 	 :channels ("&bitlbee"
 		    "#rpg-traveller"
