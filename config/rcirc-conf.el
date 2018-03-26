@@ -75,6 +75,9 @@
 	("flame.de.eu.darkmyst.org"
 	 :port 6697 :encryption tls
 	 :channels ("#rpg-hub"))
+	("campaignwiki.org"
+	 :port 6697 :encryption tls
+	 :channels ("#chat"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
