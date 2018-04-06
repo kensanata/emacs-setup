@@ -2,7 +2,7 @@
   '("#")
   nil
   '(("^;.*" . font-lock-function-name-face)
-    ("\\*.*\\*" . 'bold)
+    ("\\*.*?\\*" . 'bold)
     ("\\[\\([1-9][0-9]*d[1-9][0-9]*\\(?:x[1-9][0-9]*\\)?\\(?:\\+[1-9][0-9]*\\)?\\)\\]"
      (0 font-lock-keyword-face) (1 font-lock-string-face t))
     "\\[.*?\\]"
