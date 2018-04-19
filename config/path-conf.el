@@ -14,5 +14,7 @@
 (setenv "MANPATH" ":/home/alex/perl5/man")
 
 ;; Perl 5
-(asc:add-to-PATH "~/perl5/bin/")
-(setenv "PERL5LIB" "/home/alex/perl5/lib/perl5")
+;; This is wrong: on sibirocobombus this bin is full of scripts wanting 5.24
+;; (asc:add-to-PATH "~/perl5/bin/")
+;; This is wrong: "ListUtil.c: loadable library and perl binaries are mismatched (got handshake key 0xd600000, needed 0xd880000)"
+;; (setenv "PERL5LIB" "/home/alex/perl5/lib/perl5")
