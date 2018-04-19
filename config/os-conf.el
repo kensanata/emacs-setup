@@ -1,4 +1,4 @@
-(setenv "LANG" "de_CH.UTF-8")
+(setenv "LANG" "en_GB.UTF-8")
 
 (when (eq (window-system) 'w32)
   
