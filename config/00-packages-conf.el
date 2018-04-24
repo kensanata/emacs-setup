@@ -1,7 +1,6 @@
 (when (require 'package nil t)
   (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			   ("melpa" . "https://melpa.org/packages/")
-			   ("SC" . "http://joseito.republika.pl/sunrise-commander/")))
+			   ("melpa" . "https://melpa.org/packages/")))
   (package-initialize))
 
 (when (fboundp 'package-install)
