@@ -4,6 +4,7 @@
     (load-theme 'pink-bliss t t)
   (error))
 
+(asc:package-install 'foggy-night-theme)
 (load-theme 'foggy-night t)
 (set-face-background 'cursor "#aaa")
 (defface rcirc-late-fix-face '((t (:foreground "white" :underline t)))
