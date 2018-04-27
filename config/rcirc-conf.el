@@ -90,14 +90,15 @@
 	 :channels ("#chat"))
 	("localhost"
 	 :channels ("&bitlbee"
-		    "#rpg-traveller"
-		    "#rpg-osr"
-		    "#rpg-game-design"
-		    "#rpg-indie-games"
-		    "#rpg-game-masters"
-		    "#rpg-announcements"
-		    "#rpg-general"
-		    "#osr-general")))
+		    ;; "#rpg-traveller"
+		    ;; "#rpg-osr"
+		    ;; "#rpg-game-design"
+		    ;; "#rpg-indie-games"
+		    ;; "#rpg-game-masters"
+		    ;; "#rpg-announcements"
+		    ;; "#rpg-general"
+		    ;; "#osr-general"
+		    )))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
       rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
