@@ -1,10 +1,18 @@
 ;;; rcirc, write such as not to require rcirc at startup
 ;; (autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
-(asc:package-install 'rcirc-color)
-(asc:package-install 'rcirc-styles)
-(asc:package-install 'rcirc-notify)
-(asc:package-install 'rcirc-menu)
 (require 'rcirc-emojis)
+
+(asc:package-install 'rcirc-menu)
+(eval-after-load 'rcirc '(require 'rcirc-menu))
+
+(asc:package-install 'rcirc-styles)
+(eval-after-load 'rcirc '(require 'rcirc-styles))
+
+(asc:package-install 'rcirc-notify)
+(eval-after-load 'rcirc
+  '(progn
+     (require 'rcirc-notify)
+     (rcirc-notify-add-hooks)))
 
 ;;; bitlbee
 (cond ((file-exists-p "/usr/sbin/bitlbee");; PureOS
@@ -109,6 +117,10 @@
 (eval-after-load 'rcirc
   '(defalias 'rcirc-split-message 'list))
 
+;; colors
+(asc:package-install 'rcirc-color)
+(eval-after-load 'rcirc '(require 'rcirc-color))
+
 ;; prepare a suitable list of colors
 ;; https://stackoverflow.com/questions/3116260/given-a-background-color-how-to-get-a-foreground-color-that-makes-it-readable-o#3118280
 (require 'cl)
@@ -147,12 +159,6 @@
 		 (when (and (> r 4.5) (> y2 lower-limit) (< y2 upper-limit))
 		   (setq candidates (cons color candidates))))))
 	   candidates)))
-
-(eval-after-load 'rcirc '(require 'rcirc-color))
-(eval-after-load 'rcirc '(require 'rcirc-menu))
-
-(eval-after-load 'rcirc '(require 'rcirc-styles))
-(eval-after-load 'rcirc '(require 'rcirc-notify))
 
 (eval-after-load 'rcirc
   '(defun-rcirc-command encoding (arg)
