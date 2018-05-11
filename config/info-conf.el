@@ -10,3 +10,5 @@
 		(delete "/usr/local/opt/emacs-mac/share/info"
 			(file-expand-wildcards "/usr/local/opt/*/share/info"))))
    (message "Info-additional-directory-list was set")))
+
+(setq Info-additional-directory-list (list (expand-file-name "~/.local/info")))
