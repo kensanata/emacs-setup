@@ -2,6 +2,8 @@
 (cond ((and (eq (window-system) 'w32)
 	    (find-font (font-spec :name "Consolas")))
        (set-face-attribute 'default nil :family "Consolas" :height 130))
+      ((find-font (font-spec :name "Iosevka"))
+       (set-face-attribute 'default nil :family "Iosevka" :height 160))
       ((find-font (font-spec :name "Noto Mono"))
        (set-face-attribute 'default nil :family "Noto Mono" :height 140))
       ((find-font (font-spec :name "Fantasque Sans Mono"))
