@@ -74,10 +74,7 @@
 		    "#bussard"
 		    "#mastodon"
 		    "#purism"
-		    "#gopherproject"
-		    "#tokipona"
-		    ,@(when (eq (window-system) 'w32)
-			'("#sql" "#eclipse-scout"))))
+		    "#gopherproject"))
 	("irc.sdf.org" ;; no TLS
 	 :channels ("#gopher"))
 	("flame.de.eu.darkmyst.org"
