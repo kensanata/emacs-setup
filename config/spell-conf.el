@@ -1,7 +1,16 @@
-(defun german ()
+(defun swiss ()
   "Switch ispell dictionary to 'swiss'."
   (interactive)
   (ispell-change-dictionary "swiss8")
+  (asc:flyspell)
+  (set-input-method 'german-prefix))
+
+(defalias 'german 'swiss)
+
+(defun deutsch ()
+  "Switch ispell dictionary to 'swiss'."
+  (interactive)
+  (ispell-change-dictionary "german-new8")
   (asc:flyspell)
   (set-input-method 'german-prefix))
 
