@@ -45,11 +45,13 @@
 	 utf-8 "frodo" "Alex")
 	("Wilderlande" "https://campaignwiki.org/wiki/Wilderlande"
 	 utf-8 "frodo" "Alex")
-	("Community Wiki" "http://www.communitywiki.org/cw"
+	("Community Wiki" "https://communitywiki.org/wiki"
 	 utf-8 "question" nil)
-	("Oddmuse Wiki" "https://www.oddmuse.org/wiki"
+	("Oddmuse Wiki" "https://oddmuse.org/wiki"
 	 utf-8 "ham" nil)
 	("Alex" "https://alexschroeder.ch/wiki"
+	 utf-8 "question" "Alex Schroeder")
+	("Software" "https://alexschroeder.ch/software"
 	 utf-8 "question" "Alex Schroeder"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
