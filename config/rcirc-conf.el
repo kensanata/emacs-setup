@@ -73,6 +73,7 @@
 		    "#perl"
 		    "#bussard"
 		    "#mastodon"
+		    "#pleroma"
 		    "#purism"
 		    "#gopherproject"))
 	("irc.sdf.org" ;; no TLS
