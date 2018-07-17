@@ -21,7 +21,8 @@
       ;; osascript -e "tell application \"Skim\"" -e "open \"$(pwd)/$1\"" -e "end tell"
       dired-guess-shell-alist-user
       (if (file-exists-p "/usr/bin/evince")
-	  '(("\\.pdf\\'" "evince"))
+	  '(("\\.pdf\\'" "evince")
+	    ("\\.jpg\\'" "feh"))
 	'(("\\.pdf\\'" "skim")
 	  ("." "open")))
       dired-listing-switches "-alv")
