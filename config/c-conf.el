@@ -13,3 +13,16 @@
     (add-to-list 'c-default-style '(c-mode . "k&r"))))
 
 (setq tags-revert-without-query t)
+
+(define-abbrev c-mode-abbrev-table "co" "" 'asc:c-comment)
+
+(define-skeleton asc:c-comment
+  "Insert a multi-line comment.
+
+/**
+ * Like this.
+ */"
+  ?\n
+  "/**\n"
+  " * " _ "\n"
+  " */\n")
