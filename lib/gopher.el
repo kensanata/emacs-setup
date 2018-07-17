@@ -109,14 +109,17 @@
 
 (defun gopher (address)
   (interactive "MGopher URL: ")
-  (let* ((split-address (split-string (replace-regexp-in-string "^gopher:\/\/" "" address) "/"))
+  (let* ((split-address (split-string (replace-regexp-in-string
+				       "^gopher:\/\/" "" address) "/"))
          (split-url (split-string (car split-address) ":"))
 	 (hostname (car split-url))
 	 (port (nth 1 split-url))
-         (selector (mapconcat 'identity (cdr split-address) "/")))
-    (if (< (length selector) 1)
-        (gopher-goto-url hostname port nil)
-      (gopher-goto-url hostname port selector))))
+	 (content-type (cdr (assoc (nth 1 split-address)
+				   gopher-available-content-types)))
+         (selector (when (> (length split-address) 1)
+		     (mapconcat 'identity
+				(cons "" (nthcdr 2 split-address)) "/"))))
+    (gopher-goto-url hostname port selector content-type)))
 
 (defun gopher-goto-url (&optional hostname port selector content-type
                                   search-argument no-history)
@@ -128,7 +131,7 @@
       (setq content-type 'directory-listing))
   (if (not port)
       (setq port "70"))
-  (unless no-history (gopher-history-new hostname port selector))
+  (unless no-history (gopher-history-new hostname port selector content-type))
   (gopher-prepare-buffer hostname port selector)
   (setq gopher-network-args (append (list
                                      :name "gopher"
@@ -277,20 +280,25 @@
 
 (defun gopher-goto-url-at-point (&optional arg)
   (interactive)
-  (move-beginning-of-line nil)
-  (let* ((properties (text-properties-at (point)))
-        (content-type (gopher-get-content-type properties)))
-    (cond ((eq content-type 'search-query)
-	   (call-interactively 'gopher-goto-search))
-	  ((eq content-type 'write)
-	   (gopher-goto-write (getf properties :hostname)
-			      (getf properties :port)
-			      (getf properties :selector)))
-	  (t
-	   (gopher-goto-url (getf properties :hostname)
-			    (getf properties :port)
-			    (getf properties :selector)
-			    content-type)))))
+  (let ((url (url-get-url-at-point)))
+    (if url
+	(gopher url)
+      (move-beginning-of-line nil)
+      (let* ((properties (text-properties-at (point)))
+	     (content-type (gopher-get-content-type properties)))
+	(cond ((eq content-type 'search-query)
+	       (call-interactively 'gopher-goto-search))
+	      ((eq content-type 'write)
+	       (gopher-goto-write (getf properties :hostname)
+				  (getf properties :port)
+				  (getf properties :selector)))
+	      (content-type
+	       (gopher-goto-url (getf properties :hostname)
+				(getf properties :port)
+				(getf properties :selector)
+				content-type))
+	      (t
+	       (error "Nothing to follow, here.")))))))
 
 (defun gopher-goto-parent (&optional arg)
   (interactive)
@@ -384,7 +392,7 @@ location."
       (setq gopher-history-ring-pointer Nth-history-element))
     (car Nth-history-element)))
 
-(defun gopher-history-new (hostname port selector &optional replace)
+(defun gopher-history-new (hostname port selector content-type &optional replace)
   "Make (cons HOSTNAME PORT SELECTOR) the latest item in gopher's history.
 Set `gopher-history-ring-pointer' to point to it. Optional third
 argument REPLACE non-nil means that this item will replace the
@@ -392,9 +400,10 @@ front of the history ring, rather than being added to the list."
   (let ((address (car gopher-history-ring)))
     (when (and (equal hostname (nth 0 address))
 	       (equal port (nth 1 address))
-	       (equal selector (nth 2 address)))
+	       (equal selector (nth 2 address))
+	       (equal content-type (nth 3 content-type)))
       (setq replace t)))
-  (let ((entry (list hostname port selector)))
+  (let ((entry (list hostname port selector content-type)))
     (if (and replace gopher-history-ring)
         (setcar gopher-history-ring entry)
       (push entry gopher-history-ring)
@@ -415,7 +424,8 @@ If STEP is negative, move forward through the history."
     (gopher-goto-url (nth 0 address)
 		     (nth 1 address)
 		     (nth 2 address)
-                     nil nil t)))
+		     (nth 3 address)
+                     nil t)))
 
 (defalias 'gopher-history-backwards 'gopher-history)
 
