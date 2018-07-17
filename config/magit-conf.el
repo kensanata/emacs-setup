@@ -3,6 +3,22 @@
 
 (asc:package-install 'magit)
 
+;; New option for diff
+
+(eval-after-load "magit-diff"
+  '(asc:add-magit-diff-text-option))
+
+(defun asc:add-magit-diff-text-option ()
+  (dolist (popup (list magit-diff-popup
+		       magit-diff-refresh-popup
+		       magit-diff-mode-refresh-popup
+		       magit-revision-mode-refresh-popup))
+    (let ((switches (plist-member popup :switches)))
+      (when switches
+	(nconc (cadr switches) (list (list ?t "Treat as text files" "--text")))))))
+
+;; Cygwin
+
 (defadvice magit-expand-git-file-name
     (before magit-expand-git-file-name-cygwin activate)
   "Handle Cygwin directory names such as /cygdrive/c/*
