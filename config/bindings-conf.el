@@ -5,6 +5,9 @@
 
 (global-set-key (kbd "C-c g") 'magit-status)
 
+(global-set-key (kbd "C-c w") 'eww)
+(global-set-key (kbd "C-c W") 'eww-list-bookmarks)
+
 (global-set-key (kbd "C-<tab>") 'hippie-expand)
 (setq hippie-expand-try-functions-list
       '(try-expand-all-abbrevs try-expand-dabbrev
