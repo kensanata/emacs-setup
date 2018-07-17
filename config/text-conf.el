@@ -17,3 +17,12 @@
 (move-text-default-bindings)
 
 (add-hook 'text-mode-hook 'abbrev-mode)
+
+;; insert date
+(defun insert-date (&optional arg)
+  "Insert the current date.
+With optional ARG, insert the time as well.
+This uses ISO date and a 24h clock."
+  (interactive "P")
+  (insert (format-time-string
+	   (if arg "%F %R" "%F"))))
