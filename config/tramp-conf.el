@@ -23,6 +23,11 @@
   "Connect to my favorite server using Tramp."
   (find-file "/alex@alexschroeder.ch#882:"))
 
+(defun megabombus ()
+  (interactive)
+  "Connect to our other laptop server using Tramp."
+  (find-file "/alex@megabombus.local:"))
+
 (defun the-shire ()
   (interactive)
   "Connect to a backup server using Tramp."
