@@ -5,6 +5,8 @@
   (idle-highlight-mode 1)
   (local-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
+  (define-abbrev c-mode-abbrev-table "fu" "" 'asc:c-comment-function)
+  (define-abbrev c-mode-abbrev-table "co" "" 'asc:c-comment)
   (setq c-basic-offset 8
 	fill-column 120))
 
@@ -14,15 +16,17 @@
 
 (setq tags-revert-without-query t)
 
-(define-abbrev c-mode-abbrev-table "co" "" 'asc:c-comment)
-
-(define-skeleton asc:c-comment
+(define-skeleton asc:c-comment-function
   "Insert a multi-line comment.
 
 /**
  * Like this.
  */"
-  ?\n
+  nil
   "/**\n"
   " * " _ "\n"
   " */\n")
+
+(define-skeleton asc:c-comment
+  "Insert a single-line comment. /* like this */"
+  nil "/* " _ " */")
