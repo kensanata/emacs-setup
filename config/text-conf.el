@@ -16,6 +16,11 @@
 (asc:package-install 'move-text)
 (move-text-default-bindings)
 
+(font-lock-add-keywords
+ 'text-mode
+ '(("\\<will\\>" . 'font-lock-warning-face)))
+		        
+
 (add-hook 'text-mode-hook 'abbrev-mode)
 
 ;; insert date
