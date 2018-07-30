@@ -120,6 +120,7 @@
 ;; colors
 (asc:package-install 'rcirc-color)
 (eval-after-load 'rcirc '(require 'rcirc-color))
+(setq rcirc-color-other-attributes '(:weight bold))
 
 ;; prepare a suitable list of colors
 ;; https://stackoverflow.com/questions/3116260/given-a-background-color-how-to-get-a-foreground-color-that-makes-it-readable-o#3118280
