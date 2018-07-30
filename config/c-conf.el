@@ -25,7 +25,7 @@
   nil
   "/**\n"
   " * " _ "\n"
-  " */\n")
+  " */")
 
 (define-skeleton asc:c-comment
   "Insert a single-line comment. /* like this */"
