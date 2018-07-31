@@ -11,7 +11,11 @@
   (error))
 
 (asc:package-install 'foggy-night-theme)
-(load-theme 'foggy-night t)
-(set-face-background 'cursor "#aaa")
+(condition-case err
+    (progn
+      (load-theme 'foggy-night t t)
+      (set-face-background 'cursor "#aaa"))
+  (error))
+
 (defface rcirc-late-fix-face '((t (:foreground "white" :underline t)))
   "Overwriting the default")
