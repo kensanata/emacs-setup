@@ -5,10 +5,14 @@
       ((find-font (font-spec :name "Iosevka"))
        (set-face-attribute 'default nil :family "Iosevka" :height 160))
       ((find-font (font-spec :name "Noto Mono"))
-       (set-face-attribute 'default nil :family "Noto Mono" :height 140))
-      ((find-font (font-spec :name "Fantasque Sans Mono"))
-       (set-face-attribute 'default nil :family "Fantasque Sans Mono" :height 160))
-      ((find-font (font-spec :name "Fira Code"))
-       (set-face-attribute 'default nil :family "Fira Code" :height 140)
-       (when (functionp 'mac-auto-operator-composition-mode)
-	 (mac-auto-operator-composition-mode))))
+       (set-face-attribute 'default nil :family "Noto Mono" :height 140)))
+
+(defun iosevka ()
+  "Switch to Iosevka font."
+  (interactive)
+  (set-face-attribute 'default nil :family "Iosevka"))
+
+(defun noto ()
+  "Switch to Noto font."
+  (interactive)
+  (set-face-attribute 'default nil :family "Noto Mono"))
