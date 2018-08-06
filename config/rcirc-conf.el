@@ -68,6 +68,7 @@
 	 :port 6697 :encryption tls
 	 :channels ("#emacs"
 		    "#emacs-ops"
+		    "#org-mode"
 		    "#rcirc"
 		    "#wiki"
 		    "#oddmuse"
