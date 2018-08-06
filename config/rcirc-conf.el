@@ -220,16 +220,16 @@
 ;;   '((((background dark)) :background "dim gray")
 ;;     (t :background "lemon chiffon"))
 ;;   "My nick when mentioned by others.")
-;; (defface rcirc-my-nick '((t :foreground "plum"))
-;;   "My own nick for rcirc.")
+(defface rcirc-my-nick '((t (:inherit bold)))
+  "My own nick for rcirc.")
 ;; (defface rcirc-track-nick '((t :inherit rcirc-my-nick))
 ;;   "The face used indicate activity directed at you.")
 ;; (defface rcirc-nick-in-message-full-line '((t))
 ;;   "The face used emphasize the entire message when your nick is mentioned.")
 ;; (defface rcirc-track-keyword '((t (:inherit bold)))
 ;;   "The face used indicate activity directed at you.")
-;; (defface rcirc-prompt '((t :foreground "orchid"))
-;;   "My prompt for rcirc.")
+(defface rcirc-prompt '((t (:inherit bold)))
+  "My prompt for rcirc.")
 
 ;;; mode invisible
 
