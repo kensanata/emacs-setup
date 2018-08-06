@@ -7,7 +7,8 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (define-abbrev c-mode-abbrev-table "fu" "" 'asc:c-comment-function)
   (define-abbrev c-mode-abbrev-table "co" "" 'asc:c-comment)
-  (setq c-basic-offset 8
+  (setq c-basic-offset 4
+	tab-width 4
 	fill-column 120))
 
 (eval-after-load "cc-vars"
