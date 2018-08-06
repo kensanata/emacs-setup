@@ -50,6 +50,7 @@
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
       rcirc-fill-column 79; side-by-side on my laptop
+      rcirc-fill-column 65; using a large font
       rcirc-max-message-length 0; live dangerously!
       rcirc-default-nick "kensanata"
       rcirc-keywords '("ken" "kens" "kensa" "alex")
