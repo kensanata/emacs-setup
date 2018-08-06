@@ -121,6 +121,7 @@
 
 ;; colors
 (asc:package-install 'rcirc-color)
+;; (load-file "~/src/elpa/packages/rcirc-color/rcirc-color.el")
 (eval-after-load 'rcirc '(require 'rcirc-color))
 (setq rcirc-color-other-attributes '(:weight bold))
 
