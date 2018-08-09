@@ -52,6 +52,8 @@
 	("Alex" "https://alexschroeder.ch/wiki"
 	 utf-8 "question" "Alex Schroeder")
 	("Software" "https://alexschroeder.ch/software"
+	 utf-8 "question" "Alex Schroeder")
+	("Food" "https://communitywiki.org/food"
 	 utf-8 "question" "Alex Schroeder"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
