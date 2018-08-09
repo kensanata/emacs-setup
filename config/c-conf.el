@@ -31,3 +31,25 @@
 (define-skeleton asc:c-comment
   "Insert a single-line comment. /* like this */"
   nil "/* " _ " */")
+
+(defvar mastodon-documentation
+  '(("https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#top"
+     . "*String Utility Functions*")
+    ("https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#start-of-content"
+     . "*Mastodon API*")
+    ("https://developer.gnome.org/glib/stable/glib-Strings.html#top" . "*Strings*")
+    ("https://developer.gnome.org/glib/stable/glib-Unicode-Manipulation.html#top"
+     . "*Unicode Manipulation*")
+    ("https://developer.gnome.org/glib/stable/glib-Singly-Linked-Lists.html#top" . "*Single Linked Lists*")
+    ("https://developer.gnome.org/glib/stable/glib-Hash-Tables.html#top" . "*Hash Tables*"))
+ "List of cons cells with doc URL and buffer name.")
+
+(defun mastodon-documentation ()
+  "Load all the documentation documents."
+  (interactive)
+  (dolist (cell mastodon-documentation)
+    (unless (get-buffer (cdr cell))
+      (set-buffer (get-buffer-create (cdr cell)))
+      ;; this makes eww reuse the buffer we just created
+      (eww-mode)
+      (eww (car cell)))))
