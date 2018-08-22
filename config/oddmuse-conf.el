@@ -128,10 +128,11 @@ strings.")
 	  (format-time-string "%Y-%m-%d %H:%M" (current-time))
 	  "\n"))
 
-(setq oddmuse-tags '("RPG" "Old School" "RSP" "Map"
-		     "Software" "Copyright"
-		     "Books" "Movies" "Music" "Life" "Podcast"
-		     "Web" "Oddmuse" "Wikis" "Blogs"
+(setq oddmuse-tags '("RPG" "Old School" "RSP" "Maps"
+		     "Software" "Copyright" "Social Media"
+		     "Administration" "Programming" "Mastodon" "Trunk"
+		     "Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
+		     "Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
 		     "Switzerland" "Israel" "Palestine" "USA" "Germany"))
 
 (defun oddmuse-creole-table (start end rows)
