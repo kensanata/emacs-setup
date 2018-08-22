@@ -331,6 +331,8 @@ instead of `rcirc-markup-urls'."
 			"PIC")
 		       ((string-match "\\.gif$" url)
 			"GIF");; these are usually worse than pics
+		       ((string-match "^https://twitter\\.com" url)
+			"TWIT");; these are usually worse
 		       (t "LINK"))))
       (make-text-button start end
 			'face 'rcirc-url
