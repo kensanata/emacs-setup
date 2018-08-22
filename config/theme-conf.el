@@ -10,6 +10,13 @@
     (load-theme 'brutalist t t)
   (error))
 
+(custom-theme-set-faces
+ 'brutalist
+ '(rcirc-my-nick ((t (:inherit bold))))
+ '(rcirc-prompt ((t (:inherit bold)))))
+
+(enable-theme 'brutalist)
+
 (asc:package-install 'foggy-night-theme)
 (condition-case err
     (progn
@@ -17,5 +24,6 @@
       (set-face-background 'cursor "#aaa"))
   (error))
 
-(defface rcirc-late-fix-face '((t (:foreground "white" :underline t)))
-  "Overwriting the default")
+(custom-theme-set-faces
+ 'foggy-night
+ '(rcirc-late-fix-face ((t (:foreground "white" :underline t)))))
