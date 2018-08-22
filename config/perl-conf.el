@@ -8,6 +8,7 @@
   (setq fill-column 80)
   (set (make-local-variable 'eldoc-documentation-function)
        'as/cperl-eldoc-documentation-function)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (idle-highlight-mode 1)
   (eldoc-mode 1))
 
