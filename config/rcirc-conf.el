@@ -350,3 +350,24 @@ instead of `rcirc-markup-urls'."
 ;; for mouse buttons. (rcirc-markup-urls nil nil) http://example.html
 ;; http://example.png http://example.jpg http://example.gif
 ;; http://example
+
+(eval-after-load 'rcirc
+  '(add-to-list 'rcirc-markup-text-functions 'asc:rcirc-dim-keywords))
+
+(defvar asc:rcirc-dim-keywords
+  '("favourited your status: "
+    "boosted your status: "
+    " followed you"
+    "You: ")
+  "Keywords which result in the entire message being dimmed.")
+
+(defun asc:rcirc-dim-keywords (_senders _response)
+  "Dim message if it contains particular phrases.
+Phrases to take are from `asc:rcirc-dim-keywords'.
+Each function takes two arguments, SENDER, and RESPONSE.  The
+buffer is narrowed with the text to be printed and the point is
+at the beginning of the ‘rcirc-text’ propertized text."
+  (dolist (str asc:rcirc-dim-keywords)
+    (goto-char (point-min))
+    (when (search-forward str nil t)
+      (rcirc-add-face (point-min) (point-max) 'rcirc-dim-nick))))

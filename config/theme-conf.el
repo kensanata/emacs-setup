@@ -13,6 +13,7 @@
 (custom-theme-set-faces
  'brutalist
  '(rcirc-my-nick ((t (:inherit bold))))
+ '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
 (enable-theme 'brutalist)
