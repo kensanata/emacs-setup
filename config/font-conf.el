@@ -3,9 +3,9 @@
 	    (find-font (font-spec :name "Consolas")))
        (set-face-attribute 'default nil :family "Consolas" :height 130))
       ((find-font (font-spec :name "Iosevka"))
-       (set-face-attribute 'default nil :family "Iosevka" :height 160))
+       (set-face-attribute 'default nil :family "Iosevka" :height 240))
       ((find-font (font-spec :name "Noto Mono"))
-       (set-face-attribute 'default nil :family "Noto Mono" :height 140)))
+       (set-face-attribute 'default nil :family "Noto Mono" :height 200)))
 
 (defun iosevka ()
   "Switch to Iosevka font."
