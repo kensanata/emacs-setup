@@ -63,6 +63,7 @@
 (defun oddmuse-my-init ()
   (cond ((string= oddmuse-wiki "Alex")
 	 (local-set-key (kbd "C-c C-t") 'oddmuse-tag)
+	 (asc:markdown-mode-basics)
 	 (font-lock-add-keywords
 	  nil
 	  '(("!!\\S-.*?\\S-?!!" . 'bold)
