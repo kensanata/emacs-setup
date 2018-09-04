@@ -358,7 +358,7 @@ instead of `rcirc-markup-urls'."
   '("favourited your status: "
     "boosted your status: "
     " followed you"
-    "You: ")
+    "You\\(, \\(direct\\|private\\|unlisted\\|public\\)\\)?: ")
   "Keywords which result in the entire message being dimmed.")
 
 (defun asc:rcirc-dim-keywords (_senders _response)
