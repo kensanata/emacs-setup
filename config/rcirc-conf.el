@@ -75,6 +75,7 @@
 		    "##emacs.de"
 		    "#emacswiki"
 		    "#perl"
+		    "#perl6"
 		    "#bussard"
 		    "#mastodon"
 		    "#pleroma"
