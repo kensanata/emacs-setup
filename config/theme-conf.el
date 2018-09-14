@@ -5,14 +5,15 @@
     (load-theme 'pink-bliss t t)
   (error))
 
-(add-to-list 'custom-theme-load-path "/home/alex/src/brutalist-theme.el")
+(asc:package-install 'brutalist-theme)
 (condition-case err
     (load-theme 'brutalist t t)
   (error))
 
 (custom-theme-set-faces
  'brutalist
- '(rcirc-my-nick ((t (:inherit bold))))
+ ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+ '(rcirc-my-nick ((t (:foreground "blue"))))
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
