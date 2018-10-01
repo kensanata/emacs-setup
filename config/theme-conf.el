@@ -5,7 +5,7 @@
     (load-theme 'pink-bliss t t)
   (error))
 
-(add-to-list 'custom-theme-load-path "/home/alex/src/brutalist-theme.el")
+(asc:package-install 'brutalist-theme)
 (condition-case err
     (load-theme 'brutalist t t)
   (error))
