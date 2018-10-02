@@ -15,20 +15,12 @@
      (rcirc-notify-add-hooks)))
 
 ;;; bitlbee
-;; (cond ((file-exists-p "/usr/sbin/bitlbee");; PureOS
-;;        (global-set-key (kbd "C-c e") 'asc:rcirc-start))
-;;       ((file-exists-p "/usr/local/sbin/bitlbee");; Mac
-;;        (autoload 'bitlbee-start "bitlbee" t)
-;;        (setq bitlbee-executable "/usr/local/sbin/bitlbee")
-;;        (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
-;;       ((file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
-;;        (autoload 'bitlbee-start "bitlbee" t)
-;;        (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
-;; 	     bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
-;;        (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
-;;       (t
-;;        (global-set-key (kbd "C-c e") 'asc:rcirc-start)))
+(when (file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
+  (autoload 'bitlbee-start "bitlbee" t)
+  (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
+ 	bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee"))
 
+(global-set-key (kbd "C-c b") 'bitlbee-start)
 (global-set-key (kbd "C-c e") 'asc:rcirc-start)
 
 (defun asc:rcirc-and-bitlbee-start ()
