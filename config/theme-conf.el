@@ -12,7 +12,8 @@
 
 (custom-theme-set-faces
  'brutalist
- '(rcirc-my-nick ((t (:inherit bold))))
+ ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+ '(rcirc-my-nick ((t (:foreground "blue"))))
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
