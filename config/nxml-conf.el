@@ -9,10 +9,11 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (define-abbrev nxml-mode-abbrev-table "ol"
     "" 'opml-outline)
-  (setq indent-tab-mode nil)
-  (setq c-basic-offset 2))
+  (setq indent-tab-mode nil
+	c-basic-offset 2
+	truncate-lines t))
 
 (define-skeleton opml-outline
   "Add a new entry to an OPML outline."
   "Feed: "
-  "<outline title=\"" _ "\" xmlUrl=\"" str "\"/>\n")
+  "<outline title=\"" _ "\" xmlUrl=\"" str "\"/>")
