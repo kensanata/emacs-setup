@@ -554,6 +554,31 @@ This command is used to reflect new pages to `oddmuse-pages-hash'."
   (add-to-list 'auto-mode-alist
                `(,(expand-file-name oddmuse-directory) . oddmuse-mode)))
 
+(defcustom oddmuse-markup
+  '(oddmuse-basic-markup
+    oddmuse-bbcode-markup
+    oddmuse-creole-markup
+    oddmuse-extended-markup
+    oddmuse-usemod-markup
+    oddmuse-usemod-html-markup)
+  "List of markup variables used for Oddmuse markup.
+For example:
+\(setq oddmuse-markup (oddmuse-basic-markup oddmuse-markdown-markup))"
+  :type '(repeat
+	  (choice
+	   (variable-item :tag "Basic" oddmuse-basic-markup)
+	   (variable-item :tag "BBcode" oddmuse-bbcode-markup)
+	   (variable-item :tag "Creole" oddmuse-creole-markup)
+	   (variable-item :tag "Extended" oddmuse-extended-markup)
+	   (variable-item :tag "Markdown" oddmuse-markdown-markup)
+	   (variable-item :tag "Usemod" oddmuse-usemod-markup)
+	   (variable-item :tag "Usemod HTML" oddmuse-usemod-html-markup))))
+
+(defvar oddmuse-markup-keywords nil
+  "The actual keywords used for `oddmuse-mode'
+based on the value of `oddmuse-markup'. It is recomputed
+every time Oddmues mode is activated.")
+
 (defvar oddmuse-creole-markup
   '(("^=[^=\n]+"
      0 '(face info-title-1
@@ -595,6 +620,43 @@ This command is used to reflect new pages to `oddmuse-pages-hash'."
      0 '(face shadow
 	      help-echo "Creole multiline code")))
     "Implement markup rules for the Creole markup extension.
+The rule to identify multiline blocks of code doesn't really work.")
+
+(defvar oddmuse-markdown-markup
+  '(("^# .*"
+     0 '(face info-title-1
+	      help-echo "Markdown H1")); # h1
+    ("^## .*"
+     0 '(face info-title-2
+	      help-echo "Markdown H2")); ## h2
+    ("^### .*"
+     0 '(face info-title-3
+	      help-echo "Markdown H3")); ### h3
+    ("^#### .*"
+     0 '(face info-title-4
+	      help-echo "Markdown H4")); #### h4
+    ("\\[\\([^\]]+\\)\\](\\([^\)]+\\))"
+     0 '(face link
+	      help-echo "Markdown link"))
+    ("\\_<\\*\\([^* \n]\\([^*\n]+\n\\)*?[^*\n]*?[^* \n]\\|[^* \n]\\)\\*"
+     0 '(face italic
+	      help-echo "Markdown emphasis")); *emphasis*
+    ("\\_<\\*\\*\\([^* \n]\\([^*\n]+\n\\)*?[^*\n]*?[^* \n]\\|[^* \n]\\)\\*\\*"
+     0 '(face bold
+	      help-echo "Markdown strong emphasis")); **strong emphasis**
+    ("^[0-9]+\\. "
+     0 '(face font-lock-constant-face
+	      help-echo "Markdown ordered list"))
+    ("^- "
+     0 '(face font-lock-constant-face
+	      help-echo "Markdown ordered list"))
+    ("^```\\(.*\n\\)+?```\n"
+     0 '(face shadow
+	      help-echo "Markdown multiline code"))
+    ("`\\([^` \n]\\([^`\n]+\n\\)*?[^`\n]*?[^` \n]\\|[^` \n]\\)`"
+     0 '(face shadow
+	      help-echo "Markdown code")))
+    "Implement markup rules for the Markdown markup extension.
 The rule to identify multiline blocks of code doesn't really work.")
 
 (defvar oddmuse-bbcode-markup
@@ -702,8 +764,7 @@ forces a reload of the page instead of just popping to the buffer
 if you are already editing the page.
 
 Customize `oddmuse-wikis' to add more wikis to the list.
-
-Font-locking is controlled by `oddmuse-markup-functions'.
+Customize `oddmuse-markup' to change font locking.
 
 \\{oddmuse-mode-map}"
   (set (make-local-variable 'oddmuse-minor)
@@ -712,13 +773,9 @@ Font-locking is controlled by `oddmuse-markup-functions'.
 
   ;; font-locking (case sensitive)
   (goto-address)
-  (setq font-lock-defaults
-	(list (append oddmuse-basic-markup
-		      oddmuse-bbcode-markup
-		      oddmuse-creole-markup
-		      oddmuse-extended-markup
-		      oddmuse-usemod-markup
-		      oddmuse-usemod-html-markup)))
+  (setq-local oddmuse-markup-keywords
+	      (apply 'append (mapcar 'symbol-value oddmuse-markup)))
+  (setq font-lock-defaults (list oddmuse-markup-keywords))
   (font-lock-mode 1)
 
   ;; HTML tags
