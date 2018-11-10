@@ -563,7 +563,7 @@ This command is used to reflect new pages to `oddmuse-pages-hash'."
     oddmuse-usemod-html-markup)
   "List of markup variables used for Oddmuse markup.
 For example:
-\(setq oddmuse-markup (oddmuse-basic-markup oddmuse-markdown-markup))"
+\(setq oddmuse-markup '(oddmuse-markdown-markup oddmuse-basic-markup))"
   :type '(repeat
 	  (choice
 	   (variable-item :tag "Basic" oddmuse-basic-markup)
@@ -635,7 +635,7 @@ The rule to identify multiline blocks of code doesn't really work.")
     ("^#### .*"
      0 '(face info-title-4
 	      help-echo "Markdown H4")); #### h4
-    ("\\[\\([^\]]+\\)\\](\\([^\)]+\\))"
+    ("\\[[^]]+\\]([^)]+)"
      0 '(face link
 	      help-echo "Markdown link"))
     ("\\_<\\*\\([^* \n]\\([^*\n]+\n\\)*?[^*\n]*?[^* \n]\\|[^* \n]\\)\\*"
