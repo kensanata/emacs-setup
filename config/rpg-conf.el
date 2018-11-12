@@ -158,35 +158,20 @@
 			    (t 0))))
 	  (when (and (widget-value (nth 1 character)))
 	    (setq gold (format (concat "%9d")
-			       (if (and (zerop share)
-					(< xp-per-person 100))
-				   0
-				 (+  (string-to-number gold)
-				     (* gold-per-person share)
-				     (- (widget-value (nth 5 character)))
-				     (widget-value (nth 6 character)))))
+			       (+  (string-to-number gold)
+				   (* gold-per-person share)
+				   (- (widget-value (nth 5 character)))
+				   (widget-value (nth 6 character))))
 		  xp (format (concat "%9d")
-			     (if (and (zerop share)
-				      (< xp-per-person 100))
-				 0
 			       (+  (string-to-number xp)
 				   (* gold-zu-xp-per-person share)
 				   xp-per-person
-				   (widget-value (nth 5 character))))))
+				   (widget-value (nth 5 character)))))
 	    (replace-match (concat "|" name
-                                   (make-string (max 0 (- 20 (length name))) ? )
+                                   (make-string (max 0 (- 30 (length name))) ? )
                                    "| " (cond ((widget-value (nth 2 character)) "1")
                                               ((widget-value (nth 3 character)) "½")
                                               ((widget-value (nth 4 character)) "⅓")
 					      (t "0")) " "
 				   "|" xp
 				   "|" gold))))))))
-
-(defun wilderlande-xp (xp)
-  (interactive "nXP pro Person: ")
-  (save-excursion
-    (while (re-search-forward "^\\* \\(.*?\\) -- \\([0-9]+\\)$" nil t)
-      (let ((name (match-string 1))
-	    (num (string-to-number (match-string 2))))
-	(when (y-or-n-p (format "War %s dabei?" name))
-	  (replace-match (format "* %s -- %d" name (+  num xp))))))))

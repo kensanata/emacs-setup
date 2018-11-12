@@ -3,7 +3,8 @@
 (when (require 'shr nil t)
   (require 'oddmuse-curl nil t))
 
-(setq oddmuse-username "AlexSchroeder")
+(setq oddmuse-username "AlexSchroeder"
+      oddmuse-markup '(oddmuse-basic-markup oddmuse-markdown-markup))
 (add-to-list 'auto-mode-alist '("/Users/alex/.emacs.d/oddmuse" . oddmuse-mode))
 (add-to-list 'vc-handled-backends 'oddmuse)
 (setq oddmuse-directory "~/.emacs.d/oddmuse")
@@ -63,7 +64,6 @@
 (defun oddmuse-my-init ()
   (cond ((string= oddmuse-wiki "Alex")
 	 (local-set-key (kbd "C-c C-t") 'oddmuse-tag)
-	 (asc:markdown-mode-basics)
 	 (font-lock-add-keywords
 	  nil
 	  '(("!!\\S-.*?\\S-?!!" . 'bold)
