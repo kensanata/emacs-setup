@@ -74,6 +74,9 @@
 		    "#gopherproject"))
 	("irc.sdf.org" ;; no TLS
 	 :channels ("#gopher"))
+	("tilde.chat"
+	 :port 6697 :encryption tls
+	 :channels ("#gopher"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
