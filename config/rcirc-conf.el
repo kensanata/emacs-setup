@@ -8,20 +8,21 @@
 (asc:package-install 'rcirc-styles)
 (eval-after-load 'rcirc '(require 'rcirc-styles))
 
-(asc:package-install 'rcirc-notify)
-(eval-after-load 'rcirc
-  '(progn
-     (require 'rcirc-notify)
-     (rcirc-notify-add-hooks)))
-
-;;; bitlbee
-(when (file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
-  (autoload 'bitlbee-start "bitlbee" t)
-  (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
- 	bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee"))
+;; (asc:package-install 'rcirc-notify)
+;; (eval-after-load 'rcirc
+;;   '(progn
+;;      (require 'rcirc-notify)
+;;      (rcirc-notify-add-hooks)))
 
 (global-set-key (kbd "C-c b") 'bitlbee-start)
 (global-set-key (kbd "C-c e") 'asc:rcirc-start)
+
+;;; Bitlbee for Windows...
+(when (file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
+  (autoload 'bitlbee-start "bitlbee" t)
+  (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
+ 	bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
+  (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
 
 (defun asc:rcirc-and-bitlbee-start ()
   "Start both bitlbee and `rcirc'."
@@ -56,7 +57,7 @@
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
       ;; sometimes we have to use 71.11.84.232
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
-      `(("chat.freenode.net"
+      '(("chat.freenode.net"
 	 :port 6697 :encryption tls
 	 :channels ("#emacs"
 		    "#emacs-ops"
@@ -74,7 +75,7 @@
 		    "#gopherproject"))
 	("irc.sdf.org" ;; no TLS
 	 :channels ("#gopher"))
-	("tilde.chat"
+	("your.tilde.chat"
 	 :port 6697 :encryption tls
 	 :channels ("#gopher"))
 	;; ("flame.de.eu.darkmyst.org"
@@ -109,6 +110,15 @@
       rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
 			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"
 			  "urlinfo"))
+
+;; at the office...
+(when (string-match "^[A-Z]+[0-9]+$" system-name)
+  (let ((channels (plist-get (cdr (assoc "chat.freenode.net" rcirc-server-alist)) :channels)))
+    (when channels
+      (dolist (channel '("#sql"))
+	(unless (member channel channels)
+	  ;; modify in place
+	  (nconc channels (list channel)))))))
 
 ;; no more splitting of messages at 420 characters
 (eval-after-load 'rcirc
