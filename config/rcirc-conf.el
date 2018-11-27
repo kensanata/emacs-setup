@@ -69,6 +69,7 @@
 		    "#perl"
 		    "#perl6"
 		    "#bussard"
+		    "#fennel"
 		    "#mastodon"
 		    "#pleroma"
 		    "#gopherproject"))
