@@ -78,7 +78,7 @@
 	 :channels ("#gopher"))
 	("your.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#gopher"))
+	 :channels ("#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
