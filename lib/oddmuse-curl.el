@@ -951,7 +951,9 @@ Use a prefix argument to override this."
   (let ((list (gethash oddmuse-wiki oddmuse-pages-hash)))
     (when (not (member oddmuse-page-name list))
       (puthash oddmuse-wiki (cons oddmuse-page-name list) oddmuse-pages-hash)))
-  (and buffer-file-name (basic-save-buffer))
+  (if buffer-file-name
+      (basic-save-buffer)
+    (write-file (make-temp-file "oddmuse")))
   (let ((filename buffer-file-name))
     ;; bind the current filename to `filename' so that it will get
     ;; picked up by `oddmuse-post-command'
