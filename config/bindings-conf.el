@@ -5,9 +5,6 @@
 
 (global-set-key (kbd "C-c g") 'magit-status)
 
-(global-set-key (kbd "C-c g") 'gplus-browse-archive)
-(autoload 'gplus-browse-archive "gplus-browser" nil t)
-
 (global-set-key (kbd "C-c w") 'eww)
 (global-set-key (kbd "C-c W") 'eww-list-bookmarks)
 
