@@ -1,5 +1,7 @@
 ;;; Oddmuse
 
+(add-to-list 'load-path "~/src/oddmuse-curl")
+
 (when (require 'shr nil t)
   (require 'oddmuse-curl nil t))
 
@@ -129,12 +131,12 @@ strings.")
 	  (format-time-string "%Y-%m-%d %H:%M" (current-time))
 	  "\n"))
 
-(setq oddmuse-tags '("RPG" "Old School" "RSP" "Maps"
-		     "Software" "Copyright" "Social Media"
+(setq oddmuse-tags '("RPG" "Old School" "RSP" "Maps" "Pictures" "Philosophy"
+		     "Software" "Copyright" "Social Media" "Gadgets"
 		     "Administration" "Programming" "Mastodon" "Trunk"
 		     "Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
 		     "Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
-		     "Switzerland" "Israel" "Palestine" "USA" "Germany"))
+		     "Switzerland" "USA" "Germany"))
 
 (defun oddmuse-creole-table (start end rows)
   "Transpose cells into a table.
