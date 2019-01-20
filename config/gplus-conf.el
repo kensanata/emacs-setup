@@ -3,4 +3,4 @@
 (autoload 'gplus-browse-archive "gplus-browser.el"
   "Browse G+ Archive" t)
 
-(global-set-key (kbd "C-c g") 'gplus-browse-archive)
+(global-set-key (kbd "C-c a") 'gplus-browse-archive)
