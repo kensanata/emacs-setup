@@ -138,7 +138,7 @@ strings.")
 	"Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
 	"Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
 	"Switzerland" "USA" "Germany" "Google Plus" "Diaspora"
-	"Keep It Short" "Hellebarden und Helme"))
+	"Keep It Short" "Hellebarden und Helme" "Pendragon"))
 
 (defun oddmuse-creole-table (start end rows)
   "Transpose cells into a table.
