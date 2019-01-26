@@ -8,6 +8,7 @@
 (asc:package-install 'brutalist-theme)
 (condition-case err
     (load-theme 'brutalist t t)
+    (load-theme 'brutalist-dark t t)
   (error))
 
 (custom-theme-set-faces
