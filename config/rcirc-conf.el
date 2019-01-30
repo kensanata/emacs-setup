@@ -149,27 +149,32 @@ We have to wait for a second before joining them."
 ;; To reset map (setq rcirc-color-mapping (make-hash-table :test 'equal))
 ;; Delay setting the colors until the background color is defined.
 
-(eval-after-load 'rcirc
-  '(setq rcirc-colors
-	 (let* ((candidates nil)
-		(color nil)
-		(y1 (rcirc-colors-Y (face-background 'default)))
-		(dark (< y1 0.5))
-		(upper-limit (if dark 0.8 0.3))
-		(lower-limit (if dark 0.6 0.0)))
-	   (dolist (item color-name-rgb-alist)
-	     (setq color (car item))
-	     (unless (color-gray-p color)
-	       ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
-	       ;; Y(b) is the brightness (luminance) of the brighter
-	       ;; color and Y(d) is the brightness of the darker color.
-	       (let* ((y2 (rcirc-colors-Y color))
-		      (r (if (> y1 y2)
-			     (/ (+ y1 0.05) (+ y2 0.05))
-			   (/ (+ y2 0.05) (+ y1 0.05)))))
-		 (when (and (> r 4.5) (> y2 lower-limit) (< y2 upper-limit))
-		   (setq candidates (cons color candidates))))))
-	   candidates)))
+(defun rcirc-color-reset ()
+  "Reset the colours."
+  (interactive)
+  (setq rcirc-colors
+	(let* ((candidates nil)
+	       (color nil)
+	       (y1 (rcirc-colors-Y (face-background 'default)))
+	       (dark (< y1 0.5))
+	       (upper-limit (if dark 0.8 0.3))
+	       (lower-limit (if dark 0.6 0.0)))
+	  (dolist (item color-name-rgb-alist)
+	    (setq color (car item))
+	    (unless (color-gray-p color)
+	      ;; Contrast ration is (Y(b) + 0.05) / (Y(d) + 0.05) where
+	      ;; Y(b) is the brightness (luminance) of the brighter
+	      ;; color and Y(d) is the brightness of the darker color.
+	      (let* ((y2 (rcirc-colors-Y color))
+		     (r (if (> y1 y2)
+			    (/ (+ y1 0.05) (+ y2 0.05))
+			  (/ (+ y2 0.05) (+ y1 0.05)))))
+		(when (and (> r 4.5) (> y2 lower-limit) (< y2 upper-limit))
+		  (setq candidates (cons color candidates))))))
+	  candidates))
+  (setq rcirc-color-mapping (make-hash-table :test 'equal)))
+
+(eval-after-load 'rcirc '(rcirc-color-reset))
 
 (eval-after-load 'rcirc
   '(defun-rcirc-command encoding (arg)
