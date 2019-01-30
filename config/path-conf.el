@@ -22,3 +22,7 @@
 ;; (asc:add-to-PATH "~/perl5/bin/")
 ;; This is wrong: "ListUtil.c: loadable library and perl binaries are mismatched (got handshake key 0xd600000, needed 0xd880000)"
 ;; (setenv "PERL5LIB" "/home/alex/perl5/lib/perl5")
+
+;; Perl 6
+(asc:add-to-PATH "~/rakudo/bin/")
+(asc:add-to-PATH "~/rakudo/share/perl6/site/bin/")

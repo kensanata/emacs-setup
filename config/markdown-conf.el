@@ -1,5 +1,7 @@
 (asc:package-install 'markdown-mode)
 
+(add-hook 'markdown-mode-hook 'english)
+
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 
@@ -14,7 +16,7 @@
     (setcar item (1- (car item))))
   toc-structure)
 
-;; The Markdown files I write using IA Writer use newlines to separate
+;; The Markdown files I write using iA Writer use newlines to separate
 ;; paragraphs. That's why I need Visual Line Mode. I also need to
 ;; disable M-q. If I fill paragraphs, that introduces unwanted
 ;; newlines.

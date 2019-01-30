@@ -1,5 +1,7 @@
 ;;; Oddmuse
 
+(add-to-list 'load-path "~/src/oddmuse-curl")
+
 (when (require 'shr nil t)
   (require 'oddmuse-curl nil t))
 
@@ -44,8 +46,6 @@
 	 utf-8 "frodo" "Alex")
 	("Links to Wisdom" "https://campaignwiki.org/wiki/LinksToWisdom"
 	 utf-8 "frodo" "Alex")
-	("Wilderlande" "https://campaignwiki.org/wiki/Wilderlande"
-	 utf-8 "frodo" "Alex")
 	("Community Wiki" "https://communitywiki.org/wiki"
 	 utf-8 "question" nil)
 	("Oddmuse Wiki" "https://oddmuse.org/wiki"
@@ -55,7 +55,9 @@
 	("Software" "https://alexschroeder.ch/software"
 	 utf-8 "question" "Alex Schroeder")
 	("Food" "https://communitywiki.org/food"
-	 utf-8 "question" "Alex Schroeder"))
+	 utf-8 "question" "Alex Schroeder")
+	("MondscheinSaga" "https://communitywiki.org/wiki/MondscheinSaga"
+	 utf-8 "frodo" "Alex"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
 (add-hook 'oddmuse-mode-hook 'flyspell-mode)
@@ -129,12 +131,14 @@ strings.")
 	  (format-time-string "%Y-%m-%d %H:%M" (current-time))
 	  "\n"))
 
-(setq oddmuse-tags '("RPG" "Old School" "RSP" "Maps"
-		     "Software" "Copyright" "Social Media"
-		     "Administration" "Programming" "Mastodon" "Trunk"
-		     "Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
-		     "Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
-		     "Switzerland" "Israel" "Palestine" "USA" "Germany"))
+(setq oddmuse-tags
+      '("RPG" "Old School" "RSP" "Maps" "Pictures" "Philosophy"
+	"Software" "Copyright" "Social Media" "Gadgets" "Administration"
+	"Programming" "Mastodon" "Trunk" "Halberts and Helmets"
+	"Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
+	"Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
+	"Switzerland" "USA" "Germany" "Google Plus" "Diaspora"
+	"Keep It Short" "Hellebarden und Helme" "Pendragon"))
 
 (defun oddmuse-creole-table (start end rows)
   "Transpose cells into a table.

@@ -84,8 +84,8 @@ We have to wait for a second before joining them."
 		    "#mastodon"
 		    "#pleroma"
 		    "#gopherproject"))
-	("irc.sdf.org" ;; no TLS
-	 :channels ("#gopher"))
+	;; SDF gopher moved to tilde.chat
+	;; ("irc.sdf.org" :channels ("#gopher"))
 	("your.tilde.chat"
 	 :port 6697 :encryption tls
 	 :channels ("#gopher" "#cosmic"))
