@@ -21,7 +21,7 @@
 (when (file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
   (autoload 'bitlbee-start "bitlbee" t)
   (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
- 	bitlbee-options "-n -D -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
+ 	bitlbee-options "-n -F -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
   (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
 
 (defun asc:rcirc-and-bitlbee-start ()
@@ -38,7 +38,17 @@
   "Start `rcirc'."
   (interactive)
   (rcirc nil)
-  (rcirc-menu))
+  (rcirc-menu)
+  (run-with-idle-timer
+   1 nil
+   'asc:slack-join))
+
+(defun asc:slack-join: ()
+  "Sadly, the Slack channels don't seem to ready.
+We have to wait for a second before joining them."
+  (let* ((buf (get-buffer "*localhost*"))
+	 (process (get-buffer-process buf)))
+    (rcirc-join-channels process '("#allgemein" "#zufaellig"))))
 
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
@@ -96,16 +106,7 @@
 	 :port 6697 :encryption tls
 	 :channels ("#chat"))
 	("localhost"
-	 :channels ("&bitlbee"
-		    ;; "#rpg-traveller"
-		    ;; "#rpg-osr"
-		    ;; "#rpg-game-design"
-		    ;; "#rpg-indie-games"
-		    ;; "#rpg-game-masters"
-		    ;; "#rpg-announcements"
-		    ;; "#rpg-general"
-		    ;; "#osr-general"
-		    )))
+	 :channels ("&bitlbee")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
       rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
