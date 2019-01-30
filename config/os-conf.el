@@ -3,7 +3,9 @@
 (when (eq (window-system) 'w32)
   
   ;; (add-to-list 'dynamic-library-alist '(png "libpng15-15.dll"))
-  (add-to-list 'exec-path "C:/cygwin64/bin")
+  ;; make sure cygwin comes first, for ssh
+  (let ((path "C:/cygwin64/bin"))
+    (setq exec-path (cons path (delete path exec-path))))
   (add-to-list 'exec-path "C:/Program Files (x86)/Growl for Windows")
   (setenv "RSH" "SSH")
   (setenv "CYGWIN" "nodosfilewarning")
