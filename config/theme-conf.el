@@ -18,7 +18,18 @@
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
-(enable-theme 'brutalist)
+(require 'calendar)
+(setq calendar-latitude [47 22 north]
+      calendar-longitude [8 33 east])
+(let* ((date (calendar-current-date))
+       (data (solar-sunrise-sunset date))
+       (sunrise (car (car data)))
+       (sunset (car (cadr data)))
+       (time (decode-time))
+       (now (+ (nth 2 time) (/ (nth 1 time) 60.0))))
+  (if (and (< sunrise now) (< now sunset))
+      (enable-theme 'brutalist)
+    (enable-theme 'brutalist-dark)))
 
 (asc:package-install 'foggy-night-theme)
 (condition-case err
