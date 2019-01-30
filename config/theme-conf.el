@@ -18,6 +18,13 @@
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
+(custom-theme-set-faces
+ 'brutalist-dark
+ ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+ '(rcirc-my-nick ((t (:foreground "light blue"))))
+ '(rcirc-dim-nick ((t (:foreground "gray70"))))
+ '(rcirc-prompt ((t (:inherit bold)))))
+
 (require 'calendar)
 (setq calendar-latitude [47 22 north]
       calendar-longitude [8 33 east])
