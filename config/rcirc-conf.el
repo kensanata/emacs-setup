@@ -43,7 +43,7 @@
    1 nil
    'asc:slack-join))
 
-(defun asc:slack-join: ()
+(defun asc:slack-join ()
   "Sadly, the Slack channels don't seem to ready.
 We have to wait for a second before joining them."
   (let* ((buf (get-buffer "*localhost*"))
