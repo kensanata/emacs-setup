@@ -1,15 +1,11 @@
 (setq custom-theme-directory "~/.emacs.d/emacs-setup/lib")
 
-;; Use M-x enable-theme and M-x disable-theme
-(condition-case err
-    (load-theme 'pink-bliss t t)
-  (error))
-
 (asc:package-install 'brutalist-theme)
-(condition-case err
-    (load-theme 'brutalist t t)
-    (load-theme 'brutalist-dark t t)
-  (error))
+
+;; Use M-x enable-theme and M-x disable-theme
+(load-theme 'pink-bliss t t)
+(load-theme 'brutalist t t)
+(load-theme 'brutalist-dark t t)
 
 (custom-theme-set-faces
  'brutalist
@@ -25,26 +21,31 @@
  '(rcirc-dim-nick ((t (:foreground "gray70"))))
  '(rcirc-prompt ((t (:inherit bold)))))
 
-(require 'calendar)
+(require 'solar)
 (setq calendar-latitude [47 22 north]
       calendar-longitude [8 33 east])
-(let* ((date (calendar-current-date))
-       (data (solar-sunrise-sunset date))
-       (sunrise (car (car data)))
-       (sunset (car (cadr data)))
-       (time (decode-time))
-       (now (+ (nth 2 time) (/ (nth 1 time) 60.0))))
-  (if (and (< sunrise now) (< now sunset))
-      (enable-theme 'brutalist)
-    (enable-theme 'brutalist-dark)))
-
-(asc:package-install 'foggy-night-theme)
-(condition-case err
-    (progn
-      (load-theme 'foggy-night t t)
-      (set-face-background 'cursor "#aaa"))
-  (error))
-
-(custom-theme-set-faces
- 'foggy-night
- '(rcirc-late-fix-face ((t (:foreground "white" :underline t)))))
+(defun enable-appropriate-brutalist-theme ()
+  "Enable the brutalist or brutalist-dark theme
+depending on the time of day."
+  (interactive)
+  (let* ((date (calendar-current-date))
+	 (data (solar-sunrise-sunset date))
+	 (sunrise (car (car data)))
+	 (sunset (car (cadr data)))
+	 (time (decode-time))
+	 (now (+ (nth 2 time) (/ (nth 1 time) 60.0))))
+    (cond ((< now sunrise)
+	   (message "%dh and %02dmin to go until sunrise"
+		    (truncate (- sunrise now))
+		    (round (mod (* 60 (- sunrise now)) 60))))
+	  ((< now sunset)
+	   (message "%dh and %02dmin to go until sunset"
+		    (truncate (- sunset now))
+		    (round (mod (* 60 (- sunset now)) 60))))
+	  (t
+	   (message "%dh and 02%dmin to go until sunrise"
+		    (truncate (- (+ 24 sunrise) now))
+		    (- 60 (round (mod (* 60 (- (+ 24 sunrise) now)) 60))))))
+    (if (and (< sunrise now) (< now sunset))
+	(enable-theme 'brutalist)
+      (enable-theme 'brutalist-dark))))
