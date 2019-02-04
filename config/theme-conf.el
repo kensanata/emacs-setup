@@ -22,8 +22,11 @@
  '(rcirc-prompt ((t (:inherit bold)))))
 
 (require 'solar)
+
+;; set these to your current location
 (setq calendar-latitude [47 22 north]
       calendar-longitude [8 33 east])
+
 (defun enable-appropriate-brutalist-theme ()
   "Enable the brutalist or brutalist-dark theme
 depending on the time of day."
@@ -43,9 +46,12 @@ depending on the time of day."
 		    (truncate (- sunset now))
 		    (round (mod (* 60 (- sunset now)) 60))))
 	  (t
-	   (message "%dh and 02%dmin to go until sunrise"
+	   (message "%dh and %02dmin to go until sunrise"
 		    (truncate (- (+ 24 sunrise) now))
 		    (- 60 (round (mod (* 60 (- (+ 24 sunrise) now)) 60))))))
     (if (and (< sunrise now) (< now sunset))
 	(enable-theme 'brutalist)
       (enable-theme 'brutalist-dark))))
+
+;; and do it
+(enable-appropriate-brutalist-theme)
