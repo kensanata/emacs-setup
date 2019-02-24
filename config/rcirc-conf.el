@@ -83,7 +83,8 @@ We have to wait for a second before joining them."
 		    "#fennel"
 		    "#mastodon"
 		    "#pleroma"
-		    "#gopherproject"))
+		    "#gopherproject"
+		    "#deltachat"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
 	("your.tilde.chat"
