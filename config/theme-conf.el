@@ -12,14 +12,16 @@
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
  '(rcirc-my-nick ((t (:foreground "blue"))))
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
- '(rcirc-prompt ((t (:inherit bold)))))
+ '(rcirc-prompt ((t (:inherit bold))))
+ '(dictionary-reference-face ((t (:inherit default)))))
 
 (custom-theme-set-faces
  'brutalist-dark
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
  '(rcirc-my-nick ((t (:foreground "light blue"))))
  '(rcirc-dim-nick ((t (:foreground "gray70"))))
- '(rcirc-prompt ((t (:inherit bold)))))
+ '(rcirc-prompt ((t (:inherit bold))))
+ '(dictionary-reference-face ((t (:inherit default)))))
 
 (require 'solar)
 
