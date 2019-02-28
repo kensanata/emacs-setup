@@ -32,3 +32,6 @@
 (global-set-key (kbd "C-x 8 )") "｣")
 (global-set-key (kbd "C-x 8 y") "✓")
 (global-set-key (kbd "C-x 8 n") "✗")
+
+;; on Windows, the menu button is not mapped to M-x
+(global-set-key (kbd "<apps>") 'execute-extended-command)
