@@ -48,7 +48,7 @@
 We have to wait for a second before joining them."
   (let* ((buf (get-buffer "*localhost*"))
 	 (process (get-buffer-process buf)))
-    (rcirc-join-channels process '("#allgemein" "#zufaellig"))))
+    (rcirc-join-channels process '())))
 
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
