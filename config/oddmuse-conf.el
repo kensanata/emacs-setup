@@ -112,7 +112,7 @@ strings.")
   (save-excursion
     (when tags
       (goto-char (point-min))
-      (when (re-search-forward "Tags:\\( \\[\\[tag:.*?\\]\\]\\)+\n" nil t)
+      (when (re-search-forward "Tags:\\( \\[\\[tag:.*?\\]\\]\\)+\n?" nil t)
 	(replace-match ""))
       (goto-char (point-max))
       ;; make sure a new paragraph starts
@@ -138,7 +138,8 @@ strings.")
 	"Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
 	"Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
 	"Switzerland" "USA" "Germany" "Google Plus" "Diaspora"
-	"Keep It Short" "Hellebarden und Helme" "Pendragon"))
+	"Keep It Short" "Hellebarden und Helme" "Pendragon"
+	"Halberds and Helmets Podcast"))
 
 (defun oddmuse-creole-table (start end rows)
   "Transpose cells into a table.
