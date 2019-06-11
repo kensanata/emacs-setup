@@ -9,6 +9,8 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (define-abbrev nxml-mode-abbrev-table "ol"
     "" 'opml-outline)
+  (define-abbrev nxml-mode-abbrev-table "bl"
+    "" 'blogspot-opml-outline)
   (setq indent-tab-mode nil
 	c-basic-offset 2
 	truncate-lines t))
@@ -17,3 +19,8 @@
   "Add a new entry to an OPML outline."
   "Feed: "
   "<outline title=\"" _ "\" xmlUrl=\"" str "\"/>")
+
+(define-skeleton blogspot-opml-outline
+  "Add a new Blogspot entry to an OPML outline."
+  "Feed: "
+  "<outline title=\"" _ "\" xmlUrl=\"https://" str ".blogspot.com/feeds/posts/default\"/>")
