@@ -25,4 +25,6 @@
      (define-emms-simple-player mpg123 '(file url)
        (emms-player-simple-regexp "mp3" "mp2")
        "mpg123")
-     (setq emms-player-list '(emms-player-mpg123)))))
+     (setq emms-player-list '(emms-player-mpg123)))
+   (when (executable-find "ogg123")
+     (add-to-list 'emms-player-list 'emms-player-ogg123))))
