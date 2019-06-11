@@ -13,7 +13,11 @@
  '(rcirc-my-nick ((t (:foreground "blue"))))
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold))))
- '(dictionary-reference-face ((t (:inherit default)))))
+ '(dictionary-reference-face ((t (:inherit default))))
+ '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
+ '(wgrep-done-face ((t (:inherit default))))
+ '(wgrep-face ((t (:background "aquamarine1"))))
+ '(wgrep-file-face ((t (:inherit default)))))
 
 (custom-theme-set-faces
  'brutalist-dark
@@ -21,7 +25,11 @@
  '(rcirc-my-nick ((t (:foreground "light blue"))))
  '(rcirc-dim-nick ((t (:foreground "gray70"))))
  '(rcirc-prompt ((t (:inherit bold))))
- '(dictionary-reference-face ((t (:inherit default)))))
+ '(dictionary-reference-face ((t (:inherit default))))
+ '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
+ '(wgrep-done-face ((t (:inherit default))))
+ '(wgrep-face ((t (:background "aquamarine4"))))
+ '(wgrep-file-face ((t (:inherit default)))))
 
 (require 'solar)
 
