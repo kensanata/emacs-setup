@@ -27,3 +27,17 @@
   (unless flyspell-mode
     (flyspell-mode t))
   (flyspell-buffer))
+
+(eval-after-load "ispell"
+  '(defun ispell-get-decoded-string (n)
+     "Get the decoded string in slot N of the descriptor of the current dict."
+     (let* ((slot (or
+		   (assoc ispell-current-dictionary ispell-local-dictionary-alist)
+		   (assoc ispell-current-dictionary ispell-dictionary-alist)
+		   (error "No data for dictionary \"%s\" in `ispell-local-dictionary-alist' or `ispell-dictionary-alist'"
+			  ispell-current-dictionary)))
+            (str (nth n slot)))
+       (when (stringp str)
+	 ;; no decoding!
+         str))))
+
