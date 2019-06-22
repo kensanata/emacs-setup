@@ -27,3 +27,18 @@
 	'(("\\.pdf\\'" "skim")
 	  ("." "open")))
       dired-listing-switches "-alv")
+
+(add-hook 'image-dired-thumbnail-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "t l") 'asc:file-label-edit)
+	    (local-set-key (kbd "S-SPC") 'image-dired-display-previous-thumbnail-original)))
+
+(defun asc:file-label-edit ()
+  "Edit the text file for the image at point.
+This is used for `image-dired'."
+  (interactive)
+  (find-file (concat (file-name-sans-extension
+		      (image-dired-original-file-name))
+		     ".txt")))
+
+(setq image-dired-thumb-margin 5)
