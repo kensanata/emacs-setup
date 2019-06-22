@@ -16,7 +16,7 @@
  '(dictionary-reference-face ((t (:inherit default))))
  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
  '(wgrep-done-face ((t (:inherit default))))
- '(wgrep-face ((t (:background "aquamarine1"))))
+ '(wgrep-face ((t (:inherit default))))
  '(wgrep-file-face ((t (:inherit default)))))
 
 (custom-theme-set-faces
@@ -28,7 +28,7 @@
  '(dictionary-reference-face ((t (:inherit default))))
  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
  '(wgrep-done-face ((t (:inherit default))))
- '(wgrep-face ((t (:background "aquamarine4"))))
+ '(wgrep-face ((t (:inherit default))))
  '(wgrep-file-face ((t (:inherit default)))))
 
 (require 'solar)
