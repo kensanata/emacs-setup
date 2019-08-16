@@ -509,3 +509,47 @@ cells by rows first."
   (when markdown-marginalize-headers
     (add-hook 'window-configuration-change-hook
               #'markdown-marginalize-update-current nil t)))
+
+(defvar software-projects nil
+  "The known software projects.")
+
+(defun software-get-projects (&optional no-cache)
+  "Get the list projects from the main page of the Software wiki
+or from the cache. Use a prefix argument to reset the cache."
+  (interactive "P")
+  (or software-projects
+      (setq software-projects
+	    (let* ((url "https://alexschroeder.ch/software/raw/Software")
+		   (buf (url-retrieve-synchronously url))
+		   (regexp "\\[\\[\\(.*?\\)\\]\\]")
+		   projects)
+	      (with-current-buffer buf
+		(while (re-search-forward regexp nil t)
+		  (setq projects (cons (match-string 1) projects))))
+	      projects))))
+
+(defun software-issue (project pagename)
+  "Create a new issue on the software issue."
+  (interactive (list (completing-read "Project: " (software-get-projects))
+		     (read-string "Title: ")))
+  ;; a lot of code from `oddmuse-edit'
+  (let ((wiki "Software"))
+    (make-directory (concat oddmuse-directory "/" wiki) t)
+    (let ((name (concat wiki ":" pagename)))
+      (if (and (get-buffer name)
+               (not current-prefix-arg))
+          (pop-to-buffer (get-buffer name))
+	(set-buffer (get-buffer-create name))
+	;; do not insert page content from the wiki
+	(save-excursion
+	 (insert "Describe issue...\n\n[[tag:Issue]] [[tag:" project "]] [[tag:Open]]\n"))
+	(setq buffer-file-name (concat oddmuse-directory "/" wiki "/" pagename))
+	(vc-mode-line buffer-file-name 'oddmuse)
+	(pop-to-buffer (current-buffer))
+	(when (file-exists-p buffer-file-name)
+	  (warn "Page loaded from the wiki but a local file also exists"))
+	;; produces a message about saving the buffer
+	(basic-save-buffer)
+	;; produces a message about the wiki revision
+	(oddmuse-revision-put wiki pagename (oddmuse-get-latest-revision wiki pagename))
+	(oddmuse-mode)))))
