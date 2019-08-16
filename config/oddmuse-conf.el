@@ -154,12 +154,13 @@ strings.")
 (setq oddmuse-tags
       '("RPG" "Old School" "RSP" "Maps" "Pictures" "Philosophy"
 	"Software" "Copyright" "Social Media" "Gadgets" "Administration"
+	"PureOS" "Debian"
 	"Programming" "Mastodon" "Trunk" "Halberts and Helmets"
 	"Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
 	"Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
 	"Switzerland" "USA" "Germany" "Google Plus" "Diaspora"
 	"Keep It Short" "Hellebarden und Helme" "Pendragon"
-	"Halberds and Helmets Podcast"))
+	"Halberds and Helmets Podcast" "Indie" "Perl"))
 
 (defun oddmuse-creole-table (start end rows)
   "Transpose cells into a table.
