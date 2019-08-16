@@ -1,3 +1,5 @@
+(asc:package-install 'typo)
+
 (define-generic-mode hex-describe-mode
   '("#")
   nil
@@ -16,3 +18,4 @@
 
 (add-hook 'hex-describe-mode-hook 'turn-on-flyspell)
 (add-hook 'hex-describe-mode-hook 'idle-highlight-mode)
+(add-hook 'hex-describe-mode-hook 'typo-mode)
