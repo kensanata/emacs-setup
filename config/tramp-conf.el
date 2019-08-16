@@ -19,18 +19,22 @@
     (setenv "PATH" (concat putty-directory ";" (getenv "PATH")))))
 
 (defun sibirocobombus ()
-  (interactive)
   "Connect to my favorite server using Tramp.
 On Windows, make sure PAGEANT is running and the sibirocobombus
 key has been added to it."
-  (find-file "/plink:alex@alexschroeder.ch#882:"))
+  (interactive)
+  (find-file "/alex@alexschroeder.ch#882:"))
 
 (defun megabombus ()
-  (interactive)
   "Connect to our other laptop server using Tramp."
+  (interactive)
   (find-file "/alex@megabombus.local:"))
 
+;; (defun megabombus ()
+;;   (interactive)
+;;   (find-file "/sftp:alex@megabombus.local:/"))
+
 (defun the-shire ()
-  (interactive)
   "Connect to a backup server using Tramp."
+  (interactive)
   (find-file "/kensanata@theshire.emacs.cl:"))
