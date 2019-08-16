@@ -31,6 +31,7 @@
 (add-hook 'image-dired-thumbnail-mode-hook
 	  (lambda ()
 	    (local-set-key (kbd "t l") 'asc:file-label-edit)
+	    (local-set-key (kbd "t a") 'asc:add-to-album)
 	    (local-set-key (kbd "S-SPC") 'image-dired-display-previous-thumbnail-original)))
 
 (defun asc:file-label-edit ()
@@ -40,5 +41,16 @@ This is used for `image-dired'."
   (find-file (concat (file-name-sans-extension
 		      (image-dired-original-file-name))
 		     ".txt")))
+
+(defun asc:add-to-album ()
+  "Show current thumbnail, tag it with 'album', and add a label."
+  (interactive)
+  (image-dired-display-thumbnail-original-image)
+  (let ((tag "album"))
+    (image-dired-write-tags (list (cons (image-dired-original-file-name) tag))))
+  (image-dired-update-property
+   'tags (image-dired-list-tags (image-dired-original-file-name)))
+  (asc:file-label-edit))
+
 
 (setq image-dired-thumb-margin 5)
