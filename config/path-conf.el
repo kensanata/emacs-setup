@@ -25,11 +25,14 @@ current MANPATH environment variable."
   (shell-command "mandb"))
 
 ;; Perl 5
-;; This is wrong: on sibirocobombus this bin is full of scripts wanting 5.24
 (asc:add-to-PATH "~/perl5/bin/")
+(asc:add-to-PATH "~/perl5/perlbrew/bin")
 (asc:add-to-PATH "~/perl5/perlbrew/perls/perl-5.28.1/bin")
-;; This is wrong: "ListUtil.c: loadable library and perl binaries are mismatched (got handshake key 0xd600000, needed 0xd880000)"
-(setenv "PERL5LIB" "/home/alex/perl5/lib/perl5")
+;; set variables in process-environment
+(with-temp-buffer
+  (insert-file-contents-literally "/home/alex/.perlbrew/init")
+  (while (re-search-forward "^export \\(.+?\\)=\"\\(.+\\)\"" nil t)
+    (setenv (match-string 1) (match-string 2))))
 
 ;; Perl 6
 (asc:add-to-PATH "~/rakudo/bin/")
