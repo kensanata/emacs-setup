@@ -5,6 +5,26 @@
 (when (require 'shr nil t)
   (require 'oddmuse-curl nil t))
 
+(setq oddmuse-basic-markup
+      '(("\\[\\[.*?\\]\\]"
+	 0 '(face link
+		  help-echo "Basic free link"))
+	("\\[\\<\\(gophers?\\|https?\\)[-a-zA-Z0-9/@=+$_~*.,;:?!'\"()&#%]+ \\S-+ [^]\n]*\\]"
+	 0 '(face link
+		  help-echo "Basic external free link with text"))
+	("\\<\\(gophers?\\|https?\\)[-a-zA-Z0-9/@=+$_~*.,;:?!'\"()&#%]+[-a-zA-Z0-9/@=+$_~*]"
+	 0 '(face link
+		  help-echo "Basic external free link"))
+	("\\[[[:upper:]]\\S-*:\\S-+ [^]\n]*\\]"
+	 0 '(face link
+		  help-echo "Basic external interlink with text"))
+	("[[:upper:]]\\S-*:\\S-+"
+	 0 '(face link
+		  help-echo "Basic external interlink"))
+	("^\\([*] \\)"
+	 0 '(face font-lock-constant-face
+		  help-echo "Basic bullet list"))))
+
 (setq oddmuse-username "AlexSchroeder"
       oddmuse-markup '(oddmuse-basic-markup oddmuse-markdown-markup))
 (add-to-list 'auto-mode-alist '("/Users/alex/.emacs.d/oddmuse" . oddmuse-mode))
