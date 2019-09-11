@@ -14,7 +14,8 @@
 	      (c-setup-paragraph-variables))
 	    (local-set-key (kbd "RET") 'c-indent-new-comment-line)
 	    ;; (rainbow-identifiers-mode)
-	    (when (string-match "\.svg$" (buffer-file-name))
+	    (when (and (buffer-file-name)
+		       (string-match "\.svg$" (buffer-file-name)))
 	      (save-excursion
 		(goto-char (point-min))
 		(when (search-forward "<script type=\"application/javascript\"><![CDATA[\n" nil t)
