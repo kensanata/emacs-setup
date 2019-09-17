@@ -52,5 +52,37 @@ This is used for `image-dired'."
    'tags (image-dired-list-tags (image-dired-original-file-name)))
   (asc:file-label-edit))
 
-
 (setq image-dired-thumb-margin 5)
+
+(require 'dired-x)
+
+(defun asc:image-dired-exif-mode (dir)
+  "Create a virtual buffer for images sorted by creation date."
+  (interactive "DDirectory: ")
+  (with-current-buffer (get-buffer-create "*images*")
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (let* ((files (directory-files dir 'full "jpg$"))
+	     (prog (make-progress-reporter "Reading files " 0 (length files)))
+	     (i 0))
+	(insert dir ":\n")
+	(dolist (file files)
+	  (let* ((attr (file-attributes file 'string))
+		 (default-directory dir)	; required for eshell remote command
+	     	 (created (eshell-command-to-value
+			   (eshell-remote-command
+			    "exiftool" (list "-p" "${dateTimeOriginal#;DateFmt('%Y-%m-%d %H:%M:%S')}"
+					     "-q" "-f" (file-name-nondirectory file))))))
+	    (insert (format "%s % 3d %s %s % 10d %s %s\n"
+			    (file-attribute-modes attr)
+			    (file-attribute-link-number attr)
+			    (file-attribute-user-id attr)
+			    (file-attribute-group-id attr)
+			    (file-attribute-size attr)
+			    (substring created 0 -1) ; drop trailing newline
+			    ;; (format-time-string "%F %R" (file-attribute-modification-time attr))
+			    (file-name-nondirectory file))))
+	  (progress-reporter-update prog (setq i (1+ i))))
+	(progress-reporter-done prog))
+      (dired-virtual-mode))
+    (switch-to-buffer (current-buffer))))
