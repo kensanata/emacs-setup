@@ -17,19 +17,28 @@
 ;; https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg
 
 (setq ;; You need to replace this email address with your own!
-      user-mail-address "kensanata@gmail.com"
+      ;; user-mail-address "kensanata@gmail.com"
+      user-mail-address "alex@alexschroeder.ch"
       ;; You need to replace this key ID with your own key ID!
       mml2015-signers '("ACECFEAE")
-      ;; This tells Gnus to get email from Gmail via IMAP.
+      ;; This tells Gnus to get email from Migadu via IMAP. This is my
+      ;; "primary" mail server. If I don't set this select method,
+      ;; Gnus will attempt to fetch local news from somewhere but I
+      ;; don't have access to news.
       gnus-select-method
-      '(nnimap "gmail"
-               ;; It could also be imap.googlemail.com if that's your server.
-               (nnimap-address "imap.gmail.com")
+      '(nnimap "migadu"
+               (nnimap-address "imap.migadu.com")
                (nnimap-server-port 993)
                (nnimap-stream ssl))
-      ;; This tells Gnus to use the Gmail SMTP server. This
-      ;; automatically leaves a copy in the Gmail Sent folder.
-      smtpmail-smtp-server "smtp.gmail.com"
+      ;; This tells Gnus to get email from Gmail via IMAP.
+      gnus-secondary-select-methods
+      '((nnimap "gmail"
+		;; It could also be imap.googlemail.com if that's your server.
+		(nnimap-address "imap.gmail.com")
+		(nnimap-server-port 993)
+		(nnimap-stream ssl)))
+      ;; This tells Gnus to use the Migadu SMTP server.
+      smtpmail-smtp-server "smtp.migadu.com"
       smtpmail-smtp-service 587
       ;; Tell message mode to use SMTP.
       message-send-mail-function 'smtpmail-send-it
@@ -65,12 +74,16 @@ This moves them into the All Mail folder."
 
 (defun gmail-report-spam ()
   "Report the current or marked mails as spam.
-This moves them into the Spam folder."
+This moves them into the Junk or Spam folder."
   (interactive)
-  (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam"))
+  (if (string-match "gmail" gnus-newsgroup-name)
+      (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam")
+    (gnus-summary-move-article nil "Junk")))
 
 (defun gmail-trash ()
   "Delete the current or marked mails.
 This moves them into the Trash folder."
   (interactive)
-  (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Trash"))
+  (if (string-match "gmail" gnus-newsgroup-name)
+      (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Trash")
+    (gnus-summary-move-article nil "Trash")))
