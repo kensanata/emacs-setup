@@ -87,7 +87,7 @@ We have to wait for a second before joining them."
 		    "#deltachat"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
-	("your.tilde.chat"
+	("irc.tilde.chat"
 	 :port 6697 :encryption tls
 	 :channels ("#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
