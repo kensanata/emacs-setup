@@ -70,7 +70,9 @@
   "Archive the current or marked mails.
 This moves them into the All Mail folder."
   (interactive)
-  (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/All Mail"))
+  (if (string-match "gmail" gnus-newsgroup-name)
+      (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/All Mail"))
+    (gnus-summary-move-article nil "Archive")))
 
 (defun gmail-report-spam ()
   "Report the current or marked mails as spam.
