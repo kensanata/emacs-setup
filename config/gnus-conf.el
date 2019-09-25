@@ -11,6 +11,9 @@
 ;; Completion of email adresses
 (setq message-mail-alias-type 'ecomplete)
 
+;; Always read the file
+(setq gnus-always-read-dribble-file t)
+
 ;; (add-hook 'message-mode-hook 'longlines-mode)
 
 ;; The following is based on my Gmail Gnus GPG Guide (GGGG):
