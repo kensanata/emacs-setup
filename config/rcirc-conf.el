@@ -333,6 +333,22 @@ We have to wait for a second before joining them."
 	  (delq 'rcirc-markup-urls rcirc-markup-text-functions))
     (add-to-list 'rcirc-markup-text-functions 'rcirc-url-buttons)))
 
+(defvar asc:rcirc-link-keymap
+  (let ((map (make-sparse-keymap)))
+    (define-key map "w" 'asc:rcirc-copy-url)
+    (set-keymap-parent map button-map)
+    map)
+  "The keymap to use for URLs in rcirc.")
+
+(defun asc:rcirc-copy-url (url)
+  "Copy the URL under point to the kill ring."
+  (interactive (list (or (get-text-property (point) 'rcirc-url)
+			 (ffap-url-at-point))))
+  (if (not url)
+      (message "No URL at this position.")
+    (kill-new url)
+    (message "Copied %s" url)))
+
 (defun rcirc-url-buttons (sender response)
   "Turn URLs in into buttons.
 This is a function to add to `rcirc-markup-text-functions'
@@ -354,6 +370,7 @@ instead of `rcirc-markup-urls'."
 			'rcirc-url url
 			'help-echo url;; seems to have no effect
 			'display text
+			'keymap asc:rcirc-link-keymap
 			'action (lambda (button)
 				  (browse-url (button-get button 'rcirc-url))))
       ;; record the url if it is not already the latest stored url
