@@ -29,10 +29,11 @@ current MANPATH environment variable."
 (asc:add-to-PATH "~/perl5/perlbrew/bin")
 (asc:add-to-PATH "~/perl5/perlbrew/perls/perl-5.28.1/bin")
 ;; set variables in process-environment
-(with-temp-buffer
-  (insert-file-contents-literally "/home/alex/.perlbrew/init")
-  (while (re-search-forward "^export \\(.+?\\)=\"\\(.+\\)\"" nil t)
-    (setenv (match-string 1) (match-string 2))))
+(when (file-readable-p "/home/alex/.perlbrew/init")
+  (with-temp-buffer
+    (insert-file-contents-literally "/home/alex/.perlbrew/init")
+    (while (re-search-forward "^export \\(.+?\\)=\"\\(.+\\)\"" nil t)
+      (setenv (match-string 1) (match-string 2)))))
 
 ;; Perl 6
 (asc:add-to-PATH "~/rakudo/bin/")
