@@ -3,6 +3,9 @@
 
 (asc:package-install 'magit)
 
+(when (file-executable-p "c:/Program Files/Git/cmd/git.exe")
+  (setq magit-git-executable "c:/Program Files/Git/cmd/git.exe"))
+
 ;; New option for diff
 
 ;; (eval-after-load "magit-diff"
