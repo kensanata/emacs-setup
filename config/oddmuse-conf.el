@@ -76,7 +76,7 @@
 	 utf-8 "question" "Alex Schroeder")
 	("Food" "https://communitywiki.org/food"
 	 utf-8 "question" "Alex Schroeder")
-	("MondscheinSaga" "https://communitywiki.org/wiki/MondscheinSaga"
+	("MondscheinSaga" "https://campaignwiki.org/wiki/MondscheinSaga"
 	 utf-8 "frodo" "Alex"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
@@ -91,7 +91,7 @@
 	  '(("!!\\S-.*?\\S-?!!" . 'bold)
 	    ("!\\S-.*?\\S-?!" 0 '(face bold nobreak t)))
 	  'append))
-	((member oddmuse-wiki '("Rasiermesserküste" "Wilderlande"))
+	((member oddmuse-wiki '("Rasiermesserküste" "Wilderlande" "MondscheinSaga"))
 	 (turn-on-auto-fill)
 	 ;; see spell-conf.el
 	 (german))))
