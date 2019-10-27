@@ -35,7 +35,12 @@
                (nnimap-stream ssl))
       ;; This tells Gnus to get email from Gmail via IMAP.
       gnus-secondary-select-methods
-      '((nnimap "gmail"
+      '((nnimap "notifications"
+		(nnimap-user "notifications@alexschroeder.ch")
+		(nnimap-address "imap.migadu.com")
+		(nnimap-server-port 993)
+		(nnimap-stream ssl))
+	(nnimap "gmail"
 		;; It could also be imap.googlemail.com if that's your server.
 		(nnimap-address "imap.gmail.com")
 		(nnimap-server-port 993)
