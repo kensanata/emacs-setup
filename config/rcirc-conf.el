@@ -335,9 +335,16 @@ We have to wait for a second before joining them."
 (defvar asc:rcirc-link-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map "w" 'asc:rcirc-copy-url)
+    (define-key map "&" 'asc:rcirc-browse-url)
     (set-keymap-parent map button-map)
     map)
   "The keymap to use for URLs in rcirc.")
+
+(defun asc:rcirc-browse-url (url)
+  "Browse the URL under point using `browse-url-default-browser'."
+  (interactive (list (or (get-text-property (point) 'rcirc-url)
+			 (ffap-url-at-point))))
+  (browse-url-default-browser url))
 
 (defun asc:rcirc-copy-url (url)
   "Copy the URL under point to the kill ring."
