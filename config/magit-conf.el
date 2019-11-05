@@ -3,8 +3,8 @@
 
 (asc:package-install 'magit)
 
-(when (file-executable-p "c:/Program Files/Git/cmd/git.exe")
-  (setq magit-git-executable "c:/Program Files/Git/cmd/git.exe"))
+(when (file-executable-p "C:/Portable Programs/PortableGit/cmd/git.exe")
+  (setq magit-git-executable "c:/Portable Programs/PortableGit/cmd/git.exe"))
 
 ;; New option for diff
 
