@@ -29,7 +29,11 @@
  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
  '(wgrep-done-face ((t (:inherit default))))
  '(wgrep-face ((t (:inherit default))))
- '(wgrep-file-face ((t (:inherit default)))))
+ '(wgrep-file-face ((t (:inherit default))))
+ '(j-adverb-face ((t (:inherit bold))))
+ '(j-conjunction-face ((t (:inherit bold))))
+ '(j-other-face ((t (:inherit bold))))
+ '(j-verb-face ((t (:inherit bold)))))
 
 (require 'solar)
 
