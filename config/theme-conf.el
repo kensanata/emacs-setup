@@ -67,5 +67,4 @@ depending on the time of day."
 	(enable-theme 'brutalist)
       (enable-theme 'brutalist-dark))))
 
-;; and do it
-(enable-appropriate-brutalist-theme)
+(enable-theme 'brutalist-dark)
