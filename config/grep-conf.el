@@ -6,7 +6,7 @@
   "Grep for thing at point.
 Per default, the same extension is used as the file-name of the
 current buffer. Use a prefix argument to override either."
-  (interactive (list (thing-at-point 'word)))
+  (interactive (list (thing-at-point 'symbol)))
   (let* ((file-name (buffer-file-name))
 	 (extension (and file-name (file-name-extension file-name)))
 	 (pattern (if extension (concat "*." extension) "*")))
