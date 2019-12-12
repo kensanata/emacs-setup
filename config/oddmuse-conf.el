@@ -154,7 +154,7 @@ strings.")
 (setq oddmuse-tags
       '("RPG" "Old School" "RSP" "Maps" "Pictures" "Philosophy"
 	"Software" "Copyright" "Social Media" "Gadgets" "Administration"
-	"PureOS" "Debian"
+	"PureOS" "Debian" "Monsters"
 	"Programming" "Mastodon" "Trunk" "Halberts and Helmets"
 	"Books" "Movies" "Music" "Life" "Podcast" "Gridmapper"
 	"Web" "Oddmuse" "Wikis" "Blogs" "Text Mapper" "Hex Describe"
