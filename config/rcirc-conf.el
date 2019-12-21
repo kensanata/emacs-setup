@@ -56,7 +56,9 @@ We have to wait for a second before joining them."
       rcirc-fill-column 65; using a large font
       rcirc-max-message-length 0; live dangerously!
       rcirc-default-nick "kensanata"
-      rcirc-keywords '("ken" "kens" "kensa" "alex" "Alex_Schroeder")
+      rcirc-keywords '("ken" "kens" "kensa" "alex"; IRC
+		       "@Alex_Schroeder"; Discord
+		       )
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-timeout-seconds 1200
       rcirc-authinfo (with-temp-buffer
