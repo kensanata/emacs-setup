@@ -9,7 +9,7 @@
       '(("\\[\\[.*?\\]\\]"
 	 0 '(face link
 		  help-echo "Basic free link"))
-	("\\[\\<\\(gophers?\\|https?\\)[-a-zA-Z0-9/@=+$_~*.,;:?!'\"()&#%]+ \\S-+ [^]\n]*\\]"
+	("\\[\\<\\(gophers?\\|https?\\)[-a-zA-Z0-9/@=+$_~*.,;:?!'\"()&#%]+ [^]\n]*\\]"
 	 0 '(face link
 		  help-echo "Basic external free link with text"))
 	("\\<\\(gophers?\\|https?\\)[-a-zA-Z0-9/@=+$_~*.,;:?!'\"()&#%]+[-a-zA-Z0-9/@=+$_~*]"
