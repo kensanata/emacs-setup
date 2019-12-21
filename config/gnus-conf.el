@@ -24,24 +24,30 @@
       user-mail-address "alex@alexschroeder.ch"
       ;; You need to replace this key ID with your own key ID!
       mml2015-signers '("ACECFEAE")
-      ;; This tells Gnus to get email from Migadu via IMAP. This is my
-      ;; "primary" mail server. If I don't set this select method,
-      ;; Gnus will attempt to fetch local news from somewhere but I
-      ;; don't have access to news.
-      gnus-select-method
-      '(nnimap "migadu"
-               (nnimap-address "imap.migadu.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl))
-      ;; This tells Gnus to get email from Gmail via IMAP.
+      ;; Gnus has a "primary" server and a ton of secondary servers.
+      ;; These days such an idea seems outdated and so we use just the
+      ;; secondary select methods and all of them are configured the
+      ;; same way. If I don't set this select method, Gnus will
+      ;; attempt to fetch local news from somewhere but I don't have
+      ;; access to news. That's why we set it to the "nil" method.
+      gnus-select-method '(nnnil)
+      ;; These are now all the IMAP accounts.
       gnus-secondary-select-methods
-      '((nnimap "notifications"
+      '((nnimap "migadu"
+		(nnimap-user "alex@alexschroeder.ch")
+	  	(nnimap-address "imap.migadu.com")
+		(nnimap-server-port 993)
+		(nnimap-stream ssl))
+	(nnimap "notifications"
 		(nnimap-user "notifications@alexschroeder.ch")
 		(nnimap-address "imap.migadu.com")
 		(nnimap-server-port 993)
 		(nnimap-stream ssl))
 	(nnimap "gmail"
-		;; It could also be imap.googlemail.com if that's your server.
+		;; It could also be imap.googlemail.com if that's your
+		;; server. The nnimap-user is determined by the fact
+		;; that there is no other matching entry in the
+		;; ~/.authinfo.gpg file
 		(nnimap-address "imap.gmail.com")
 		(nnimap-server-port 993)
 		(nnimap-stream ssl)))
