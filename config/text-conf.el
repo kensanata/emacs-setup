@@ -32,3 +32,10 @@ This uses ISO date and a 24h clock."
   (interactive "P")
   (insert (format-time-string
 	   (if arg "%F %R" "%F"))))
+
+(defun remove-display-text-property (start end)
+  "Remote all text properties from START to END.
+This is useful when copying stuff with a display property set
+from elsewhere."
+  (interactive "r")
+  (set-text-properties start end nil))
