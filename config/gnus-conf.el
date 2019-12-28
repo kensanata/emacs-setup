@@ -90,14 +90,10 @@ This moves them into the (non-Gmail) Archive folder."
   "Report the current or marked mails as spam.
 This moves them into the Junk or Spam folder."
   (interactive)
-  (if (string-match "gmail" gnus-newsgroup-name)
-      (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam")
-    (gnus-summary-move-article nil "nnimap+imap.migadu.com:Junk")))
+  (gnus-summary-move-article nil "nnimap+migadu:Junk"))
 
 (defun gmail-trash ()
   "Delete the current or marked mails.
 This moves them into the Trash folder."
   (interactive)
-  (if (string-match "gmail" gnus-newsgroup-name)
-      (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Trash")
-    (gnus-summary-move-article nil "nnimap+imap.migadu.com:Trash")))
+  (gnus-summary-move-article nil "nnimap+migadu:Trash"))
