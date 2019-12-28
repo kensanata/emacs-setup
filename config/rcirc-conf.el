@@ -134,6 +134,9 @@ We have to wait for a second before joining them."
 ;; (load-file "~/src/elpa/packages/rcirc-color/rcirc-color.el")
 (eval-after-load 'rcirc '(require 'rcirc-color))
 (setq rcirc-color-other-attributes '(:weight bold))
+;; make sure the nick "s" gets no colour
+(setq rcirc-color-mapping (make-hash-table :test 'equal))
+(puthash "s" (list :foreground (face-foreground 'default)) rcirc-color-mapping)
 
 ;; prepare a suitable list of colors
 ;; https://stackoverflow.com/questions/3116260/given-a-background-color-how-to-get-a-foreground-color-that-makes-it-readable-o#3118280
