@@ -57,7 +57,7 @@ We have to wait for a second before joining them."
       rcirc-max-message-length 0; live dangerously!
       rcirc-default-nick "kensanata"
       rcirc-keywords '("ken" "kens" "kensa" "alex"; IRC
-		       "@Alex_Schroeder"; Discord
+		       "Alex_Schroeder"; Discord
 		       )
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-timeout-seconds 1200
@@ -88,6 +88,7 @@ We have to wait for a second before joining them."
 		    "#jsoftware"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
+	;; Tilde chat is often unreachable
 	;; ("irc.tilde.chat"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#gopher" "#cosmic"))
