@@ -1,3 +1,4 @@
+(asc:package-install 'pydoc)
 (add-hook 'python-mode-hook 'asc:init-python-mode)
 
 (defun asc:init-python-mode ()
