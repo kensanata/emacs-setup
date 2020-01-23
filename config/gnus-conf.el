@@ -76,23 +76,23 @@
 (add-hook 'gnus-summary-mode-hook 'my-gnus-summary-keys)
 
 (defun my-gnus-summary-keys ()
-  (local-set-key "y" 'gmail-archive)
-  (local-set-key "d" 'gmail-trash)
-  (local-set-key "$" 'gmail-report-spam))
+  (local-set-key "y" 'asc:archive)
+  (local-set-key "d" 'asc:trash)
+  (local-set-key "$" 'asc:report-spam))
 
-(defun gmail-archive ()
+(defun asc:archive ()
   "Archive the current or marked mails.
 This moves them into the (non-Gmail) Archive folder."
   (interactive)
-  (gnus-summary-move-article nil "nnimap+imap.migadu.com:Archive"))
+  (gnus-summary-move-article nil "nnimap+migadu:Archive"))
 
-(defun gmail-report-spam ()
+(defun asc:report-spam ()
   "Report the current or marked mails as spam.
 This moves them into the Junk or Spam folder."
   (interactive)
   (gnus-summary-move-article nil "nnimap+migadu:Junk"))
 
-(defun gmail-trash ()
+(defun asc:trash ()
   "Delete the current or marked mails.
 This moves them into the Trash folder."
   (interactive)
