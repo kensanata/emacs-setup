@@ -78,3 +78,17 @@
   (interactive "r")
   (let ((inhibit-read-only t))
     (kill-region (region-beginning) (region-end))))
+
+(defun supershell ()
+  "Quickly toggle back and forth as root using tramp and su.
+NOTE: Place in ~/.authinfo or ~/.authinfo.gpg something like
+what follows to get a sudo-like experience:
+
+machine HOSTNAME login root password PASSWORD"
+  (if (not (string-match "/su:root@" (pwd)))
+      (progn
+        (insert "cd /su::$PWD")
+        (eshell-send-input))
+    (progn
+      (insert "cd $OLDPWD")
+      (eshell-send-input))))
