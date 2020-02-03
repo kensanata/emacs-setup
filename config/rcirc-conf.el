@@ -95,9 +95,9 @@ We have to wait for a second before joining them."
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
-	("campaignwiki.org"
-	 :port 6697 :encryption tls
-	 :channels ("#chat"))
+	;; ("campaignwiki.org"
+	;;  :port 6697 :encryption tls
+	;;  :channels ("#chat"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
@@ -105,9 +105,9 @@ We have to wait for a second before joining them."
 	;;  :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
 	;;  :channels ("#kensanata/elisp"
 	;; 	    "#kensanata/oddmuse"))
-	("campaignwiki.org"
-	 :port 6697 :encryption tls
-	 :channels ("#chat"))
+	;; ("campaignwiki.org"
+	;;  :port 6697 :encryption tls
+	;;  :channels ("#chat"))
 	("localhost"
 	 :channels ("&bitlbee")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
