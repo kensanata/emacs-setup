@@ -27,9 +27,6 @@
 ;; an environment, specially if there is an entire page full of them.
 ;; So now I want to use C-c p to copy a password and have it removed
 ;; from the clipboard after a few seconds.
-;;
-;; Things I might want to add in the future:
-;; - completion of hosts and usernames
 
 ;;; Code
 
