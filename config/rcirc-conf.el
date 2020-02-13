@@ -374,19 +374,22 @@ instead of `rcirc-markup-urls'."
 			"GIF");; these are usually worse than pics
 		       ((string-match "^https://twitter\\.com" url)
 			"TWIT");; these are usually worse
+		       ((string-match "::" url)
+			nil);; bogus Perl module
 		       (t "LINK"))))
-      (make-text-button start end
-			'face 'rcirc-url
-			'follow-link t
-			'rcirc-url url
-			'help-echo url;; seems to have no effect
-			'display text
-			'keymap asc:rcirc-link-keymap
-			'action (lambda (button)
-				  (browse-url (button-get button 'rcirc-url))))
-      ;; record the url if it is not already the latest stored url
-      (when (not (string= url (caar rcirc-urls)))
-        (push (cons url start) rcirc-urls)))))
+      (when text
+	(make-text-button start end
+			  'face 'rcirc-url
+			  'follow-link t
+			  'rcirc-url url
+			  'help-echo url;; seems to have no effect
+			  'display text
+			  'keymap asc:rcirc-link-keymap
+			  'action (lambda (button)
+				    (browse-url (button-get button 'rcirc-url))))
+	;; record the url if it is not already the latest stored url
+	(when (not (string= url (caar rcirc-urls)))
+	  (push (cons url start) rcirc-urls))))))
 
 ;; Sadly, these buttons with the display property set no longer work
 ;; for mouse buttons. (rcirc-markup-urls nil nil) http://example.html
