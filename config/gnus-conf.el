@@ -38,11 +38,11 @@
 	  	(nnimap-address "imap.migadu.com")
 		(nnimap-server-port 993)
 		(nnimap-stream ssl))
-	(nnimap "notifications"
-		(nnimap-user "notifications@alexschroeder.ch")
-		(nnimap-address "imap.migadu.com")
-		(nnimap-server-port 993)
-		(nnimap-stream ssl))
+	;; (nnimap "notifications"
+	;; 	(nnimap-user "notifications@alexschroeder.ch")
+	;; 	(nnimap-address "imap.migadu.com")
+	;; 	(nnimap-server-port 993)
+	;; 	(nnimap-stream ssl))
 	(nnimap "gmail"
 		;; It could also be imap.googlemail.com if that's your
 		;; server. The nnimap-user is determined by the fact
@@ -65,7 +65,7 @@
       ;; The agent seems to confuse nnimap, therefore we'll disable it.
       gnus-agent nil
       ;; We don't want local, unencrypted copies of emails we write.
-      gnus-message-archive-group nil
+      gnus-message-archive-group "nnimap+migadu:Sent"
       ;; We want to be able to read the emails we wrote.
       mml-secure-openpgp-encrypt-to-self t)
 
