@@ -54,15 +54,11 @@
 	 utf-8 "frodo" "Alex")
 	("Gridmapper" "https://campaignwiki.org/wiki/Gridmapper"
 	 utf-8 "frodo" "Alex")
-	("Greyheim" "https://campaignwiki.org/wiki/Greyheim"
+	("Drei Wälder" "https://campaignwiki.org/wiki/Drei_W%c3%a4lder"
 	 utf-8 "frodo" "Alex")
 	("Rasiermesserküste" "https://campaignwiki.org/wiki/Rasiermesserk%c3%bcste"
 	 utf-8 "frodo" "Alex")
 	("Halberds and Helmets" "https://campaignwiki.org/wiki/Halberds_and_Helmets"
-	 utf-8 "frodo" "Alex")
-	("Fünf Winde" "https://campaignwiki.org/wiki/F%C3%BCnfWinde"
-	 utf-8 "frodo" "Alex")
-	("Monsters" "https://campaignwiki.org/wiki/Monsters"
 	 utf-8 "frodo" "Alex")
 	("Links to Wisdom" "https://campaignwiki.org/wiki/LinksToWisdom"
 	 utf-8 "frodo" "Alex")
@@ -76,7 +72,7 @@
 	 utf-8 "question" "Alex Schroeder")
 	("Food" "https://communitywiki.org/food"
 	 utf-8 "question" "Alex Schroeder")
-	("MondscheinSaga" "https://campaignwiki.org/wiki/MondscheinSaga"
+	("Dschungel von Chult" "https://campaignwiki.org/wiki/DschungelvonChult"
 	 utf-8 "frodo" "Alex"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
