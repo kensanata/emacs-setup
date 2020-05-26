@@ -84,7 +84,6 @@ We have to wait for a second before joining them."
 		    "#raku"
 		    "#bussard"
 		    "#fennel"
-		    "#mastodon"
 		    "#jsoftware"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
