@@ -66,13 +66,19 @@ number by the same amount."
 	  (delete-region (overlay-start o) (overlay-end o))
 	  (insert (number-to-string (+ num n))))))))
 
+(defun number-mark-column (regexp amount)
+  "FIXME"
+  (interactive "sRegexp: \nnAmount: ")
+  )
+
 (define-minor-mode number-mode
   "A mode to work with numbers in a text buffer"
   nil
   "N"
   (list (cons (kbd "C-=") 'number-mark)
 	(cons (kbd "M-C-+") 'number-mark-add)
-	(cons (kbd "M-C-=") 'number-mark-distribute)))
+	(cons (kbd "M-C-=") 'number-mark-distribute)
+	(cons (kbd "C-c C-=") 'number-mark-column)))
 
 ;; (define-key number-mode-map (kbd "C-=") 'number-mark)
 ;; (define-key number-mode-map (kbd "M-C-=") 'number-mark-add)
