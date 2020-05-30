@@ -66,13 +66,39 @@ number by the same amount."
 	  (delete-region (overlay-start o) (overlay-end o))
 	  (insert (number-to-string (+ num n))))))))
 
-(defun number-mark-column (regexp amount)
-  "FIXME"
-  (interactive "sRegexp: \nnAmount: ")
-  )
+(defun number-mark-column (regexp)
+  "Mark all the numbers at the current column
+in this buffer, if the line matches REGEXP."
+  (interactive "sRegexp: ")
+  (save-excursion
+    (let ((target-column (current-column)))
+      (goto-char (point-min))
+      (while (re-search-forward regexp nil t)
+	(when (and (eq (move-to-column target-column) target-column)
+		   (not (memq t (mapcar (lambda (o)
+					  (when (overlay-get o 'number) t))
+					(overlays-at (point))))))
+	  (skip-chars-backward number-digits)
+	  (let ((start (point)))
+	    (skip-chars-forward number-digits)
+	    (when (< start (point))
+	      (let ((o (make-overlay start (point) nil nil t)))
+		(overlay-put o 'number t)
+		(overlay-put o 'face 'query-replace)))))
+	(forward-line 1)))))
 
 (define-minor-mode number-mode
-  "A mode to work with numbers in a text buffer"
+  "A mode to work with numbers in a text buffer
+
+This mode allows you to mark numbers using \\[number-mark], or
+all the numbers of the current column on lines matching a regular
+expression using \\[number-mark-column].
+
+Marked numbers are highlighted using the face `query-replace'.
+
+Once you have marked all the numbers you want to work with, you
+can increment them all by a certain amount using \\[number-mark-add],
+or you can distribute a certain amount using \\[number-mark-distribute]."
   nil
   "N"
   (list (cons (kbd "C-=") 'number-mark)
