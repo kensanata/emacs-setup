@@ -1,4 +1,10 @@
-(asc:package-install 'elpher)
+(let ((version (emacs-version)))
+  (when (and (string-match "^GNU Emacs \\([0-9]+\\)\.\\([0-9]+\\)" version)
+	     (or (> (string-to-number (match-string 1 version)) 26)
+		 (and (= (string-to-number (match-string 1 version)) 26)
+		      (> (string-to-number (match-string 2 version)) 2))))
+    ;; requires Emacs 26.2 these days
+    (asc:package-install 'elpher)))
 
 (add-hook 'elpher-mode-hook
 	  (lambda ()
