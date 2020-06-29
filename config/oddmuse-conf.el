@@ -5,6 +5,10 @@
 (when (require 'shr nil t)
   (require 'oddmuse-curl nil t))
 
+(eval-after-load 'goto-address-url-regexp
+  '(setq goto-address-url-regexp
+	 (replace-regexp-in-string "gopher" "gopher\\\\|gemini" goto-address-url-regexp)))
+
 (setq oddmuse-basic-markup
       '(("\\[\\[.*?\\]\\]"
 	 0 '(face link
