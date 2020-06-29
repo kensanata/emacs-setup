@@ -88,9 +88,10 @@ We have to wait for a second before joining them."
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
 	;; Tilde chat is often unreachable
-	;; ("irc.tilde.chat"
-	;;  :port 6697 :encryption tls
-	;;  :channels ("#gopher" "#cosmic"))
+	("irc.tilde.chat"
+	 :port 6697 :encryption tls
+	 :channels ("#gemini"))
+	;; "#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
@@ -173,7 +174,7 @@ We have to wait for a second before joining them."
 	  candidates))
   (setq rcirc-color-mapping (make-hash-table :test 'equal))
   ;; make sure the nick "s" gets no colour
-  (puthash "s" (list :foreground (face-foreground 'default)) rcirc-color-mapping))
+  (puthash "s" '(:background inherit) rcirc-color-mapping))
 
 (eval-after-load 'rcirc '(rcirc-color-reset))
 
