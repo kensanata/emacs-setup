@@ -1,5 +1,17 @@
 ;;; -*- lexical-binding:t -*-
 
+(global-set-key (kbd "C-c q") 'elpher-menu)
+
+;; sometimes I'm in places with very bad connectivity
+(setq elpher-connection-timeout 20)
+
+(add-hook 'elpher-menu-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "e")
+			   (lambda ()
+			     (interactive)
+			     (elpher 1)))))
+
 (let ((version (emacs-version)))
   (when (and (string-match "^GNU Emacs \\([0-9]+\\)\.\\([0-9]+\\)" version)
 	     (or (> (string-to-number (match-string 1 version)) 26)
