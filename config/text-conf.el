@@ -24,6 +24,8 @@
 
 (add-hook 'text-mode-hook 'abbrev-mode)
 
+(global-set-key (kbd "C-c i") 'insert-date)
+
 ;; insert date
 (defun insert-date (&optional arg)
   "Insert the current date.
