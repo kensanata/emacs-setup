@@ -1,5 +1,25 @@
 ;;; -*- lexical-binding:t -*-
 
+(unless (fboundp 'read-answer)
+  (load-file (expand-file-name "~/src/emacs/lisp/emacs-lisp/map-ynp.el")))
+(unless (fboundp 'assoc-delete-all)
+  (defun assoc-delete-all (key alist &optional test)
+    "Delete from ALIST all elements whose car is KEY.
+Compare keys with TEST.  Defaults to `equal'.
+Return the modified alist.
+Elements of ALIST that are not conses are ignored."
+    (unless test (setq test #'equal))
+    (while (and (consp (car alist))
+		(funcall test (caar alist) key))
+      (setq alist (cdr alist)))
+    (let ((tail alist) tail-cdr)
+      (while (setq tail-cdr (cdr tail))
+	(if (and (consp (car tail-cdr))
+		 (funcall test (caar tail-cdr) key))
+	    (setcdr tail (cdr tail-cdr))
+	  (setq tail tail-cdr))))
+    alist))
+
 (global-set-key (kbd "C-c q") 'elpher-menu)
 
 ;; sometimes I'm in places with very bad connectivity
