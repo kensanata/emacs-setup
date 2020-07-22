@@ -8,47 +8,13 @@
 (asc:package-install 'rcirc-styles)
 (eval-after-load 'rcirc '(require 'rcirc-styles))
 
-;; (asc:package-install 'rcirc-notify)
-;; (eval-after-load 'rcirc
-;;   '(progn
-;;      (require 'rcirc-notify)
-;;      (rcirc-notify-add-hooks)))
-
-(global-set-key (kbd "C-c b") 'bitlbee-start)
 (global-set-key (kbd "C-c e") 'asc:rcirc-start)
-
-;;; Bitlbee for Windows...
-(when (file-exists-p "c:/cygwin64/usr/local/sbin/bitlbee.exe");; Cygwin
-  (autoload 'bitlbee-start "bitlbee" t)
-  (setq bitlbee-executable "c:/cygwin64/usr/local/sbin/bitlbee.exe"
- 	bitlbee-options "-n -F -v -d c:/Users/asc/AppData/Roaming/.bitlbee")
-  (global-set-key (kbd "C-c e") 'asc:rcirc-and-bitlbee-start))
-
-(defun asc:rcirc-and-bitlbee-start ()
-  "Start both bitlbee and `rcirc'."
-  (interactive)
-  (if (bitlbee-start); needs time to start up
-      (run-with-idle-timer
-       1 nil
-       'asc:rcirc-start)
-    ;; alternatively, just run it
-    (asc:rcirc-start)))
 
 (defun asc:rcirc-start ()
   "Start `rcirc'."
   (interactive)
   (rcirc nil)
-  (rcirc-menu)
-  (run-with-idle-timer
-   1 nil
-   'asc:slack-join))
-
-(defun asc:slack-join ()
-  "Sadly, the Slack channels don't seem to ready.
-We have to wait for a second before joining them."
-  (let* ((buf (get-buffer "*localhost*"))
-	 (process (get-buffer-process buf)))
-    (rcirc-join-channels process '())))
+  (rcirc-menu))
 
 (setq rcirc-prompt "%n> "; list nick
       rcirc-fill-prefix "    "
