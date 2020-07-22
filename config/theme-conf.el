@@ -19,6 +19,11 @@
  '(wgrep-face ((t (:inherit default))))
  '(wgrep-file-face ((t (:inherit default)))))
 
+(custom-theme-set-variables
+ 'brutalist
+ '(ansi-color-names-vector
+   ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"]))
+
 (custom-theme-set-faces
  'brutalist-dark
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
@@ -34,6 +39,11 @@
  '(j-conjunction-face ((t (:inherit bold))))
  '(j-other-face ((t (:inherit bold))))
  '(j-verb-face ((t (:inherit bold)))))
+
+(custom-theme-set-variables
+ 'brutalist-dark
+ '(ansi-color-names-vector
+   ["black" "salmon" "yellow green" "light goldenrod" "steel blue" "orchid" "turquoise" "#eeeee8"]))
 
 (require 'solar)
 
