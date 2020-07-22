@@ -1,5 +1,3 @@
-(asc:package-install 'typo)
-
 (define-generic-mode hex-describe-mode
   '("#")
   nil

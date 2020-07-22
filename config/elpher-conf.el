@@ -51,6 +51,8 @@ Elements of ALIST that are not conses are ignored."
 (add-to-list 'load-path "/home/alex/src/gemini.el")
 (autoload 'gemini-mode "gemini-mode" "Gemini Mode" t)
 
+(add-hook 'gemini-mode-hook 'typo-mode)
+
 (add-hook 'elpher-mode-hook
 	  (lambda ()
 	    (local-set-key (kbd "u") 'elpher-up)
