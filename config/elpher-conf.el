@@ -21,6 +21,20 @@ Elements of ALIST that are not conses are ignored."
     alist))
 
 (global-set-key (kbd "C-c q") 'elpher-menu)
+(global-set-key (kbd "C-c Q") 'asc:elpher-match-alexschroeder.ch)
+
+(defun asc:elpher-match-alexschroeder.ch (terms)
+  (interactive "sTerms: ")
+  (let* ((name (format "*alexschroeder.ch match %s*" terms))
+	 (buf (get-buffer-create name)))
+    (pop-to-buffer-same-window buf)
+    (elpher-mode)
+    (elpher-visit-page
+     (elpher-make-page
+      (format "Alex Schroeder: %s" terms)
+      (elpher-address-from-url
+       (concat "gemini://alexschroeder.ch/do/match?"
+	       (url-hexify-string terms)))))))
 
 ;; sometimes I'm in places with very bad connectivity
 (setq elpher-connection-timeout 20)
