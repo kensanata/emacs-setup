@@ -27,6 +27,13 @@
 (custom-theme-set-faces
  'brutalist-dark
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+ '(company-tooltip ((t (:background "#888888"))))
+ '(company-template-field ((t (:background "grey40"))))
+ '(company-tooltip-common ((t (:foreground "#ddddd8"))))
+ '(company-tooltip-annotation ((t (:foreground "#eeeee8"))))
+ '(company-tooltip-annotation-selection ((t (:foreground "#eeeee8"))))
+ '(company-scrollbar-bg ((t (:background "gray70"))))
+ '(company-scrollbar-fg ((t (:background "dim gray"))))
  '(rcirc-my-nick ((t (:foreground "light blue"))))
  '(rcirc-dim-nick ((t (:foreground "gray70"))))
  '(rcirc-prompt ((t (:inherit bold))))
