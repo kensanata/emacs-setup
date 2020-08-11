@@ -139,7 +139,8 @@
 	  candidates))
   (setq rcirc-color-mapping (make-hash-table :test 'equal))
   ;; make sure the nick "s" gets no colour
-  (puthash "s" '(:background inherit) rcirc-color-mapping))
+  (dolist (c '("a" "s"))
+    (puthash c '(:background inherit) rcirc-color-mapping)))
 
 (eval-after-load 'rcirc '(rcirc-color-reset))
 
