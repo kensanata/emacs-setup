@@ -99,7 +99,7 @@
 
 ;; prepare a suitable list of colors
 ;; https://stackoverflow.com/questions/3116260/given-a-background-color-how-to-get-a-foreground-color-that-makes-it-readable-o#3118280
-(require 'cl)
+(require 'cl-lib)
 (defun rcirc-colors-Y (color)
   (let ((gamma 2.2))
     (destructuring-bind (r g b) (color-name-to-rgb color)
