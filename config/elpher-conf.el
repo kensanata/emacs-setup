@@ -28,6 +28,22 @@ Elements of ALIST that are not conses are ignored."
 	    (local-set-key (kbd "a") 'asc:elpher-match-alexschroeder.ch)
 	    (local-set-key (kbd "w") 'asc:elpher-search-en.wikipedia.org)))
 
+(autoload 'elpher-mode "elpher" "Put buffer in Elpher Mode")
+
+(defun asc:elpher-new-alexschroeder.ch (title)
+  (interactive "sTitle: ")
+  (switch-to-buffer
+   (get-buffer-create
+    (generate-new-buffer-name "*alexschroeder.ch new*")))
+  (elpher-mode)
+  (setq-local gemini-write-text-p t)
+  (elpher-visit-page
+   (elpher-make-page
+    (format "Alex Schroeder: %s" title)
+    (elpher-address-from-url
+     (concat "gemini://alexschroeder.ch/raw/"
+	     (url-hexify-string title))))))
+
 (defun asc:elpher-match-alexschroeder.ch (terms)
   (interactive "sTerms: ")
   (let* ((name (format "*alexschroeder.ch*" terms))
@@ -98,9 +114,10 @@ Elements of ALIST that are not conses are ignored."
 	(insert "=> " pagename)
       (insert "=> " escaped " " pagename))))
 
-(defun gemini-insert-link-to-oddmuse-wiki (pagename)
-  "Insert a link to PAGENAME of the current wiki with completion."
-  (interactive (list (oddmuse-read-pagename oddmuse-wiki)))
+(defun gemini-insert-link-to-oddmuse-wiki (wiki pagename)
+  "Insert a link to WIKI and PAGENAME with completion."
+  (interactive (oddmuse-pagename))
+  (setq-local oddmuse-wiki wiki)
   (insert "=> " pagename " " (replace-regexp-in-string "_" " " pagename)))
   
 (defun elpher-node-up (node)
