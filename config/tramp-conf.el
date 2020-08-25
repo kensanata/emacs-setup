@@ -1,12 +1,4 @@
-(setq tramp-completion-function-alist
-      '(("scp"
-	 (tramp-parse-netrc "~/.authinfo.gpg")
-	 (tramp-parse-rhosts "/etc/hosts.equiv")
-	 (tramp-parse-shosts "~/.ssh/known_hosts"))
-	("ssh"
-	 (tramp-parse-netrc "~/.authinfo.gpg")
-	 (tramp-parse-rhosts "/etc/hosts.equiv")
-	 (tramp-parse-shosts "~/.ssh/known_hosts"))))
+(setq tramp-completion-use-auth-sources nil) ;; don't ask for my passphrase
 
 (defvar putty-directory "c:/Portable Programs/PuTTY"
   "The directory containing pscp.exe and plink.exe on Windows.")
@@ -29,10 +21,6 @@ key has been added to it."
   "Connect to our other laptop server using Tramp."
   (interactive)
   (find-file "/alex@megabombus.local:"))
-
-;; (defun megabombus ()
-;;   (interactive)
-;;   (find-file "/sftp:alex@megabombus.local:/"))
 
 (defun the-shire ()
   "Connect to a backup server using Tramp."
