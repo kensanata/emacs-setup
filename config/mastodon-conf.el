@@ -1,1 +1,2 @@
-(setq mastodon-instance-url "https://octodon.social")
+(setq mastodon-instance-url "https://octodon.social"
+      mastodon-auth-source-file "~/.authinfo.gpg")
