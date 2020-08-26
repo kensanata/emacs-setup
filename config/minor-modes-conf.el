@@ -1,7 +1,6 @@
 ;; deactivate some bling
 (dolist (mode '(blink-cursor-mode
 		tool-bar-mode
-		blink-cursor-mode
 		menu-bar-mode
 		scroll-bar-mode))
   (when (fboundp mode)
