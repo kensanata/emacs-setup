@@ -7,6 +7,7 @@
     (funcall mode -1)))
 
 ;; active some other bling
+(toggle-frame-fullscreen) 
 (show-paren-mode 1)
 (winner-mode 1)
 (windmove-default-keybindings)

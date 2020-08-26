@@ -26,6 +26,8 @@
 
 (custom-theme-set-faces
  'brutalist-dark
+ ;; don't actually make the other modelines unreadable
+ '(mode-line-inactive ((t (:foreground "gray70"))))
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
  '(company-tooltip ((t (:background "#888888"))))
  '(company-template-field ((t (:background "grey40"))))
