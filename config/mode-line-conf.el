@@ -34,3 +34,23 @@
 
 ;; Use F12 to toggle modelines
 (global-set-key (kbd "<f12>") 'hidden-mode-line-mode)
+
+
+;; center the window by adding a very wide fringe
+(define-minor-mode center-window-mode
+  "Minor mode to center the window using wide fringes."
+  :init-value nil
+  :global t
+  :group 'editing-basics
+  (if (not center-window-mode)
+      (set-fringe-style nil);; default
+    (set-fringe-mode
+     (/ (- (frame-pixel-width)
+           (* (+ fill-column 4)
+	      (frame-char-width)))
+        2))))
+
+(center-window-mode 1)
+
+;; Use F9 to toggle centering
+(global-set-key (kbd "<f9>") 'center-window-mode)
