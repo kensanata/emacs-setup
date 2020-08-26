@@ -29,20 +29,8 @@
 ;; Activate hidden-mode-line-mode
 (hidden-mode-line-mode 1)
 
-;; If you want to hide the mode-line in all new buffers
+;; Hide the mode-line in all new buffers
 (add-hook 'after-change-major-mode-hook 'hidden-mode-line-mode)
 
-;; Command to toggle the display of the mode-line as a header
-(defun mode-line-in-header ()
-  (interactive)
-  (cond ((not header-line-format)
-	 (setq header-line-format (or hide-mode-line mode-line-format)
-               mode-line-format nil))
-	((not hide-mode-line)
-	 (setq mode-line-format header-line-format
-	       header-line-format nil))
-	(t
-	 (setq header-line-format nil)))
-  (set-window-buffer nil (current-buffer)))
-
-(global-set-key (kbd "<f12>") 'mode-line-in-header)
+;; Use F12 to toggle modelines
+(global-set-key (kbd "<f12>") 'hidden-mode-line-mode)
