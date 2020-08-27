@@ -25,8 +25,9 @@ variable is nil.")
              hidden-mode-line-mode)
     (run-with-idle-timer
      0 nil 'message
-     (concat "Hidden Mode Line Mode enabled.  "
-             "Use M-x hidden-mode-line-mode to make the mode-line appear."))))
+     (concat "Hidden Mode Line Mode enabled. "
+             (substitute-command-keys
+	      "Use \\[hidden-mode-line-mode] to show it again.")))))
 
 ;; Activate hidden-mode-line-mode
 (hidden-mode-line-mode 1)
