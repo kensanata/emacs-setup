@@ -1,14 +1,16 @@
 ;; https://bzg.fr/en/emacs-strip-tease.html/
 ;; http://bzg.fr/emacs-hide-mode-line.html
 
-(defvar-local hidden-mode-line-mode nil)
-(defvar-local hide-mode-line nil)
+(defvar-local hide-mode-line nil
+  "Store the model line if it is hidden.
+If `hidden-mode-line-mode' is active, this variable contains the
+value of `mode-line-format'. If the mode line is not hidden, this
+variable is nil.")
 
 (define-minor-mode hidden-mode-line-mode
   "Minor mode to hide the mode-line in the current buffer."
   :init-value nil
   :global nil
-  :variable hidden-mode-line-mode
   :group 'editing-basics
   (if hidden-mode-line-mode
       (setq hide-mode-line mode-line-format
@@ -36,7 +38,7 @@
 (global-set-key (kbd "<f12>") 'hidden-mode-line-mode)
 
 
-;; center the window by adding a very wide fringe
+;; Center the window by adding a very wide fringe
 (define-minor-mode center-window-mode
   "Minor mode to center the window using wide fringes."
   :init-value nil
@@ -50,7 +52,8 @@
 	      (frame-char-width)))
         2))))
 
-(center-window-mode 1)
+;; We need to run this code once Emacs is done initializing
+(run-with-idle-timer 0 nil 'center-window-mode 1)
 
 ;; Use F9 to toggle centering
 (global-set-key (kbd "<f9>") 'center-window-mode)
