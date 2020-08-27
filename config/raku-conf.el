@@ -1,4 +1,6 @@
-(add-hook 'perl6-mode-hook 'as/perl6-init)
+(use-package raku-mode)
+
+(add-hook 'raku-mode-hook 'as/perl6-init)
 
 (defun as/perl6-init ()
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)

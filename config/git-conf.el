@@ -1,3 +1,2 @@
-(when (asc:package-install 'git-gutter)
-  (require 'git-gutter)
-  (global-git-gutter-mode +1))
+(use-package git-gutter)
+(global-git-gutter-mode +1)

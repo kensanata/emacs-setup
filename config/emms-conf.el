@@ -2,8 +2,7 @@
 ;; machine. Sadly, I installed mpg123 instead of mpg321 on the Windows
 ;; machine.
 
-
-(asc:package-install 'emms)
+(use-package emms)
 
 (dolist (dir '("C:/Portable Programs/mp3info-0.8.5-win"
 	       "C:/Portable Programs/mpg123-1.22.0-x86-64"))

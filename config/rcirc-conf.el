@@ -2,10 +2,10 @@
 ;; (autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
 (require 'rcirc-emojis)
 
-(asc:package-install 'rcirc-menu)
+(use-package rcirc-menu)
 (eval-after-load 'rcirc '(require 'rcirc-menu))
 
-(asc:package-install 'rcirc-styles)
+(use-package rcirc-styles)
 (eval-after-load 'rcirc '(require 'rcirc-styles))
 
 (global-set-key (kbd "C-c e") 'asc:rcirc-start)
@@ -92,8 +92,7 @@
   '(defalias 'rcirc-split-message 'list))
 
 ;; colors
-(asc:package-install 'rcirc-color)
-;; (load-file "~/src/elpa/packages/rcirc-color/rcirc-color.el")
+(use-package rcirc-color :defer t)
 (eval-after-load 'rcirc '(require 'rcirc-color))
 (setq rcirc-color-other-attributes '(:weight bold))
 

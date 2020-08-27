@@ -1,4 +1,4 @@
-(asc:package-install 'swiper)
+(use-package swiper)
 
 (ivy-mode 1)
 

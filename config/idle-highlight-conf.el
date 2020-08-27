@@ -1,4 +1,4 @@
-(asc:package-install 'idle-highlight-mode)
+(use-package idle-highlight-mode)
 
 ;; (autoload 'idle-highlight-mode "idle-highlight-mode" nil t)
 (eval-after-load "idle-highlight"

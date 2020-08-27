@@ -1,4 +1,6 @@
-(asc:package-install 'typo)
+(use-package typo)
+
+(add-hook 'text-mode-hook 'typo-mode)
 
 (eval-after-load "typo"
   '(define-typo-cycle typo-cycle-left-single-quotation-mark

@@ -1,7 +1,7 @@
 ;; Emacs, Cygwin, whatever... Magit learns to live with Cygwin names.
 ;; https://github.com/magit/magit/issues/1318
 
-(asc:package-install 'magit)
+(use-package magit :bind ("C-c g" . magit-status))
 
 (when (file-executable-p "C:/Portable Programs/PortableGit/cmd/git.exe")
   (setq magit-git-executable "c:/Portable Programs/PortableGit/cmd/git.exe"))

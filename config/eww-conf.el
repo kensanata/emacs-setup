@@ -1,4 +1,8 @@
 ;; no need for cookies within Emacs
+
+(global-set-key (kbd "C-c w") 'eww)
+(global-set-key (kbd "C-c W") 'eww-list-bookmarks)
+
 ;; use M-x url-cookie-list to check
 (setq url-cookie-trusted-urls '()
       url-cookie-untrusted-urls '(".*"))

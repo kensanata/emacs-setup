@@ -13,8 +13,8 @@
                 #'endless/fill-or-unfill)
 
 ;; move line with M-up and M-down
-(asc:package-install 'move-text)
-(move-text-default-bindings)
+(use-package move-text
+  :config (move-text-default-bindings))
 
 (add-hook
  'text-mode-hook

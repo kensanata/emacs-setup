@@ -1,24 +1,6 @@
 ;;; -*- lexical-binding:t -*-
 
-(unless (fboundp 'read-answer)
-  (load-file (expand-file-name "~/src/emacs/lisp/emacs-lisp/map-ynp.el")))
-(unless (fboundp 'assoc-delete-all)
-  (defun assoc-delete-all (key alist &optional test)
-    "Delete from ALIST all elements whose car is KEY.
-Compare keys with TEST.  Defaults to `equal'.
-Return the modified alist.
-Elements of ALIST that are not conses are ignored."
-    (unless test (setq test #'equal))
-    (while (and (consp (car alist))
-		(funcall test (caar alist) key))
-      (setq alist (cdr alist)))
-    (let ((tail alist) tail-cdr)
-      (while (setq tail-cdr (cdr tail))
-	(if (and (consp (car tail-cdr))
-		 (funcall test (caar tail-cdr) key))
-	    (setcdr tail (cdr tail-cdr))
-	  (setq tail tail-cdr))))
-    alist))
+(use-package elpher :defer t)
 
 (global-set-key (kbd "C-c q") 'elpher-menu)
 
@@ -72,14 +54,6 @@ Elements of ALIST that are not conses are ignored."
 
 ;; sometimes I'm in places with very bad connectivity
 (setq elpher-connection-timeout 20)
-
-(let ((version (emacs-version)))
-  (when (and (string-match "^GNU Emacs \\([0-9]+\\)\.\\([0-9]+\\)" version)
-	     (or (> (string-to-number (match-string 1 version)) 26)
-		 (and (= (string-to-number (match-string 1 version)) 26)
-		      (> (string-to-number (match-string 2 version)) 2))))
-    ;; requires Emacs 26.2 these days
-    (asc:package-install 'elpher)))
 
 (add-to-list 'load-path "/home/alex/src/elpher")
 (autoload 'elpher "elpher" "Gopher and Gemini client" t)

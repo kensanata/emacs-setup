@@ -10,15 +10,10 @@
 			       t "-conf\\.el\\'"))
   (load-file file))
 
-;; It turns out that I rarely use emacsclient...
-;; (server-start)
-
 ;; fix read-only bug
 (defadvice isearch-occur (after isearch-occur-fix activate)
   "Fix bug #20971: http://debbugs.gnu.org/cgi/bugreport.cgi?bug=20971"
   (setq buffer-read-only nil))
 
-(setq initial-scratch-message
-      (concat ";; This Emacs is a config installed from\n"
-	      ";; https://github.com/kensanata/emacs-setup\n")
+(setq initial-scratch-message ""
       inhibit-startup-screen t)
