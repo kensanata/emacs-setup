@@ -1,4 +1,5 @@
 ;; I use aerc to read mail and emacsclient as my mail editor
+(server-start)
 
 (define-derived-mode eml-mode mail-mode "Email"
   "Write emails via emacsclient."

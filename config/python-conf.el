@@ -1,4 +1,4 @@
-(use-package pydoc)
+(use-package pydoc :after python)
 (add-hook 'python-mode-hook 'asc:init-python-mode)
 
 (defun asc:init-python-mode ()

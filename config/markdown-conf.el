@@ -1,4 +1,9 @@
-(use-package markdown-mode)
+(use-package markdown-mode
+  :mode ("\\.\\(?:md\\|markdown\\)\\'" . markdown-mode)
+  :config
+  (defalias
+    'markdown-add-xhtml-header-and-footer
+    'as/markdown-add-xhtml-header-and-footer))
 
 (add-hook 'markdown-mode-hook 'english)
 
@@ -23,11 +28,6 @@
 (defun as/ia-writer ()
   (visual-line-mode 1)
   (local-set-key (kbd "M-q") 'ignore))
-
-(eval-after-load "markdown-mode"
-  '(defalias
-     'markdown-add-xhtml-header-and-footer
-     'as/markdown-add-xhtml-header-and-footer))
 
 (defun as/markdown-add-xhtml-header-and-footer (title)
     "Wrap XHTML header and footer with given TITLE around current buffer."

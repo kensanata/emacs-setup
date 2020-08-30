@@ -44,6 +44,13 @@
 ;; Fix encoding? Check with words such as "Tätigkeitsliste"
 ;; ispell-dictionary-alist has latin-1 encoded umlauts!
 ;; (assoc "swiss8" ispell-dictionary-alist)
+
+;; Also, the British dictionary doesn't recognise type mode stuff such
+;; as "doesn’t".
+;; (assoc "british" ispell-dictionary-alist)
+
 (setq ispell-local-dictionary-alist
       '(("swiss8" "[A-Za-zÄÜÖäüöß]" "[^A-Za-zÄÜÖäüöß]"
-	 "[']" t ("-C" "-d" "de_CH") nil utf-8)))
+	 "[']" t ("-C" "-d" "de_CH") nil utf-8)
+	("british" "[[:alpha:]]" "[^[:alpha:]]"
+	 "['’]" t ("-d" "en_GB") nil utf-8)))

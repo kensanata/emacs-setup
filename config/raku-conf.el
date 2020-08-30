@@ -1,4 +1,5 @@
-(use-package raku-mode)
+(use-package raku-mode
+  :mode ("\\.raku\\(?:mod\\|test\\)?\\'" . raku-mode))
 
 (add-hook 'raku-mode-hook 'as/perl6-init)
 
