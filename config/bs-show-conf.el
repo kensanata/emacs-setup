@@ -2,7 +2,8 @@
 (global-set-key (kbd "C-x C-b") 'bs-show)
 
 (setq bs-configurations
-      '(("all" nil nil nil nil nil)
+      '(;;("gnus" "^\\*\\(Group\\|Summary\\|Article\\|Server\\|\\(un\\)?sent\\b\\)" nil "" nil nil)
+	("all" nil nil nil nil nil)
         ("files" nil nil nil bs-visits-non-file bs-sort-buffer-interns-are-last)
         ("c" nil nil nil
 	 (lambda (buf)
@@ -18,5 +19,4 @@
          (lambda (buf)
            (with-current-buffer buf
              (not (eq major-mode 'dired-mode))))
-	 bs-sort-buffer-interns-are-last)
-	("gnus" "^\\*\\(Group\\|Summary\\|Article\\|Server\\|\\(un\\)?sent\\b\\)" nil "" nil nil)))
+	 bs-sort-buffer-interns-are-last)))
