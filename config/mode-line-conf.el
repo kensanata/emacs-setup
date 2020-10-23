@@ -54,7 +54,15 @@ variable is nil.")
         2))))
 
 ;; We need to run this code once Emacs is done initializing
-(run-with-idle-timer 0 nil 'center-window-mode 1)
+;; (run-with-idle-timer 0 nil 'center-window-mode 1)
 
 ;; Use F9 to toggle centering
 (global-set-key (kbd "<f9>") 'center-window-mode)
+
+(defun disable-center-window-mode ()
+  "Disable `center-window-mode' uncoditionally."
+  (center-window-mode 0))
+
+;; disable center-window-mode for some modes
+(add-hook 'dired-mode-hook 'disable-center-window-mode)
+(add-hook 'programming-mode-hook 'disable-center-window-mode)
