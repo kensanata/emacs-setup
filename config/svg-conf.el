@@ -17,4 +17,12 @@
     (while (re-search-forward "step\\([0-9]+\\)" end t)
       (let ((n (string-to-number (match-string 1))))
 	(replace-match (format "step%d" (1+ n)))))))
+
+(defun as:round-numbers (start end)
+  (interactive "r")
+  (goto-char start)
+  (save-excursion
+    (while (re-search-forward "\\([0-9]+\\.[0-9][0-9]+\\)" end t)
+      (let ((n (string-to-number (match-string 1))))
+	(replace-match (format "%.1f" n))))))
     
