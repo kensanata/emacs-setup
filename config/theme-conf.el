@@ -48,7 +48,8 @@
  '(j-adverb-face ((t (:inherit bold))))
  '(j-conjunction-face ((t (:inherit bold))))
  '(j-other-face ((t (:inherit bold))))
- '(j-verb-face ((t (:inherit bold)))))
+ '(j-verb-face ((t (:inherit bold))))
+ '(swiper-line-face ((t (:background "grey40")))))
 
 (custom-theme-set-variables
  'brutalist-dark
