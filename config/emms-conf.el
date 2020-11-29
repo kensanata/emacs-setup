@@ -25,3 +25,17 @@
 		   "~/Music"))
   (when (file-directory-p dir)
     (setq emms-source-file-default-directory (expand-file-name dir))))
+
+(setq emms-tag-editor-tagfile-functions
+  '(("mp3" "id3tag"
+     ((info-artist      . "a")
+      (info-title       . "s")
+      (info-album       . "A")
+      (info-tracknumber . "t")
+      (info-year        . "y")
+      (info-genre       . "g")
+      (info-note        . "c")))
+    ("ogg" . emms-tag-editor-tag-ogg)
+    ("flac" . emms-tag-editor-tag-flac)))
+
+(setq emms-tag-editor-rename-format "%n - %t")
