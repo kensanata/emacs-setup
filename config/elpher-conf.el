@@ -93,25 +93,23 @@
   (interactive (oddmuse-pagename))
   (setq-local oddmuse-wiki wiki)
   (insert "=> " pagename " " (replace-regexp-in-string "_" " " pagename)))
-  
-(defun elpher-node-up (node)
-  "Does the node have a selector that looks like a path?"
-  (let* ((address (elpher-node-address node))
-	 (selector (elpher-address-selector address))
-	 (up (file-name-directory (directory-file-name selector))))
-    (when (not (string= up selector))
-      (elpher-make-node (concat "Up from " (elpher-node-display-string elpher-current-node))
-			(elpher-make-address ?1
-					     up
-					     (elpher-address-host address)
-					     (elpher-address-port address)
-					     (elpher-address-use-tls-p address))
-			elpher-current-node))))
 
 (defun elpher-up ()
   "Go up in a gopher site."
   (interactive)
-  (let ((up (elpher-node-up elpher-current-node)))
-    (if up
-	(elpher-visit-node up)
-      (error "No way up"))))
+  (let* ((url (elpher-address-to-url (elpher-page-address elpher-current-page)))
+	 (urlobj (url-generic-parse-url url))
+	 (path (car (url-path-and-query urlobj)))
+	 (elems (split-string path "/"))
+	 (up (string-join (reverse (cdr (reverse elems))) "/")))
+    (setf (url-filename urlobj) up)
+    (elpher-go (url-recreate-url urlobj))))
+  
+;; Utilities
+
+(defun gemini-url-percent-encode-title (start end)
+  "Percent-encode the region and insert it at START."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (insert (url-encode-url (buffer-substring-no-properties start end)) " ")))
