@@ -1,9 +1,9 @@
 (use-package swiper)
 
 (ivy-mode 1)
-(global-set-key (kbd "C-o") 'swiper)
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "C-r") 'swiper-isearch-backward)
+
+(global-set-key (kbd "C-o") 'swiper); line based
+(define-key swiper-map (kbd "C-w") 'ivy-yank-word); more like isearch
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
