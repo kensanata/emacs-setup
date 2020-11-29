@@ -29,15 +29,8 @@ variable is nil.")
              (substitute-command-keys
 	      "Use \\[hidden-mode-line-mode] to show it again.")))))
 
-;; Activate hidden-mode-line-mode
-(hidden-mode-line-mode 1)
-
-;; Hide the mode-line in all new buffers
-(add-hook 'after-change-major-mode-hook 'hidden-mode-line-mode)
-
 ;; Use F12 to toggle modelines
 (global-set-key (kbd "<f12>") 'hidden-mode-line-mode)
-
 
 ;; Center the window by adding a very wide fringe
 (define-minor-mode center-window-mode
