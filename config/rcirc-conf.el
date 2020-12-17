@@ -52,7 +52,7 @@
 	;; Tilde chat is often unreachable
 	("irc.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#gemini"))
+	 :channels ())
 	;; "#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
