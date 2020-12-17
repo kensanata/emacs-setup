@@ -68,6 +68,17 @@
 (add-to-list 'load-path "/home/alex/src/gemini.el")
 (autoload 'gemini-mode "gemini-mode" "Gemini Mode" t)
 
+(setq elpher-gemini-tokens
+  '(("alexschroeder.ch" . "hello")
+    ("communitywiki.org" . "hello")
+    ("transjovian.org" . "hello")
+    ("toki.transjovian.org" . "hello")
+    ("xn--vxagggm5c.transjovian.org" . "hello")
+    ("next.oddmuse.org" . "hello")
+    ("emacswiki.org" . "emacs")
+    ("127.0.0.1" . "hello")
+    ("localhost" . "hello")))
+
 (add-hook 'gemini-mode-hook 'typo-mode)
 (add-hook 'gemini-mode-hook
 	  (lambda ()
