@@ -84,8 +84,10 @@ This command will not run unless in an RMAIL buffer visiting
   (rmail-output rmail-spam-file)
   (rmail-delete-forward))
 
-(setq mairix-file-path "/home/alex/mairix"
+(setq mairix-file-path "/home/alex/mail/mairix"
       mairix-search-file "search")
+
+(autoload 'mairix-search "mairix" "Call Mairix with SEARCH.")
 
 (require 'cl-lib)
 
