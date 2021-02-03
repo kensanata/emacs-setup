@@ -19,3 +19,7 @@
 	 (elpher-go url))
 	(t (funcall original url new-window))))
 
+;; labels don't come in paragraphs
+(eval-after-load "shr"
+  '(defun shr-tag-label (dom)
+     (shr-generic dom)))
