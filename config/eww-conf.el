@@ -1,11 +1,14 @@
-;; no need for cookies within Emacs
-
+;; I want to use eww.
 (global-set-key (kbd "C-c w") 'eww)
 (global-set-key (kbd "C-c W") 'eww-list-bookmarks)
 
+;; no need for cookies within Emacs
 ;; use M-x url-cookie-list to check
 (setq url-cookie-trusted-urls '()
-      url-cookie-untrusted-urls '(".*"))
+      url-cookie-untrusted-urls '(".*")
+      ;; ↓ run (url-setup-privacy-info) after changing
+      url-privacy-level 'paranoid
+      browse-url-browser-function 'eww-browse-url)
 
 (advice-add 'eww-browse-url :around 'asc:eww-browse-url)
 
