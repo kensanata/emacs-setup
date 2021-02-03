@@ -12,27 +12,36 @@
 
 ;; I also like RMAIL.
 ;; See cadadr's blog post: https://cadadr.dreamwidth.org/828.html
-(setq rmail-primary-inbox-list '("/home/alex/mail/inbox"); where mail comes from, delivered by mpop
-      rmail-file-name "/home/alex/mail/current"; where I read mail
-      rmail-secondary-file-directory "/home/alex/mail"; where the other folders are
-      rmail-secondary-file-regexp "spam\\|sent\\|archive$"; the interesting other folders
-      rmail-default-file "/home/alex/mail/archive"; where mail I want to keep goes
-      rmail-spam-file "/home/alex/mail/spam"; where spam mail goes
-      rmail-mime-prefer-html nil)
+(setq
+ ;; where mail comes from, delivered by mpop
+ rmail-primary-inbox-list '("/home/alex/mail/inbox")
+ ;; where I read mail
+ rmail-file-name "/home/alex/mail/current"
+ ;; where the other mbox files are
+ rmail-secondary-file-directory "/home/alex/mail"
+ ;; the interesting other folders (without archive-001 and so on)
+ rmail-secondary-file-regexp "spam\\|sent\\|archive$"
+ ;; where mail I want to keep goes
+ rmail-default-file "/home/alex/mail/archive"
+ ;; I don't differentiate between spam and trash anymore because I'm
+ ;; relying on my provider's spam filter. I'm not running a local spam
+ ;; filter.
+ rmail-trash-file "/home/alex/mail/trash")
 
 (defvar rmail-summary-font-lock-keywords
-  '(("^.....D.*" . font-lock-string-face)			; Deleted.
-    ("^.....-.*" . 'bold)				        ; Unread.
+  '(("^.....D.*" . font-lock-comment-face)                ;; deleted
+    ("^.....-.*" . 'bold)                                 ;; Unread
     ;; Neither of the below will be highlighted if either of the above are:
-    ("^.....[^D-] \\(......\\)" 1 font-lock-keyword-face)	; Date.
-    ("{ \\([^\n}]+\\) }" 1 font-lock-comment-face))		; Labels.
+    ("^.....[^D-] \\(......\\)" 1 font-lock-keyword-face) ;; Date.
+    ("{ \\([^\n}]+\\) }" 1 font-lock-comment-face))	  ;; Labels.
   "Additional expressions to highlight in Rmail Summary mode.")
 
 (eval-after-load "rmail"
   '(progn
      (define-key rmail-mode-map "<" 'asc:fetch-mail)
      (define-key rmail-mode-map "A" 'asc:archive-mail)
-     (define-key rmail-mode-map "$" 'asc:spam-mail)
+     (define-key rmail-mode-map "d" 'asc:trash-mail)
+     (define-key rmail-mode-map "$" 'asc:trash-mail)
      (define-key rmail-mode-map "S" 'mairix-search)
      (define-key rmail-mode-map (kbd "<tab>") 'asc:rmail-forward-link-or-button)
      (define-key rmail-mode-map (kbd "<backtab>") 'asc:rmail-backward-link-or-button)))
@@ -44,7 +53,11 @@
 ;; Redefining quit
 (eval-after-load "rmailsum"
   '(progn
-     (define-key rmail-summary-mode-map "q" 'bury-buffer)))
+     (define-key rmail-mode-map "<" 'asc:fetch-mail)
+     (define-key rmail-summary-mode-map "A" 'asc:archive-mail)
+     (define-key rmail-summary-mode-map "d" 'asc:trash-mail)
+     (define-key rmail-summary-mode-map "$" 'asc:trash-mail)
+     (define-key rmail-summary-mode-map "S" 'mairix-search)))
 
 (global-set-key (kbd "C-c <") 'asc:fetch-mail)
 
@@ -73,15 +86,13 @@ This command will not run unless in an RMAIL buffer visiting
   (rmail-output rmail-default-file)
   (rmail-delete-forward))
 
-(defun asc:spam-mail ()
-  "It will move the current message to ‘rmail-default-file’
-This command will not run unless in an RMAIL buffer visiting
-‘rmail-file-name’."
+(defun asc:trash-mail ()
+  "It will move the current message to ‘rmail-trash-file’
+If you're currently visiting the trash file, then it will be
+deleted."
   (interactive)
-  (unless (string= (buffer-file-name) rmail-file-name)
-    (user-error
-     "This is not your default RMAIL file"))
-  (rmail-output rmail-spam-file)
+  (unless (string= (buffer-file-name) rmail-trash-file)
+    (rmail-output rmail-trash-file))
   (rmail-delete-forward))
 
 (setq mairix-file-path "/home/alex/mail/mairix"
@@ -129,6 +140,7 @@ This is the reverse counterpart of
       sendmail-program "msmtp"
       message-default-headers "Fcc: /home/alex/mail/sent"
       message-auto-save-directory "/home/alex/mail/drafts"
-      message-confirm-send t)
+      message-confirm-send t
+      message-hidden-headers '("^References:" "^X-Draft-From:" "^In-Reply-To:"))
 
 (add-hook 'message-sent-hook 'bury-buffer)
