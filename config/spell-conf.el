@@ -3,6 +3,8 @@
   (interactive)
   (ispell-change-dictionary "swiss8")
   (asc:flyspell)
+  (typo-mode 1)
+  (setq typo-language "German")
   (set-input-method 'german-prefix))
 
 (defalias 'german 'swiss)
@@ -12,6 +14,8 @@
   (interactive)
   (ispell-change-dictionary "german-new8")
   (asc:flyspell)
+  (typo-mode 1)
+  (setq typo-language "German")
   (set-input-method 'german-prefix))
 
 (defun english ()
@@ -19,6 +23,8 @@
   (interactive)
   (ispell-change-dictionary "british")
   (asc:flyspell)
+  (typo-mode 1)
+  (setq typo-language "English")
   (set-input-method nil))
 
 (defun asc:flyspell ()
