@@ -67,7 +67,7 @@
 	("Links to Wisdom" "https://campaignwiki.org/wiki/LinksToWisdom"
 	 utf-8 "frodo" "Alex")
 	("Community Wiki" "https://communitywiki.org/wiki"
-	 utf-8 "question" nil)
+	 utf-8 "IS9oBk9t" nil)
 	("Oddmuse Wiki" "https://oddmuse.org/wiki"
 	 utf-8 "ham" nil)
 	("Alex" "https://alexschroeder.ch/wiki"
@@ -76,7 +76,11 @@
 	 utf-8 "question" "Alex Schroeder")
 	("Food" "https://communitywiki.org/food"
 	 utf-8 "question" "Alex Schroeder")
+	("Kaylash" "https://campaignwiki.org/wiki/Kaylash"
+	 utf-8 "frodo" "Alex")
 	("Dschungel von Chult" "https://campaignwiki.org/wiki/DschungelvonChult"
+	 utf-8 "frodo" "Alex")
+	("Die Zeit der Waldbrände" "https://campaignwiki.org/wiki/Die_Zeit_der_Waldbr%c3%a4nde"
 	 utf-8 "frodo" "Alex"))
       oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
 
