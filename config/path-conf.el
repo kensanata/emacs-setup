@@ -11,7 +11,10 @@
 			(replace-regexp-in-string "\n" "" (shell-command-to-string "manpath"))))
 	(setenv "PATH"
 		(concat (getenv "PERLBREW_PATH") path-separator
-			(getenv "PATH"))))
+			(getenv "PATH")))
+	(dolist (path (split-string (getenv "PERLBREW_PATH") path-separator))
+	  (unless (member path exec-path)
+	    (add-to-list 'exec-path path))))
     (message "Did not find %s" init-file)))
 
 ;; ~/.local
