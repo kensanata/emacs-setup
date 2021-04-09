@@ -77,7 +77,8 @@
     ("next.oddmuse.org" . "hello")
     ("emacswiki.org" . "emacs")
     ("127.0.0.1" . "hello")
-    ("localhost" . "hello")))
+    ("localhost" . "hello")
+    ("campaignwiki.org" . "hello")))
 
 (add-hook 'gemini-mode-hook 'typo-mode)
 (add-hook 'gemini-mode-hook
