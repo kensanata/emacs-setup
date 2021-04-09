@@ -14,7 +14,9 @@
       "mpg123")
     (setq emms-player-list '(emms-player-mpg123)))
   (when (executable-find "ogg123")
-    (add-to-list 'emms-player-list 'emms-player-ogg123)))
+    (add-to-list 'emms-player-list 'emms-player-ogg123))
+  (when (executable-find "mpv")
+    (add-to-list 'emms-player-list 'emms-player-mpv)))
 
 (dolist (dir '("C:/Portable Programs/mp3info-0.8.5-win"
 	       "C:/Portable Programs/mpg123-1.22.0-x86-64"))
