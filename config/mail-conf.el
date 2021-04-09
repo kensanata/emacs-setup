@@ -40,11 +40,10 @@
   '(progn
      (define-key rmail-mode-map "<" 'asc:fetch-mail)
      (define-key rmail-mode-map "A" 'asc:archive-mail)
+     (define-key rmail-mode-map "O" 'asc:move-mail)
      (define-key rmail-mode-map "d" 'asc:trash-mail)
      (define-key rmail-mode-map "$" 'asc:trash-mail)
-     (define-key rmail-mode-map "S" 'mairix-search)
-     (define-key rmail-mode-map (kbd "<tab>") 'asc:rmail-forward-link-or-button)
-     (define-key rmail-mode-map (kbd "<backtab>") 'asc:rmail-backward-link-or-button)))
+     (define-key rmail-mode-map "S" 'mairix-search)))
 
 (eval-after-load "message"
   '(progn
@@ -55,6 +54,7 @@
   '(progn
      (define-key rmail-mode-map "<" 'asc:fetch-mail)
      (define-key rmail-summary-mode-map "A" 'asc:archive-mail)
+     (define-key rmail-summary-mode-map "O" 'asc:move-mail)
      (define-key rmail-summary-mode-map "d" 'asc:trash-mail)
      (define-key rmail-summary-mode-map "$" 'asc:trash-mail)
      (define-key rmail-summary-mode-map "S" 'mairix-search)))
@@ -80,9 +80,6 @@
 This command will not run unless in an RMAIL buffer visiting
 ‘rmail-file-name’."
   (interactive)
-  (unless (string= (buffer-file-name) rmail-file-name)
-    (user-error
-     "This is not your default RMAIL file"))
   (rmail-output rmail-default-file)
   (rmail-delete-forward))
 
@@ -91,8 +88,18 @@ This command will not run unless in an RMAIL buffer visiting
 If you're currently visiting the trash file, then it will be
 deleted."
   (interactive)
-  (unless (string= (buffer-file-name) rmail-trash-file)
+  (unless (or (string= (buffer-file-name)
+		       rmail-trash-file)
+	      (and rmail-buffer
+		   (string= (buffer-file-name rmail-buffer)
+			     rmail-trash-file)))
     (rmail-output rmail-trash-file))
+  (rmail-delete-forward))
+
+(defun asc:move-mail (file)
+  "It will move the current message to FILE."
+  (interactive "FMove to mbox file: ")
+  (rmail-output file)
   (rmail-delete-forward))
 
 (setq mairix-file-path "/home/alex/mail/mairix"
@@ -101,38 +108,6 @@ deleted."
 (autoload 'mairix-search "mairix" "Call Mairix with SEARCH.")
 
 (require 'cl-lib)
-
-(defun asc:rmail-forward-link-or-button (p)
-  "Navigate both links and buttons in Rmail in a ring.
-This replaces the use of ‘forward-button’ which only traverses
-buttons and skips over links."
-  (interactive (list (point)))
-  (let (positions)
-    (dolist (overlay (overlays-in (point-min) (point-max)))
-      (when (memq (car (overlay-properties overlay))
-                  '(goto-address button))
-        (pushnew (overlay-start overlay) positions)))
-    (setq positions (sort positions #'<))
-    (if (>= p (car (last positions)))
-        (goto-char (first positions))
-      (goto-char (find-if (lambda (x) (> x p)) positions)))))
-
-(defun asc:rmail-backward-link-or-button (p)
-  "Navigate both links and buttons in Rmail in a ring.
-This replaces the use of ‘forward-button’ which only traverses
-buttons and skips over links.
-This is the reverse counterpart of
-‘gk-rmail-forward-link-or-button’."
-  (interactive (list (point)))
-  (let (positions)
-    (dolist (overlay (overlays-in (point-min) (point-max)))
-      (when (memq (car (overlay-properties overlay))
-                  '(goto-address button))
-        (pushnew (overlay-start overlay) positions)))
-    (setq positions (sort positions #'<))
-    (if (<= p (first positions))
-        (goto-char (car (last positions)))
-      (goto-char (find-if (lambda (x) (< x p)) positions :from-end t)))))
 
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       message-sendmail-f-is-evil t
