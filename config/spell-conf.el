@@ -27,6 +27,15 @@
   (setq typo-language "English")
   (set-input-method nil))
 
+(defun francais ()
+  "Switch ispell dictionary to 'francais'."
+  (interactive)
+  (ispell-change-dictionary "francais")
+  (asc:flyspell)
+  (typo-mode 1)
+  (setq typo-language "French")
+  (set-input-method 'french-prefix))
+
 (defun asc:flyspell ()
   "Ensure flyspell is running."
   (interactive)
@@ -58,5 +67,7 @@
 (setq ispell-local-dictionary-alist
       '(("swiss8" "[A-Za-zÄÜÖäüöß]" "[^A-Za-zÄÜÖäüöß]"
 	 "[']" t ("-C" "-d" "de_CH") nil utf-8)
+	("francais" "[A-Za-zÀÂÆÇÈÉÊËÎÏÔÙÛÜàâçèéêëîïôùûü]" "[^A-Za-zÀÂÆÇÈÉÊËÎÏÔÙÛÜàâçèéêëîïôùûü]"
+	 "[-'’.@]" t ("-C" "-d" "fr_CH") nil utf-8)
 	("british" "[[:alpha:]]" "[^[:alpha:]]"
 	 "['’]" t ("-d" "en_GB") nil utf-8)))
