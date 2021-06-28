@@ -26,7 +26,9 @@
  ;; I don't differentiate between spam and trash anymore because I'm
  ;; relying on my provider's spam filter. I'm not running a local spam
  ;; filter.
- rmail-trash-file "/home/alex/mail/trash")
+ rmail-trash-file "/home/alex/mail/trash"
+ ;; delete mail when moving it
+ rmail-delete-after-output t)
 
 (defvar rmail-summary-font-lock-keywords
   '(("^.....D.*" . font-lock-comment-face)                ;; deleted
@@ -40,7 +42,6 @@
   '(progn
      (define-key rmail-mode-map "<" 'asc:fetch-mail)
      (define-key rmail-mode-map "A" 'asc:archive-mail)
-     (define-key rmail-mode-map "O" 'asc:move-mail)
      (define-key rmail-mode-map "d" 'asc:trash-mail)
      (define-key rmail-mode-map "$" 'asc:trash-mail)
      (define-key rmail-mode-map "S" 'mairix-search)))
@@ -54,7 +55,6 @@
   '(progn
      (define-key rmail-mode-map "<" 'asc:fetch-mail)
      (define-key rmail-summary-mode-map "A" 'asc:archive-mail)
-     (define-key rmail-summary-mode-map "O" 'asc:move-mail)
      (define-key rmail-summary-mode-map "d" 'asc:trash-mail)
      (define-key rmail-summary-mode-map "$" 'asc:trash-mail)
      (define-key rmail-summary-mode-map "S" 'mairix-search)))
@@ -80,27 +80,20 @@
 This command will not run unless in an RMAIL buffer visiting
 ‘rmail-file-name’."
   (interactive)
-  (rmail-output rmail-default-file)
-  (rmail-delete-forward))
+  (rmail-output rmail-default-file))
 
 (defun asc:trash-mail ()
   "It will move the current message to ‘rmail-trash-file’
 If you're currently visiting the trash file, then it will be
 deleted."
   (interactive)
-  (unless (or (string= (buffer-file-name)
+  (if (or (string= (buffer-file-name)
 		       rmail-trash-file)
 	      (and rmail-buffer
 		   (string= (buffer-file-name rmail-buffer)
-			     rmail-trash-file)))
-    (rmail-output rmail-trash-file))
-  (rmail-delete-forward))
-
-(defun asc:move-mail (file)
-  "It will move the current message to FILE."
-  (interactive "FMove to mbox file: ")
-  (rmail-output file)
-  (rmail-delete-forward))
+			    rmail-trash-file)))
+      (rmail-delete-forward)
+    (rmail-output rmail-trash-file)))
 
 (setq mairix-file-path "/home/alex/mail/mairix"
       mairix-search-file "search")
@@ -118,4 +111,23 @@ deleted."
       message-confirm-send t
       message-hidden-headers '("^References:" "^X-Draft-From:" "^In-Reply-To:"))
 
-(add-hook 'message-sent-hook 'bury-buffer)
+(defun asc:ecomplete-add-mail (email expansion)
+  "Add EMAIL with EXPANSION for future mail completion."
+  (interactive (list (read-string "Email address: ")
+		     (read-string "Expansion: ")))
+  (ecomplete-add-item email 'mail expansion))
+
+(defun asc:ecomplete-pick-item (prompt type)
+  "Choose an item of TYPE."
+  (let* ((elems (cdr (assq type ecomplete-database))))
+    (completing-read prompt elems)))
+
+(defun asc:ecomplete-add-mail-group (email recipients)
+  "Add EMAIL with RECIPIENTS for future mail completion.
+RECIPIENTS is a list of email addresses"
+  (interactive (list (read-string "Email address: ")
+		     (let (recipient recipients)
+		       (while (not (string= "" (setq recipient (asc:ecomplete-pick-item "Email: " 'mail))))
+			 (push recipient recipients))
+		       recipients)))
+  (ecomplete-add-item email 'mail (string-join recipients ", ")))
