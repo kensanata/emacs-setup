@@ -5,10 +5,19 @@
       '(;;("gnus" "^\\*\\(Group\\|Summary\\|Article\\|Server\\|\\(un\\)?sent\\b\\)" nil "" nil nil)
 	("all" nil nil nil nil nil)
         ("files" nil nil nil bs-visits-non-file bs-sort-buffer-interns-are-last)
-        ("c" nil nil nil
+        ("gemini" nil nil nil
 	 (lambda (buf)
            (with-current-buffer buf
-             (not (eq major-mode 'c-mode))))
+	     (and
+              (not (eq major-mode 'elpher-mode))
+              (not (eq major-mode 'gemini-mode)))))
+	 bs-sort-buffer-interns-are-last)
+        ("perl" nil nil nil
+	 (lambda (buf)
+           (with-current-buffer buf
+	     (and
+              (not (eq major-mode 'perl-mode))
+              (not (eq major-mode 'cperl-mode)))))
 	 bs-sort-buffer-interns-are-last)
 	("oddmuse" nil nil nil
 	 (lambda (buf)
@@ -19,4 +28,9 @@
          (lambda (buf)
            (with-current-buffer buf
              (not (eq major-mode 'dired-mode))))
+	 bs-sort-buffer-interns-are-last)
+	("c" nil nil nil
+	 (lambda (buf)
+           (with-current-buffer buf
+             (not (eq major-mode 'c-mode))))
 	 bs-sort-buffer-interns-are-last)))
