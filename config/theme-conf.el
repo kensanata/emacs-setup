@@ -60,7 +60,12 @@
  '(j-conjunction-face ((t (:inherit bold))))
  '(j-other-face ((t (:inherit bold))))
  '(j-verb-face ((t (:inherit bold))))
- '(swiper-line-face ((t (:background "grey40")))))
+ '(swiper-line-face ((t (:background "grey40"))))
+ '(mastodon-boost-fave-face ((t (:inherit success))))
+ '(mastodon-boosted-face ((t (:inherit bold))))
+ '(mastodon-cw-face ((t (:inherit bold))))
+ '(mastodon-display-name-face ((t (:inherit font-lock-string-face))))
+ '(mastodon-handle-face ((t (:inherit font-lock-comment-face)))))
 
 (custom-theme-set-variables
  'brutalist-dark
