@@ -32,34 +32,31 @@
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
       ;; sometimes we have to use 71.11.84.232
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
-      '(("chat.freenode.net"
+      '(("irc.libera.chat"
 	 :port 6697 :encryption tls
 	 :channels ("#emacs"
-		    "#emacs-ops"
-		    "#org-mode"
 		    "#rcirc"
 		    "#wiki"
 		    "#oddmuse"
-		    "##emacs.de"
-		    "#perl"
-		    "#xelf"
-		    "#raku"
-		    "#bussard"
+		    "#phoebe"
+		    "#perl" "#awk"
 		    "#fennel"
-		    "#jsoftware"))
+		    "##fediverse-lisp"
+		    "#retro"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
 	;; Tilde chat is often unreachable
 	("irc.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ())
+	 :channels ("#rpg" "#ijirait" "#gemini"))
 	;; "#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
-	;; ("campaignwiki.org"
-	;;  :port 6697 :encryption tls
-	;;  :channels ("#chat"))
+	("irc.otherworlders.org"
+	 :port 6667 ;; no encryption
+	 :channels ("#halberds-and-helmets"
+		    "#fudge"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
@@ -71,9 +68,13 @@
 	 :channels ("&bitlbee")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
-      rcirc-ignore-list '("consolers" "enometh" "ams" "jordanb" "Nihplod"
-			  "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"
-			  "urlinfo"))
+      ;; add Gemini
+      rcirc-url-regexp "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\|gemini\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)[-a-z0-9_=#$@~%&*+\\/[:word:]]\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
+      rcirc-ignore-list '())
+
+;; "consolers" "enometh" "ams" "jordanb" "Nihplod"
+;; "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"
+;; "urlinfo"
 
 ;; at the office...
 (when (string-match "^[A-Z]+[0-9]+$" system-name)
@@ -332,6 +333,8 @@ instead of `rcirc-markup-urls'."
 			"GIF");; these are usually worse than pics
 		       ((string-match "^https://twitter\\.com" url)
 			"TWIT");; these are usually worse
+		       ((string-match "^gemini://" url)
+			"GEMINI");; cool
 		       ((string-match "::" url)
 			nil);; bogus Perl module
 		       (t "LINK"))))
