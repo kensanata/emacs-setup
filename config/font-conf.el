@@ -1,4 +1,3 @@
-;; See https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
 (cond ((find-font (font-spec :name "Iosevka"))
        ;; on windows, this defaults to a different font?
        (dolist (face '(default fixed-pitch))
