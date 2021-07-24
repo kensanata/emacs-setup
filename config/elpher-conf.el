@@ -1,8 +1,7 @@
 ;;; -*- lexical-binding:t -*-
 
 (use-package elpher :defer t
-  :config (require 'elpher-http)
-  :config (require 'elpher-bookmark-integration))
+  :config (require 'elpher-http))
 
 (add-hook 'elpher-menu-mode-hook
 	  (lambda ()
