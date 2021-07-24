@@ -1,8 +1,8 @@
 ;;; -*- lexical-binding:t -*-
 
-(use-package elpher :defer t)
-
-(global-set-key (kbd "C-c q") 'elpher-menu)
+(use-package elpher :defer t
+  :config (require 'elpher-http)
+  :config (require 'elpher-bookmark-integration))
 
 (add-hook 'elpher-menu-mode-hook
 	  (lambda ()
@@ -109,11 +109,14 @@
 (defun elpher-up ()
   "Go up in a gopher site."
   (interactive)
-  (let* ((url (elpher-address-to-url (elpher-page-address elpher-current-page)))
+  (let* ((address (elpher-page-address elpher-current-page))
+	 (url (elpher-address-to-url address))
 	 (urlobj (url-generic-parse-url url))
 	 (path (car (url-path-and-query urlobj)))
-	 (elems (split-string path "/"))
-	 (up (string-join (reverse (cdr (reverse elems))) "/")))
+	 (elems (and path (split-string path "/")))
+	 (up (and elems (string-join (reverse (cdr (reverse elems))) "/"))))
+    (unless up
+      (error "Cannot go up from here"))
     (setf (url-filename urlobj) up)
     (elpher-go (url-recreate-url urlobj))))
   
