@@ -44,13 +44,6 @@ The browser to used is specified by the
   '((t :inherit font-lock-comment-face))
   "Face used for HTTP/HTTPS type directory records.")
 
-;; add the HTTP entry after the Gemini entry to `elpher-type-map'
-(unless (assq 'http elpher-type-map)
-  (let ((cell (memq (assq 'gemini elpher-type-map) elpher-type-map)))
-    (setcdr cell (cons '(http elpher-get-http-page elpher-render-gemini
-			      "http" elpher-http)
-		       (cdr cell)))))
-
 (defun elpher-http-remove-redundant-ports (orig address &rest args)
   "Handle HTTP/HTTPS ports."
   (setq address (apply orig address args))
@@ -83,6 +76,11 @@ The browser to used is specified by the
 (advice-add 'elpher-address-type :around #'elpher-http-address-type)
 
 ;; (elpher-address-type (url-generic-parse-url "http://alexschroeder.ch"))
+
+;; add the HTTP entry to `elpher-type-map'
+(add-to-list 'elpher-type-map '(http elpher-get-http-page elpher-render-gemini "http" elpher-http))
+
+;; (assq 'http elpher-type-map)
 
 ;; HTTP/HTTPS
 

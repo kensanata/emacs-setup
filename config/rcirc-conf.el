@@ -5,8 +5,6 @@
 (use-package rcirc-menu :after rcirc)
 (use-package rcirc-styles :after rcirc)
 
-(global-set-key (kbd "C-c e") 'asc:rcirc-start)
-
 (defun asc:rcirc-start ()
   "Start `rcirc'."
   (interactive)

@@ -1,42 +1,39 @@
 ;;; -*- lexical-binding:t -*-
 
+;; prefer my own copies
+(add-to-list 'load-path "/home/alex/src/elpher")
+(add-to-list 'load-path "/home/alex/src/gemini-write")
+
 (use-package elpher :defer t
-  :config (require 'elpher-http))
+  ;; add Elpher as a web client via ../lib/elpher-http.el
+  :config (require 'elpher-http)
+  ;; also creates an autoload for elpher
+  :bind ("C-c e" . elpher))
 
-(add-hook 'elpher-menu-mode-hook
+(use-package gemini-mode :defer t :commands gemini-mode :mode "\\.gmi\\'")
+
+(add-hook 'elpher-mode-hook
 	  (lambda ()
-	    (local-set-key (kbd "n") (lambda () (interactive) (elpher 1)))
-	    (local-set-key (kbd "a") 'asc:elpher-match-alexschroeder.ch)
-	    (local-set-key (kbd "w") 'asc:elpher-search-en.wikipedia.org)))
+	    (local-set-key "u" #'elpher-up)
+	    (local-set-key "b" #'elpher-back)
+	    (local-set-key "l" #'elpher-back)
+	    (local-set-key "j" #'bookmark-jump)
+	    (local-set-key "n" (lambda () (interactive) (elpher 1)))
+	    (local-set-key "W" #'asc:elpher-search-en.wikipedia.org)))
 
-(autoload 'elpher-mode "elpher" "Put buffer in Elpher Mode")
-
-(defun asc:elpher-new-alexschroeder.ch (title)
-  (interactive "sTitle: ")
-  (switch-to-buffer
-   (get-buffer-create
-    (generate-new-buffer-name "*alexschroeder.ch new*")))
-  (elpher-mode)
-  (setq-local gemini-write-text-p t)
-  (elpher-visit-page
-   (elpher-make-page
-    (format "Alex Schroeder: %s" title)
-    (elpher-address-from-url
-     (concat "gemini://alexschroeder.ch/raw/"
-	     (url-hexify-string title))))))
-
-(defun asc:elpher-match-alexschroeder.ch (terms)
-  (interactive "sTerms: ")
-  (let* ((name (format "*alexschroeder.ch*" terms))
-	 (buf (get-buffer-create name)))
-    (pop-to-buffer-same-window buf)
-    (elpher-mode)
-    (elpher-visit-page
-     (elpher-make-page
-      (format "Alex Schroeder: %s" terms)
-      (elpher-address-from-url
-       (concat "gemini://alexschroeder.ch/do/match?"
-	       (url-hexify-string terms)))))))
+(defun elpher-up ()
+  "Go up in a gopher site."
+  (interactive)
+  (let* ((address (elpher-page-address elpher-current-page))
+	 (url (elpher-address-to-url address))
+	 (urlobj (url-generic-parse-url url))
+	 (path (car (url-path-and-query urlobj)))
+	 (elems (and path (split-string path "/")))
+	 (up (and elems (string-join (reverse (cdr (reverse elems))) "/"))))
+    (unless up
+      (error "Cannot go up from here"))
+    (setf (url-filename urlobj) up)
+    (elpher-go (url-recreate-url urlobj))))
 
 (defun asc:elpher-search-en.wikipedia.org (terms)
   (interactive "sTerms: ")
@@ -54,22 +51,15 @@
 ;; sometimes I'm in places with very bad connectivity
 (setq elpher-connection-timeout 20)
 
-(add-to-list 'load-path "/home/alex/src/elpher")
-(autoload 'elpher "elpher" "Gopher and Gemini client" t)
-(autoload 'elpher-menu "elpher" "An overview of all Elpher activities" t)
-
-(add-to-list 'load-path "/home/alex/src/gemini-write")
+;; to edit my wikis (cannot use-package because it's not on MELPA)
 (autoload 'elpher-edit "gemini-write" "Edit a Gemini page" t)
 ;; cannot delay loading until the user uses e to edit a page because
 ;; we need the advice for elpher-render-gemini-plain-text
 (eval-after-load "elpher" '(load-library "gemini-write"))
 
-(add-to-list 'load-path "/home/alex/src/gemini.el")
-(autoload 'gemini-mode "gemini-mode" "Gemini Mode" t)
-
 (setq elpher-gemini-tokens
   '(("alexschroeder.ch" . "hello")
-    ("communitywiki.org" . "hello")
+    ("communitywiki.org" . "fSu1Fbsa")
     ("transjovian.org" . "hello")
     ("toki.transjovian.org" . "hello")
     ("xn--vxagggm5c.transjovian.org" . "hello")
@@ -85,12 +75,6 @@
 	    (local-set-key (kbd "C-c i") 'gemini-insert-link-to-oddmuse-wiki)
 	    (local-set-key (kbd "C-c l") 'gemini-insert-local-link)))
 
-(add-hook 'elpher-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "u") 'elpher-up)
-	    (local-set-key (kbd "b") 'elpher-back)
-	    (local-set-key (kbd "l") 'elpher-back)))
-
 (defun gemini-insert-local-link (pagename)
   "Insert a link to a new page on this wiki."
   (interactive "sPage name: ")
@@ -104,20 +88,6 @@
   (interactive (oddmuse-pagename))
   (setq-local oddmuse-wiki wiki)
   (insert "=> " pagename " " (replace-regexp-in-string "_" " " pagename)))
-
-(defun elpher-up ()
-  "Go up in a gopher site."
-  (interactive)
-  (let* ((address (elpher-page-address elpher-current-page))
-	 (url (elpher-address-to-url address))
-	 (urlobj (url-generic-parse-url url))
-	 (path (car (url-path-and-query urlobj)))
-	 (elems (and path (split-string path "/")))
-	 (up (and elems (string-join (reverse (cdr (reverse elems))) "/"))))
-    (unless up
-      (error "Cannot go up from here"))
-    (setf (url-filename urlobj) up)
-    (elpher-go (url-recreate-url urlobj))))
   
 ;; Utilities
 
@@ -127,3 +97,27 @@
   (save-excursion
     (goto-char start)
     (insert (url-encode-url (buffer-substring-no-properties start end)) " ")))
+
+;; Render *foo* as italics, **foo** as bold, /foo/ as italics, and _foo_ as underline.
+
+(advice-add 'elpher-process-text-for-display :filter-return #'asc:add-emphasis)
+
+(defun asc:add-emphasis (str)
+  "Highlight **foo**, *foo*, /foo/, and _foo_ in STR.
+Don't do this if STR already has a text property at position 0
+(most likely preformatted text)."
+  (unless (get-text-property 0 'face str)
+    (dolist (rule '(("\\(\\*\\*\\)\\<\\(.*?\\)\\>\\(\\*\\*\\)" . bold)
+		    ("\\(\\*\\)\\<\\(.*?\\)\\>\\(\\*\\)" . italic)
+		    ("\\(/\\)\\<\\(.*?\\)\\>\\(/\\)" . italic)
+		    ("\\(_\\)\\<\\(.*?\\)\\>\\(_\\)" . underline)))
+      (let ((re (car rule))
+	    (face (cdr rule))
+	    (start 0))
+	(while (string-match re str start)
+	  (unless (get-text-property (match-beginning 0) 'invisible str)
+            (add-text-properties (match-beginning 1) (match-end 1) `(invisible t) str)
+            (add-text-properties (match-beginning 2) (match-end 2) `(face ,face) str)
+            (add-text-properties (match-beginning 3) (match-end 3) `(invisible t) str))
+	  (setq start (match-end 0))))))
+  str)
