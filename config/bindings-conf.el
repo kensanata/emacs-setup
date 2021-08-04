@@ -1,11 +1,13 @@
 (setq default-input-method 'german-prefix)
 
-(global-set-key (kbd "C-<tab>") 'hippie-expand)
+(global-set-key (kbd "C-c u") #'browse-url)
+
+(global-set-key (kbd "C-<tab>") #'hippie-expand)
 (setq hippie-expand-try-functions-list
       '(try-expand-all-abbrevs try-expand-dabbrev
 	try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill
 	try-complete-lisp-symbol-partially try-complete-lisp-symbol))
-(define-key minibuffer-local-map (kbd "C-<tab>") 'hippie-expand)
+(define-key minibuffer-local-map (kbd "C-<tab>") #'hippie-expand)
 
 (global-set-key (kbd "C-x 8 1 / 3") "⅓")
 (global-set-key (kbd "C-x 8 1 / 5") "⅕")
