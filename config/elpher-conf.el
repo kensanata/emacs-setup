@@ -10,7 +10,31 @@
   ;; also creates an autoload for elpher
   :bind ("C-c e" . elpher))
 
-(use-package gemini-mode :defer t :commands gemini-mode :mode "\\.gmi\\'")
+(use-package gemini-mode
+  :defer t
+  :commands gemini-mode
+  :mode "\\.gmi\\'"
+  :config
+  ;; I want a mandatory space for headings
+  (setq gemini-highlights
+	(let* ((gemini-preformatted-regexp "^```[^`]+```$")
+               (gemini-heading-rest-regexp "^####+[[:blank:]]+.*$")
+               (gemini-heading-3-regexp "^###[[:blank:]]+.*$")
+               (gemini-heading-2-regexp "^##[[:blank:]]+.*$")
+               (gemini-heading-1-regexp "^#[[:blank:]]+.*$")
+               (gemini-ulist-regexp "^\\* .*$")
+               (gemini-quote-regexp "^>[[:blank:]]+.*$"))
+	  ;; preformatted must be declared first has it must absolutely be set
+	  ;; before any other face (for exemple to avoid a title inside a
+	  ;; preformatted block to hijack it).
+	  `((,gemini-preformatted-regexp . 'font-lock-builtin-face)
+	    (,gemini-heading-rest-regexp . 'gemini-heading-face-rest)
+	    (,gemini-heading-3-regexp . 'gemini-heading-face-3)
+	    (,gemini-heading-2-regexp . 'gemini-heading-face-2)
+	    (,gemini-heading-1-regexp . 'gemini-heading-face-1)
+	    (,gemini-regex-link-line 1 'link)
+	    (,gemini-ulist-regexp . 'gemini-ulist-face)
+	    (,gemini-quote-regexp . 'gemini-quote-face)))))
 
 (add-hook 'elpher-mode-hook
 	  (lambda ()
