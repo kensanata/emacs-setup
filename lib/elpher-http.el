@@ -47,7 +47,7 @@ The browser to used is specified by the
 (defun elpher-http-remove-redundant-ports (orig address &rest args)
   "Handle HTTP/HTTPS ports."
   (setq address (apply orig address args))
-  (when (and (not (elpher-address-special-p address))
+  (when (and (not (elpher-address-about-p address))
              (eq (url-portspec address)
 		 (pcase (url-type address)
                    ("http" 80)
