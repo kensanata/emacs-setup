@@ -130,11 +130,14 @@
   "Highlight **foo**, *foo*, /foo/, and _foo_ in STR.
 Don't do this if STR already has a text property at position 0
 (most likely preformatted text)."
-  (unless (get-text-property 0 'face str)
-    (dolist (rule '(("\\(\\*\\*\\)\\<\\(.*?\\)\\>\\(\\*\\*\\)" . bold)
-		    ("\\(\\*\\)\\<\\(.*?\\)\\>\\(\\*\\)" . italic)
-		    ("\\(/\\)\\<\\(.*?\\)\\>\\(/\\)" . italic)
-		    ("\\(_\\)\\<\\(.*?\\)\\>\\(_\\)" . underline)))
+  (unless (or (string-prefix-p ">" str)
+	      (string-prefix-p "*" str)
+	      (and (boundp gemini-write-text-p)
+		   gemini-write-text-p))
+    (dolist (rule '(("\\(?:\\W\\|^\\)\\(\\*\\*\\)\\<\\(.*?\\)\\>\\(\\*\\*\\)\\(?:\\W\\|$\\)" . bold)
+		    ("\\(?:\\W\\|^\\)\\(\\*\\)\\<\\(.*?\\)\\>\\(\\*\\)\\(?:\\W\\|$\\)" . italic)
+		    ("\\(?:\\W\\|^\\)\\(/\\)\\<\\(.*?\\)\\>\\(/\\)\\(?:\\W\\|$\\)" . italic)
+		    ("\\(?:\\W\\|^\\)\\(_\\)\\<\\(.*?\\)\\>\\(_\\)\\(?:\\W\\|$\\)" . underline)))
       (let ((re (car rule))
 	    (face (cdr rule))
 	    (start 0))
