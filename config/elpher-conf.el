@@ -148,3 +148,66 @@ Don't do this if STR already has a text property at position 0
             (add-text-properties (match-beginning 3) (match-end 3) `(invisible t) str))
 	  (setq start (match-end 0))))))
   str)
+
+;; Do not cache Ijirait!
+
+(defvar asc:elpher-no-cache-prefixes '("gemini://campaignwiki.org/play")
+  "Prefixes of URLs not to cache.")
+
+(advice-add 'elpher-cache-content :around #'asc:elpher-cache-content)
+
+(defun asc:elpher-cache-content (oldfun address content)
+  "Do not cache Ijirait URLs."
+  (let ((url (elpher-address-to-url address)))
+    (unless (catch 'found
+	      (dolist (prefix asc:elpher-no-cache-prefixes)
+		(when (string-prefix-p prefix url)
+		  (throw 'found t))))
+      (funcall oldfun address content))))
+
+;; Stream Ijirait
+
+;; (autoload 'elpher-address-from-gemini-url "elpher")
+
+;; (defun ijirait-stream ()
+;;   "Open a stream to Ijirait."
+;;   (interactive) 
+;;   (let* ((buf (switch-to-buffer-other-window "*Ijirait Stream*"))
+;; 	 (url "gemini://campaignwiki.org:1965/play/ijirait")
+;; 	 (address (elpher-address-from-gemini-url url))
+;; 	 (host (elpher-address-host address))
+;; 	 (port (elpher-address-port address))
+;; 	 (process (get-buffer-process buf)))
+;;     (unless (process-live-p process)
+;;       (erase-buffer)
+;;       (gemini-mode)
+;;       (insert "# Ijirait\n")
+;;       (insert "A client certificate is required.\n")
+;;       (setq-local elpher-current-page (elpher-make-page "Ijirait Stream" address)
+;; 		  network-security-level 'low
+;; 		  gnutls-verify-error nil)
+;;       ;; we always ask for a client certificate and therefore always
+;;       ;; set elpher-client-certificate
+;;       (elpher-choose-client-certificate)
+;;       (let ((params (cons 'gnutls-x509pki
+;; 			  (gnutls-boot-parameters
+;; 			   :type 'gnutls-x509pki
+;;                            :hostname host
+;;                            :keylist (elpher-get-current-keylist address)))))
+;; 	(make-network-process :name "ijirait-stream"
+;; 			      :host host
+;; 			      :service port
+;; 			      :buffer buf
+;; 			      :nowait t
+;; 			      :coding 'utf-8
+;; 			      :tls-parameters params
+;; 			      :sentinel 'ijirait-sentinel)))))
+
+;; (defun ijirait-sentinel (proc event)
+;;   (message "%S" event)
+;;   (when (string-prefix-p "open" event)
+;;     (let ((inhibit-eol-conversion t))
+;;       (process-send-string proc "gemini://campaignwiki.org:1965/play/ijirait\r\n"))))
+
+;; (get-buffer-process "*Ijirait Stream*")
+;; (list-processes)
