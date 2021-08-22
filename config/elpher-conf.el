@@ -2,6 +2,7 @@
 
 ;; prefer my own copies
 (add-to-list 'load-path "/home/alex/src/elpher")
+(add-to-list 'load-path "/home/alex/src/elpher-http")
 (add-to-list 'load-path "/home/alex/src/gemini-write")
 
 (use-package elpher :defer t
