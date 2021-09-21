@@ -46,7 +46,8 @@
 	    (local-set-key "l" #'elpher-back)
 	    (local-set-key "j" #'bookmark-jump)
 	    (local-set-key "n" (lambda () (interactive) (elpher 1)))
-	    (local-set-key "W" #'asc:elpher-search-en.wikipedia.org)))
+	    (local-set-key "W" #'asc:elpher-search-en.wikipedia.org)
+	    (setq-local xterm-color-preserve-properties nil)))
 
 (defun elpher-up ()
   "Go up in a gopher site."
