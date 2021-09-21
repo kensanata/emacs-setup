@@ -1,15 +1,17 @@
 ;;; -*- lexical-binding:t -*-
 
 ;; prefer my own copies
-(add-to-list 'load-path "/home/alex/src/elpher")
+;; (add-to-list 'load-path "/home/alex/src/elpher")
+;; (add-to-list 'load-path "/home/alex/src/gemini-write")
 (add-to-list 'load-path "/home/alex/src/elpher-http")
-(add-to-list 'load-path "/home/alex/src/gemini-write")
 
 (use-package elpher :defer t
   ;; add Elpher as a web client via ../lib/elpher-http.el
   :config (require 'elpher-http)
   ;; also creates an autoload for elpher
   :bind ("C-c e" . elpher))
+
+(use-package gemini-write :after elpher)
 
 (use-package gemini-mode
   :defer t
