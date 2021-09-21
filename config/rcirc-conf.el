@@ -20,6 +20,7 @@
       rcirc-keywords '("ken" "kens" "kensa" "alex"; IRC
 		       "Alex_Schroeder"; Discord
 		       )
+      rcirc-dim-nicks '("jan6")
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-timeout-seconds 1200
       rcirc-authinfo (with-temp-buffer
