@@ -3,7 +3,4 @@
 (setq url-cookie-trusted-urls '()
       url-cookie-untrusted-urls '(".*")
       ;; ↓ run (url-setup-privacy-info) after changing
-      url-privacy-level 'paranoid
-      browse-url-browser-function 'eww-browse-url)
-
-;; make Eww more like Elpher
+      url-privacy-level 'paranoid)

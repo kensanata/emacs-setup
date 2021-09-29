@@ -8,8 +8,12 @@
 (use-package elpher :defer t
   ;; add Elpher as a web client via ../lib/elpher-http.el
   :config (require 'elpher-http)
+  :commands elpher-browse-url-elpher
   ;; also creates an autoload for elpher
   :bind ("C-c e" . elpher))
+
+(global-set-key (kbd "C-c u") #'browse-url)
+(setq browse-url-browser-function 'elpher-browse-url-elpher)
 
 (use-package gemini-write :after elpher)
 

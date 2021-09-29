@@ -1,7 +1,5 @@
 (setq default-input-method 'german-prefix)
 
-(global-set-key (kbd "C-c u") #'browse-url)
-
 (global-set-key (kbd "C-<tab>") #'hippie-expand)
 (setq hippie-expand-try-functions-list
       '(try-expand-all-abbrevs try-expand-dabbrev
