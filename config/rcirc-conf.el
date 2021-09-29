@@ -2,7 +2,8 @@
 ;; (autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
 (require 'rcirc-emojis)
 
-(use-package rcirc-menu :after rcirc)
+(use-package rcirc-menu :after rcirc
+  :bind ("C-c m" . rcirc-menu))
 (use-package rcirc-styles :after rcirc)
 
 (defun asc:rcirc-start ()
