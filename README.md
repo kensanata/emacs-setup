@@ -15,20 +15,8 @@ libraries you need to install yourself (see below).
 
 # Packages installed from ELPA/MELPA
 
-Evaluate the following to install all the packages you need:
-
-```
-(dolist (pkg '(emms
-	       expand-region
-	       git-gutter
-	       idle-highlight-mode
-	       markdown-mode
-	       session
-	       swiper;; ivy-mode
-	       ))
-  (unless (package-installed-p pkg)
-    (package-install pkg)))
-```
+The invocations of `use-package` should install all the other packages
+from MELPA.
 
 # Optional other packages
 
