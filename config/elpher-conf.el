@@ -49,7 +49,16 @@
 	    (local-set-key "j" #'bookmark-jump)
 	    (local-set-key "n" (lambda () (interactive) (elpher 1)))
 	    (local-set-key "W" #'asc:elpher-search-en.wikipedia.org)
+	    (local-set-key "e" #'gemini-write-text)
+	    (local-set-key "w" #'gemini-write-file)
 	    (setq-local xterm-color-preserve-properties nil)))
+
+(add-hook 'gemini-mode-hook 'typo-mode)
+(add-hook 'gemini-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c C-c") 'gemini-write)
+	    (local-set-key (kbd "C-c i") 'gemini-insert-link-to-oddmuse-wiki)
+	    (local-set-key (kbd "C-c l") 'gemini-insert-local-link)))
 
 (defun elpher-up ()
   "Go up in a gopher site."
@@ -98,12 +107,6 @@
     ("127.0.0.1" . "hello")
     ("localhost" . "hello")
     ("campaignwiki.org" . "hello")))
-
-(add-hook 'gemini-mode-hook 'typo-mode)
-(add-hook 'gemini-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c i") 'gemini-insert-link-to-oddmuse-wiki)
-	    (local-set-key (kbd "C-c l") 'gemini-insert-local-link)))
 
 (defun gemini-insert-local-link (pagename)
   "Insert a link to a new page on this wiki."
