@@ -96,17 +96,19 @@
 ;; we need the advice for elpher-render-gemini-plain-text
 (eval-after-load "elpher" '(load-library "gemini-write"))
 
-(setq elpher-gemini-tokens
-  '(("alexschroeder.ch" . "hello")
-    ("communitywiki.org" . "fSu1Fbsa")
-    ("transjovian.org" . "hello")
-    ("toki.transjovian.org" . "hello")
-    ("xn--vxagggm5c.transjovian.org" . "hello")
-    ("next.oddmuse.org" . "hello")
-    ("emacswiki.org" . "emacs")
-    ("127.0.0.1" . "hello")
-    ("localhost" . "hello")
-    ("campaignwiki.org" . "hello")))
+(setq
+ gemini-write-use-auth-source nil
+ gemini-write-tokens
+ '(("alexschroeder.ch" . "hello")
+   ("communitywiki.org" . "fSu1Fbsa")
+   ("transjovian.org" . "hello")
+   ("toki.transjovian.org" . "hello")
+   ("xn--vxagggm5c.transjovian.org" . "hello")
+   ("next.oddmuse.org" . "hello")
+   ("emacswiki.org" . "emacs")
+   ("127.0.0.1" . "hello")
+   ("localhost" . "hello")
+   ("campaignwiki.org" . "hello")))
 
 (defun gemini-insert-local-link (pagename)
   "Insert a link to a new page on this wiki."
