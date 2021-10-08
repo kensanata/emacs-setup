@@ -15,7 +15,10 @@
 (global-set-key (kbd "C-c u") #'browse-url)
 (setq browse-url-browser-function 'elpher-browse-url-elpher)
 
-(use-package gemini-write :after elpher)
+(use-package gemini-write
+  :after elpher
+  :commands gemini-write-mode
+  :config (gemini-write-mode 1))
 
 (use-package gemini-mode
   :defer t
