@@ -13,8 +13,6 @@
 ;; I also like RMAIL.
 ;; See cadadr's blog post: https://cadadr.dreamwidth.org/828.html
 (setq
- ;; where mail comes from, delivered by mpop
- rmail-primary-inbox-list '("/home/alex/mail/inbox")
  ;; where I read mail
  rmail-file-name "/home/alex/mail/current"
  ;; where the other mbox files are
