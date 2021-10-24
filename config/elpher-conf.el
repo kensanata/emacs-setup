@@ -136,33 +136,6 @@
     (goto-char start)
     (insert (url-encode-url (buffer-substring-no-properties start end)) " ")))
 
-;; Render *foo* as italics, **foo** as bold, /foo/ as italics, and _foo_ as underline.
-
-(advice-add 'elpher-process-text-for-display :filter-return #'asc:add-emphasis)
-
-(defun asc:add-emphasis (str)
-  "Highlight **foo**, *foo*, /foo/, and _foo_ in STR.
-Don't do this if STR already has a text property at position 0
-(most likely preformatted text)."
-  (unless (or (string-prefix-p ">" str)
-	      (string-prefix-p "*" str)
-	      (and (boundp gemini-write-text-p)
-		   gemini-write-text-p))
-    (dolist (rule '(("\\(?:\\W\\|^\\)\\(\\*\\*\\)\\<\\(.*?\\)\\>\\(\\*\\*\\)\\(?:\\W\\|$\\)" . bold)
-		    ("\\(?:\\W\\|^\\)\\(\\*\\)\\<\\(.*?\\)\\>\\(\\*\\)\\(?:\\W\\|$\\)" . italic)
-		    ("\\(?:\\W\\|^\\)\\(/\\)\\<\\(.*?\\)\\>\\(/\\)\\(?:\\W\\|$\\)" . italic)
-		    ("\\(?:\\W\\|^\\)\\(_\\)\\<\\(.*?\\)\\>\\(_\\)\\(?:\\W\\|$\\)" . underline)))
-      (let ((re (car rule))
-	    (face (cdr rule))
-	    (start 0))
-	(while (string-match re str start)
-	  (unless (get-text-property (match-beginning 0) 'invisible str)
-            (add-text-properties (match-beginning 1) (match-end 1) `(invisible t) str)
-            (add-text-properties (match-beginning 2) (match-end 2) `(face ,face) str)
-            (add-text-properties (match-beginning 3) (match-end 3) `(invisible t) str))
-	  (setq start (match-end 0))))))
-  str)
-
 ;; Do not cache Ijirait!
 
 (defvar asc:elpher-no-cache-prefixes '("gemini://campaignwiki.org/play")
