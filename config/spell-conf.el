@@ -36,6 +36,15 @@
   (setq typo-language "French")
   (set-input-method 'french-prefix))
 
+(defun portuges ()
+  "Switch ispell dictionary to 'portuguese'."
+  (interactive)
+  (ispell-change-dictionary "portugues")
+  (asc:flyspell)
+  (typo-mode 1)
+  (setq typo-language "French")
+  (set-input-method nil))
+
 (defun asc:flyspell ()
   "Ensure flyspell is running."
   (interactive)
