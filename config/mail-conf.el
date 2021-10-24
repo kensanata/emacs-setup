@@ -69,7 +69,10 @@
    (lambda (process event)
      (unless (process-live-p process)
        (when (zerop (process-exit-status process))
-         (if (> (file-attribute-size (file-attributes (car rmail-primary-inbox-list))) 0)
+         (if (> (file-attribute-size
+		 (file-attributes
+		  (concat rmail-spool-directory (user-login-name))))
+		0)
 	     (message "New mail!")
 	   (message "No new mail.")))))))
 
