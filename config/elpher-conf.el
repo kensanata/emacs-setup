@@ -54,6 +54,7 @@
 	    (local-set-key "W" #'asc:elpher-search-en.wikipedia.org)
 	    (local-set-key "e" #'gemini-write-text)
 	    (local-set-key "w" #'gemini-write-file)
+	    (local-set-key "F" #'elpher-certificate-toggle)
 	    (setq-local xterm-color-preserve-properties nil)))
 
 (add-hook 'gemini-mode-hook 'typo-mode)
@@ -76,6 +77,15 @@
       (error "Cannot go up from here"))
     (setf (url-filename urlobj) up)
     (elpher-go (url-recreate-url urlobj))))
+
+(defun elpher-certificate-toggle ()
+  "Choose a client certificate, or forget the current one."
+  (interactive)
+  (if elpher-client-certificate
+      (elpher-forget-current-certificate)
+    (let ((chosen-certificate (elpher-choose-client-certificate)))
+      (when chosen-certificate
+	(setq elpher-client-certificate chosen-certificate)))))
 
 (defun asc:elpher-search-en.wikipedia.org (terms)
   (interactive "sTerms: ")
