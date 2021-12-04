@@ -17,7 +17,7 @@
       ;; trash-directory "~/.Trash/emacs"
       dired-dwim-target t
       dired-guess-shell-alist-user
-      	  '(("\\.pdf\\'" "evince")
+      	  '(("\\.pdf\\'" "evince * &")
 	    ("\\.jpg\\'" "feh"))
       dired-listing-switches "-alv")
 
