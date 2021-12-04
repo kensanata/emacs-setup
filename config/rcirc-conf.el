@@ -4,6 +4,7 @@
 
 (use-package rcirc-menu :after rcirc
   :bind ("C-c m" . rcirc-menu))
+
 (use-package rcirc-styles :after rcirc)
 
 (defun asc:rcirc-start ()
@@ -34,8 +35,8 @@
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
       '(("irc.libera.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#emacs"
-		    "#rcirc" "#elpher"
+	 :channels ("#emacs" "#emacsconf"
+		    "#rcirc" "#elpher" "#gemini"
 		    "#wiki"
 		    "#oddmuse"
 		    "#phoebe"
@@ -48,7 +49,7 @@
 	;; Tilde chat is often unreachable
 	("irc.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#rpg" "#ijirait" "#gemini" "#spartan"))
+	 :channels ("#rpg" "#ijirait" "#gemini" "#spartan" "#smolnet"))
 	;; "#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
@@ -75,18 +76,11 @@
       rcirc-url-regexp "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\|gemini\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)[-a-z0-9_=#$@~%&*+\\/[:word:]]\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
       rcirc-ignore-list '())
 
-;; "consolers" "enometh" "ams" "jordanb" "Nihplod"
-;; "raela" "krisfremen" "dustpuppy" "rudybot" "GumbyPAN"
-;; "urlinfo"
+(add-hook 'rcirc-menu-mode-hook
+	  'asc:rcirc-menu-start)
 
-;; at the office...
-(when (string-match "^[A-Z]+[0-9]+$" system-name)
-  (let ((channels (plist-get (cdr (assoc "chat.freenode.net" rcirc-server-alist)) :channels)))
-    (when channels
-      (dolist (channel '("#sql"))
-	(unless (member channel channels)
-	  ;; modify in place
-	  (nconc channels (list channel)))))))
+(defun asc:rcirc-menu-start ()
+  (local-set-key "r" 'rcirc))
 
 ;; no more splitting of messages at 420 characters
 (eval-after-load 'rcirc
