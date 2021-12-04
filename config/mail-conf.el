@@ -132,3 +132,21 @@ RECIPIENTS is a list of email addresses"
 			 (push recipient recipients))
 		       recipients)))
   (ecomplete-add-item email 'mail (string-join recipients ", ")))
+
+(defun asc:rmail-fixup-mime-multipart ()
+  "Fix up decryption of a MIME multipart message.
+
+If you've used `rmail-epa-decrypt' and the decrypted section
+turns out to be a MIME multipart message (i.e. OpenPGP/MIME),
+then the display it messed up: the new multipart content-type
+header just sits there alone in the middle of a part, and
+everything belonging to this multipart message is not decoded
+correctly. This function fixes the situation."
+  (interactive)
+  (rmail-edit-current-message)
+  (when (search-forward "\n\nContent-Type: multipart" nil t)
+    (let ((multipart-start (line-beginning-position)))
+      (re-search-backward "^--.*\n")
+      (delete-region (match-end 0) multipart-start)
+      (insert "Content-Description: encrypted message\n")
+      (rmail-cease-edit))))
