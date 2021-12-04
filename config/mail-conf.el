@@ -48,6 +48,13 @@
   '(progn
      (define-key message-mode-map (kbd "C-c C-c") 'message-send)))
 
+(add-hook 'message-mode-hook
+	  'asc:message-mode-init)
+
+(defun asc:message-mode-init ()
+  (typo-mode 1)
+  (english))
+
 ;; Redefining quit
 (eval-after-load "rmailsum"
   '(progn
