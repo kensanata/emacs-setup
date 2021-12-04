@@ -64,6 +64,12 @@
 	    (local-set-key (kbd "C-c i") 'gemini-insert-link-to-oddmuse-wiki)
 	    (local-set-key (kbd "C-c l") 'gemini-insert-local-link)))
 
+(defun elpher-new-page-on-alexschroeder (page)
+  "Create a new PAGE."
+  (interactive "sPage: ")
+  (elpher-go (concat "gemini://alexschroeder.ch/raw/"
+		     (url-encode-url page))))
+
 (defun elpher-up ()
   "Go up in a gopher site."
   (interactive)
