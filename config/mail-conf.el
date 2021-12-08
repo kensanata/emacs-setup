@@ -44,6 +44,9 @@
      (define-key rmail-mode-map "$" 'asc:trash-mail)
      (define-key rmail-mode-map "S" 'mairix-search)))
 
+(add-hook 'rmail-mode-hook
+	  'visual-line-mode)
+
 (eval-after-load "message"
   '(progn
      (define-key message-mode-map (kbd "C-c C-c") 'message-send)))
