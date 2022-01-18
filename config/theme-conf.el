@@ -60,6 +60,8 @@
  '(j-conjunction-face ((t (:inherit bold))))
  '(j-other-face ((t (:inherit bold))))
  '(j-verb-face ((t (:inherit bold))))
+ '(js2-error ((t (:inherit shadow))))
+ '(js2-warning ((t (:background "grey40"))))
  '(swiper-line-face ((t (:background "grey40"))))
  '(mastodon-boost-fave-face ((t (:inherit success))))
  '(mastodon-boosted-face ((t (:inherit bold))))
