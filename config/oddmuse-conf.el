@@ -80,6 +80,8 @@
 	 utf-8 "frodo" "Alex")
 	("Tau Subsector" "https://campaignwiki.org/wiki/Tau_Subsector"
 	 utf-8 "frodo" "Alex")
+	("Octagon" "https://campaignwiki.org/wiki/Octagon"
+	 utf-8 "frodo" "Alex")
 	("Dschungel von Chult" "https://campaignwiki.org/wiki/DschungelvonChult"
 	 utf-8 "frodo" "Alex")
 	("Die Zeit der Waldbrände" "https://campaignwiki.org/wiki/Die_Zeit_der_Waldbr%c3%a4nde"
