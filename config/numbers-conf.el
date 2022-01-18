@@ -66,6 +66,16 @@ number by the same amount."
 	  (delete-region (overlay-start o) (overlay-end o))
 	  (insert (number-to-string (+ num n))))))))
 
+(defun number-sum ()
+  "Sum all marked numbers."
+  (interactive)
+  (let ((n 0))
+    (dolist (o (overlays-in (point-min) (point-max)))
+      (when (overlay-get o 'number)
+	(let ((num (string-to-number (buffer-substring (overlay-start o) (overlay-end o)))))
+	  (setq n (+ num n)))))
+    (message "Sum: %d" n)))
+
 (defun number-mark-column (regexp)
   "Mark all the numbers at the current column
 in this buffer, if the line matches REGEXP."
@@ -86,6 +96,19 @@ in this buffer, if the line matches REGEXP."
 		(overlay-put o 'number t)
 		(overlay-put o 'face 'query-replace)))))
 	(forward-line 1)))))
+
+(defun number-mark-group (regexp)
+  "Mark all the numbers in this buffer matching group 1 in REGEXP"
+  (interactive "sRegexp with one group matching the number: ")
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward regexp nil t)
+      (when (not (memq t (mapcar (lambda (o)
+				   (when (overlay-get o 'number) t))
+				 (overlays-at (match-beginning 1)))))
+	(let ((o (make-overlay (match-beginning 1) (match-end 1) nil nil t)))
+	  (overlay-put o 'number t)
+	  (overlay-put o 'face 'query-replace))))))
 
 (define-minor-mode number-mode
   "A mode to work with numbers in a text buffer
