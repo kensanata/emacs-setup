@@ -5,8 +5,6 @@
     'markdown-add-xhtml-header-and-footer
     'as/markdown-add-xhtml-header-and-footer))
 
-(add-hook 'markdown-mode-hook 'english)
-
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 
