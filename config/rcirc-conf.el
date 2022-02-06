@@ -60,6 +60,7 @@
 	("irc.otherworlders.org"
 	 :port 6667 ;; no encryption
 	 :channels ("#halberds-and-helmets"
+		    "#montags"
 		    "#fudge"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
