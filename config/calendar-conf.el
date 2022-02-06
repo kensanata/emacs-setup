@@ -44,3 +44,30 @@
      display-time-interval 5)
 
 (display-time-mode 1)
+
+(defun asc:display-time-world (string)
+  "Show world time for STRING.
+STRING is a time that can be parsed by `parse-time-string'.
+The output depends on `display-time-world-list'."
+  (interactive "sTime: ")
+  (when (string-match-p "^[0-9]+:[0-9][0-9]$" string)
+    (setq string (concat (format-time-string "%F " (current-time)) string)))
+  (let* ((now (parse-iso8601-time-string string))
+	 (max-width 0)
+	 result fmt)
+    (dolist (zone display-time-world-list)
+      (let* ((label (cadr zone))
+	     (width (string-width label)))
+	(push (cons label
+		    (format-time-string display-time-world-time-format
+					now (car zone)))
+	      result)
+	(when (> width max-width)
+	  (setq max-width width))))
+    (setq fmt (concat "%-" (int-to-string max-width) "s %s"))
+    (message (mapconcat
+	      (lambda (timedata)
+		(format fmt (car timedata) (cdr timedata)))
+	      (nreverse result)
+	      "\n"))))
+
