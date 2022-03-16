@@ -36,11 +36,11 @@
     (format "@%03d" beats)))
 
 (setq display-time-string-forms
-     '(" " 24-hours ":" minutes " "
+     '(24-hours ":" minutes " "
        (itime-string 24-hours minutes seconds t)
        (if mail
 	   " Mail"
-	 ""))
+	 "") " ")
      display-time-interval 5)
 
 (display-time-mode 1)
