@@ -20,20 +20,15 @@
 ;; https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg
 
 (setq ;; You need to replace this email address with your own!
-      ;; user-mail-address "kensanata@gmail.com"
       user-mail-address "alex@alexschroeder.ch"
       ;; You need to replace this key ID with your own key ID!
       mml2015-signers '("ACECFEAE")
-      ;; Gnus has a "primary" server and a ton of secondary servers.
-      ;; These days such an idea seems outdated and so we use just the
-      ;; secondary select methods and all of them are configured the
-      ;; same way. If I don't set this select method, Gnus will
-      ;; attempt to fetch local news from somewhere but I don't have
-      ;; access to news. That's why we set it to the "nil" method.
-      gnus-select-method '(nnnil)
+      ;; Set to '(nnnil) if you don't have local news!
+      gnus-select-method (list 'nnspool (system-name))
       ;; These are now all the IMAP accounts.
       gnus-secondary-select-methods
-      '((nnimap "migadu"
+      '((nntp "news.tilde.club")
+	(nnimap "migadu"
 		(nnimap-user "alex@alexschroeder.ch")
 	  	(nnimap-address "imap.migadu.com")
 		(nnimap-server-port 993)
