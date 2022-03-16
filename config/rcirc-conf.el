@@ -49,17 +49,18 @@
 	;; Tilde chat is often unreachable
 	("irc.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#rpg" "#ijirait" "#gemini" "#spartan" "#smolnet"))
+	 :channels ("#rpg" "#ijirait" "#gemini" "#spartan" "#smolnet" "#netnews"))
 	;; "#gopher" "#cosmic"))
 	;; ("flame.de.eu.darkmyst.org"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#rpg-hub"))
-	("irc.esper.net"
-	 :port 6697 :encryption tls
-	 :channels ("#merveilles" "#uxn"))
+	;; ("irc.esper.net"
+	;;  :port 6697 :encryption tls
+	;;  :channels ("#merveilles" "#uxn"))
 	("irc.otherworlders.org"
 	 :port 6667 ;; no encryption
 	 :channels ("#halberds-and-helmets"
+		    "#lonestar"
 		    "#montags"
 		    "#fudge"))
 	("irc.oftc.net"
