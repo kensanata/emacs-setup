@@ -41,3 +41,18 @@ This is useful when copying stuff with a display property set
 from elsewhere."
   (interactive "r")
   (set-text-properties start end nil))
+
+(defun sort-words (start end)
+  "Sort words in the region between START and END.
+For the purposes of this function, a word is anything that's not
+whitespace. This replaces all whitespace with a literal space."
+  (interactive "r")
+  (save-excursion
+    (let ((words))
+      (goto-char start)
+      (while (re-search-forward "\\S-+" end t)
+	(push (match-string 0) words))
+      (delete-region start end)
+      (dolist (word (sort words 'string<))
+	(insert word " ")))
+    (delete-char -1)))
