@@ -385,7 +385,12 @@ Torchbearers, men-at-arms, those kind of people."
     "I can climb, I can swim, I can run."
     "Give me a backpack and I'll carry it."
     "Back home they called me Mule. I try to live up to the name."
-    "The great Rindawan taught me humility at the porters' guild.")
+    "The great Rindawan taught me humility at the porters' guild."
+    "I was declared unfit to be a sailor and am looking for peaceful landlubber employment."
+    "I touch no one and no one touches me. I'm a rock!"
+    "The great sages teach detachment. I'm pretty detached."
+    "I need money for a smoke. Got something you need carried around?"
+    "I am strong. I lift. Do you lift?")
   "Excuses for not fighting.")
 
 (defvar rpg-claims
@@ -423,5 +428,11 @@ Torchbearers, men-at-arms, those kind of people."
     "My parents kicked me out and I have a lot of anger in me. A lot of anger."
     "My father was a carpenter and never got anywhere. I intend to do better."
     "I'm from a family of soldiers. My mother made it rich and I intend to do the same."
-    "My friends tell me that they got all their gold in the dungeon so now I intend to get some for myself.")
+    "My friends tell me that they got all their gold in the dungeon so now I intend to get some for myself."
+    "I used to be a pirate but then we had a shipwreck and I'm not going back."
+    "I served in the town guard and then they caught me cheating at the docks and here I am. I can fight!"
+    "I used to be the bodyguard of a tax collector. Of course I can fight."
+    "Big Boss Garo Baba kicked me out of his bath house. I know how to stab people."
+    "The elves of the sea picked me up as a kid and taught me the way of the sword."
+    "Uaaargh. Uuugh. Nuk nuk. Gaaah. Nuk nak nuk nuk. Graaaaa!")
   "Claims made by people who will fight.")
