@@ -390,7 +390,18 @@ Torchbearers, men-at-arms, those kind of people."
     "I touch no one and no one touches me. I'm a rock!"
     "The great sages teach detachment. I'm pretty detached."
     "I need money for a smoke. Got something you need carried around?"
-    "I am strong. I lift. Do you lift?")
+    "I am strong. I lift. Do you lift?"
+    "I have run from all my problems in life and I don't intend to stop."
+    "Non-violence is the way of the unarmed."
+    "When the invasion comes, I'll just move with the flow."
+    "The first rule of survival is to remain unnoticed."
+    "The bearing of arms begets violence."
+    "Having a weapon makes you more likely to use it."
+    "I don't carry weapons because I've seen too many people stab friends and family."
+    "The meek shall inherit the earth."
+    "If you die from sickness or old age, you end up in Hel, not Valhalla. Works for me."
+    "Better to live long and be poor than to fight and leave a mauled corpse."
+    "I don't find and at night I don't dream. That is my blessing.")
   "Excuses for not fighting.")
 
 (defvar rpg-claims
@@ -432,6 +443,13 @@ Torchbearers, men-at-arms, those kind of people."
     "I used to be a pirate but then we had a shipwreck and I'm not going back."
     "I served in the town guard and then they caught me cheating at the docks and here I am. I can fight!"
     "I used to be the bodyguard of a tax collector. Of course I can fight."
+    "I used to be the bodyguard of a mine owner collector. He is no more, sadly."
+    "I can use a fighting stick. I used to make way for the magistrate."
+    "I have collected many debts and I'm not afraid to collect some more."
+    "My boss used to say: first you explain, then you threaten, and only then do you use violence."
+    "Those who will not listen must feel it. I'm here to support you when they don't listen."
+    "There is no problem in the world that cannot be solved by more violence."
+    "I'm here to stab people."
     "Big Boss Garo Baba kicked me out of his bath house. I know how to stab people."
     "The elves of the sea picked me up as a kid and taught me the way of the sword."
     "Uaaargh. Uuugh. Nuk nuk. Gaaah. Nuk nak nuk nuk. Graaaaa!")
