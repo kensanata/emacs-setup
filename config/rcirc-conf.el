@@ -84,6 +84,14 @@
 (defun asc:rcirc-menu-start ()
   (local-set-key "r" 'rcirc))
 
+;; don't search the passwords in auth-source since that queries me for my GPG passphrase
+(advice-add 'rcirc :around #'asc:without-auth-source)
+
+(defun asc:without-auth-source (orig arg)
+  "Dynamically bind `auth-sources' to nil."
+  (let ((auth-sources nil))
+    (funcall orig arg)))
+
 ;; no more splitting of messages at 420 characters
 (eval-after-load 'rcirc
   '(defalias 'rcirc-split-message 'list))
