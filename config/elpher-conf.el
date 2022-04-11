@@ -142,7 +142,12 @@
   (interactive (oddmuse-pagename))
   (setq-local oddmuse-wiki wiki)
   (insert "=> " pagename " " (replace-regexp-in-string "_" " " pagename)))
-  
+
+(defun gemini-insert-link-to-wikipedia (language pagename)
+  "Insert a link to PAGENAME on Wikipedia."
+  (interactive "sLanguage: \nsPagename: ")
+  (insert "=> //vault.transjovian.org/text/" language "/" pagename " " pagename))
+
 ;; Utilities
 
 (defun gemini-url-percent-encode-title (start end)
