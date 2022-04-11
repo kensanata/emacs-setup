@@ -44,6 +44,11 @@
      (define-key rmail-mode-map "$" 'asc:trash-mail)
      (define-key rmail-mode-map "S" 'mairix-search)))
 
+(autoload 'mairix-search "mairix"
+  "Call Mairix with SEARCH.
+If THREADS is non-nil, also display whole threads of found
+messages.  Results will be put into the default search file." t)
+
 (add-hook 'rmail-mode-hook
 	  'visual-line-mode)
 
