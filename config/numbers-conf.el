@@ -23,7 +23,10 @@ number by the same amount."
 (defun number-unmark-all ()
   "Remove all marks."
   (interactive)
-  (remove-overlays (point-min) (point-max) 'number t))
+  (remove-overlays
+   (if (region-active-p) (region-beginning) (point-min))
+   (if (region-active-p) (region-end) (point-max))
+   'number t))
 
 (defun number-unmark ()
   "Remove the current mark."
@@ -101,14 +104,49 @@ in this buffer, if the line matches REGEXP."
   "Mark all the numbers in this buffer matching group 1 in REGEXP"
   (interactive "sRegexp with one group matching the number: ")
   (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward regexp nil t)
+    (goto-char (if (region-active-p) (region-beginning) (point-min)))
+    (while (re-search-forward regexp (if (region-active-p) (region-end)) t)
       (when (not (memq t (mapcar (lambda (o)
 				   (when (overlay-get o 'number) t))
 				 (overlays-at (match-beginning 1)))))
 	(let ((o (make-overlay (match-beginning 1) (match-end 1) nil nil t)))
 	  (overlay-put o 'number t)
 	  (overlay-put o 'face 'query-replace))))))
+
+(defvar number-move-amount 10
+  "Step size for moving SVG stuff around.")
+
+(defun number-move (regexp amount)
+  "Increase the group in REGEX by AMOUNT."
+  (save-excursion
+    (let ((start (region-beginning))
+	  (end (region-end)))
+      (goto-char start)
+      (while (re-search-forward regexp end t)
+	(let ((num (string-to-number (buffer-substring (match-beginning 1) (match-end 1)))))
+	  (goto-char (match-beginning 1))
+	  (delete-region (match-beginning 1) (match-end 1))
+	  (insert (number-to-string (+ num amount))))))))
+
+(defun number-move-right ()
+  "Increase all x=\"123\" values by `number-move-amount'."
+  (interactive)
+  (number-move "\\bx=\"\\([0-9]+\\)\"" number-move-amount))
+
+(defun number-move-left ()
+  "Increase all x=\"123\" values by `number-move-amount'."
+  (interactive)
+  (number-move "\\bx=\"\\([0-9]+\\)\"" (- number-move-amount)))
+
+(defun number-move-up ()
+  "Increase all y=\"123\" values by `number-move-amount'."
+  (interactive)
+  (number-move "\\by=\"\\([0-9]+\\)\"" (- number-move-amount)))
+
+(defun number-move-down ()
+  "Increase all y=\"123\" values by `number-move-amount'."
+  (interactive)
+  (number-move "\\by=\"\\([0-9]+\\)\"" number-move-amount))
 
 (define-minor-mode number-mode
   "A mode to work with numbers in a text buffer
@@ -124,7 +162,11 @@ can increment them all by a certain amount using \\[number-mark-add],
 or you can distribute a certain amount using \\[number-mark-distribute]."
   nil
   "N"
-  (list (cons (kbd "C-=") 'number-mark)
+  (list (cons (kbd "M-<right>") 'number-move-right)
+	(cons (kbd "M-<left>") 'number-move-left)
+	(cons (kbd "M-<up>") 'number-move-up)
+	(cons (kbd "M-<down>") 'number-move-down)
+	(cons (kbd "C-=") 'number-mark)
 	(cons (kbd "M-C-+") 'number-mark-add)
 	(cons (kbd "M-C-=") 'number-mark-distribute)
 	(cons (kbd "C-c C-=") 'number-mark-column)))
