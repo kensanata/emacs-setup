@@ -29,13 +29,6 @@
  ;; don't actually make the other modelines unreadable
  '(mode-line-inactive ((t (:foreground "gray70"))))
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
- '(company-tooltip ((t (:background "#888888"))))
- '(company-template-field ((t (:background "grey40"))))
- '(company-tooltip-common ((t (:foreground "#ddddd8"))))
- '(company-tooltip-annotation ((t (:foreground "#eeeee8"))))
- '(company-tooltip-annotation-selection ((t (:foreground "#eeeee8"))))
- '(company-scrollbar-bg ((t (:background "gray70"))))
- '(company-scrollbar-fg ((t (:background "dim gray"))))
  '(message-header-cc ((t (:inherit bold))))
  '(message-header-name ((t (:inherit default))))
  '(message-header-newsgroup ((t (:inherit default))))

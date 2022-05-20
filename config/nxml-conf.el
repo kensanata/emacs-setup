@@ -5,7 +5,6 @@
 
 (defun asc:init-nxml-mode ()
   (idle-highlight-mode 1)
-  (local-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (define-abbrev nxml-mode-abbrev-table "ol"
     "" 'opml-outline)

@@ -3,7 +3,6 @@
 
 (defun asc:init-c-mode ()
   (idle-highlight-mode 1)
-  (local-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'before-save-hook 'delete-trailing-whitespace t t)
   (define-abbrev c-mode-abbrev-table "fu" "" 'asc:c-comment-function)
   (define-abbrev c-mode-abbrev-table "co" "" 'asc:c-comment)
