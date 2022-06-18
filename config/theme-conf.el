@@ -60,7 +60,8 @@
  '(mastodon-boosted-face ((t (:inherit bold))))
  '(mastodon-cw-face ((t (:inherit bold))))
  '(mastodon-display-name-face ((t (:inherit font-lock-string-face))))
- '(mastodon-handle-face ((t (:inherit font-lock-comment-face)))))
+ '(mastodon-handle-face ((t (:inherit font-lock-comment-face))))
+ '(warning ((t (:inherit bold)))))
 
 (custom-theme-set-variables
  'brutalist-dark
