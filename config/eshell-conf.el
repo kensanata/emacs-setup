@@ -1,18 +1,3 @@
-;; Setting up some directories, but only for certain of my systems.
-
-(when (file-directory-p "/Users/alex/Source/oddmuse/test-data")
-  (setenv "WikiDataDir" "/Users/alex/Source/oddmuse/test-data"))
-
-(when (file-directory-p "C:\\Program Files (x86)\\GNU\\GnuPG")
-  (add-to-list 'exec-path "C:\\Program Files (x86)\\GNU\\GnuPG"))
-
-(when (file-directory-p "C:\\Program Files\\nodejs")
-  (add-to-list 'exec-path "C:\\Program Files\\nodejs"))
-
-(when (file-directory-p "C:\\Users\\asc\\AppData\\Roaming\\bin")
-  (add-to-list 'exec-path "C:\\Users\\asc\\AppData\\Roaming\\bin"))
-;; (executable-find "lein")
-
 (global-set-key (kbd "C-z") 'eshell-here)
 
 (defun eshell-here (&optional arg)
