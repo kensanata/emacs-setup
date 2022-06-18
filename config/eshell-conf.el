@@ -25,7 +25,7 @@
       eshell-prompt-regexp "^[^$\n]* [#$] ")
 
 ;; plan 9
-(autoload 'eshell-smart-initialize "em-smart" "Setup Eshell smart display." t)
+;; (autoload 'eshell-smart-initialize "em-smart" "Setup Eshell smart display." t)
 
 (defun eshell-bash-completion ()
   (setq-local bash-completion-nospace t)
