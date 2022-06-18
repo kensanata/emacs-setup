@@ -1,9 +1,9 @@
 ;;; Oddmuse
 
-(add-to-list 'load-path "~/src/oddmuse-curl")
+(add-to-list 'load-path "~/src/oddmuse.el")
 
 (when (require 'shr nil t)
-  (require 'oddmuse-curl nil t))
+  (require 'oddmuse nil t))
 
 (eval-after-load 'goto-address-url-regexp
   '(setq goto-address-url-regexp
@@ -39,17 +39,6 @@
   "Handle files in `oddmuse-directory'."
   (string-match (concat "^" (expand-file-name oddmuse-directory))
 		(file-name-directory file)))
-
-(autoload 'oddmuse-edit "oddmuse-curl"
-  "Edit a page on an Oddmuse wiki." t)
-(autoload 'oddmuse-post "oddmuse-curl"
-  "Post the current buffer to an Oddmuse wiki." t)
-(autoload 'oddmuse-new "oddmuse-curl"
-  "Create a day page on an Oddmuse wiki." t)
-(autoload 'oddmuse-rc "oddmuse-curl"
-  "Recent Changes on an Oddmuse wiki." t)
-(autoload 'oddmuse-mode "oddmuse-curl"
-  "Yadda yadda." t)
 
 (setq oddmuse-wikis
       '(("Emacs Wiki" "https://www.emacswiki.org/emacs"
@@ -88,12 +77,13 @@
 	 utf-8 "frodo" "Alex")
 	("Die Zeit der Waldbrände" "https://campaignwiki.org/wiki/Die_Zeit_der_Waldbr%c3%a4nde"
 	 utf-8 "frodo" "Alex"))
-      oddmuse-rc-command "curl --silent %w\"?action=rc;days=7;rollback=1;showedit=1;raw=1\"")
+      oddmuse-rc-command "\ew?action=rc;days=7;rollback=1;showedit=1;raw=1")
 
 (add-hook 'oddmuse-mode-hook 'flyspell-mode)
 (add-hook 'oddmuse-mode-hook 'oddmuse-my-init)
 
 (defun oddmuse-my-init ()
+  (visual-line-mode)
   (cond ((string= oddmuse-wiki "Alex")
 	 (local-set-key (kbd "C-c C-t") 'oddmuse-tag)
 	 (font-lock-add-keywords
@@ -102,9 +92,8 @@
 	    ("!\\S-.*?\\S-?!" 0 '(face bold nobreak t)))
 	  'append))
 	((member oddmuse-wiki '("Rasiermesserküste" "Wilderlande" "MondscheinSaga"))
-	 (turn-on-auto-fill)
 	 ;; see spell-conf.el
-	 (german))))
+	 (swiss))))
 
 (defun oddmuse-comment ()
   "Switch between article and talk pages."
