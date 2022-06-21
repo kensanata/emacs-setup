@@ -33,18 +33,22 @@
 	  (nth 2 (bash-completion-dynamic-complete-nocomint
 		  (save-excursion (eshell-bol) (point)) (point))))))
 
-(add-hook 'eshell-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-z") 'bury-buffer)
-	    (local-set-key (kbd "C-a") 'eshell-bol)
-	    (local-set-key (kbd "C-w") 'asc:kill-region)
-	    (local-set-key (kbd "<up>") 'previous-line)
-	    (local-set-key (kbd "<down>") 'next-line)
-	    (idle-highlight-mode 1)
-	    (eldoc-mode 1)
-	    (eshell-smart-initialize)
-	    (setenv "PAGER" "cat")
-	    (setenv "EDITOR" "emacsclient")))
+(add-hook 'eshell-mode-hook 'asc:eshell-mode-init)
+
+(defun asc:eshell-mode-init ()
+  (local-set-key (kbd "C-z") 'bury-buffer)
+  (local-set-key (kbd "C-a") 'eshell-bol)
+  (local-set-key (kbd "C-w") 'asc:kill-region)
+  (eldoc-mode 1)
+  (idle-highlight-mode 1)
+  (setenv "PAGER" "cat")
+  (setenv "EDITOR" "emacsclient"))
+
+(add-hook 'eshell-hist-mode-hook 'asc:eshell-hist-mode-init)
+
+(defun asc:eshell-hist-mode-init ()
+  (define-key eshell-hist-mode-map (kbd "<up>") 'previous-line)
+  (define-key eshell-hist-mode-map (kbd "<down>") 'next-line))
 
 (defalias 'eshell/emacs 'find-file)
 (defalias 'eshell/less 'find-file)
