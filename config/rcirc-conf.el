@@ -61,7 +61,7 @@
 	 :port 6667 ;; no encryption
 	 :channels ("#halberds-and-helmets"
 		    "#lonestar"
-		    "#montags"
+		    "#montag"
 		    "#fudge"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
