@@ -1,5 +1,70 @@
+;; Install a bugfix for Emacs 28.1, commit
+;; 516ff422c54b79099841bb59d34da467f3f9a34e
+(eval-after-load 'rcirc
+  '(defun rcirc-process-server-response-1 (process text)
+  "Parse TEXT as received from PROCESS."
+  (unless (string= emacs-version "28.1")
+    (warn "This copy of rcirc-process-server-response-1 was patched for Emacs 28.1"))
+  (if (string-match rcirc-process-regexp text)
+      (let* ((rcirc-message-tags
+              (append
+               (and-let* ((tag-data (match-string 1 text)))
+                 (save-match-data
+                   (mapcar
+                    (lambda (tag)
+                      (unless (string-match rcirc-tag-regexp tag)
+                        ;; This should not happen, unless there is
+                        ;; a mismatch between this regular
+                        ;; expression and `rcirc-process-regexp'.
+                        (error "Malformed tag %S" tag))
+                      (cons (match-string 1 tag)
+                            (when (match-string 2 tag)
+                              (replace-regexp-in-string
+                               (rx (* ?\\ ?\\) ?\\ (any ?: ?s ?\\ ?r ?n))
+                               (lambda (rep)
+                                 (concat (substring rep 0 -2)
+                                         (cl-case (aref rep (1- (length rep)))
+                                           (?:  ";")
+                                           (?s  " ")
+                                           (?\\ "\\\\")
+                                           (?r  "\r")
+                                           (?n  "\n"))))
+                               (match-string 2 tag)))))
+                    (split-string tag-data ";"))))
+               rcirc-message-tags))
+             (user (match-string 3 text))
+	     (sender (rcirc-user-nick user))
+             (cmd (match-string 4 text))
+             (cmd-end (match-end 4))
+             (args nil)
+             (handler (intern-soft (concat "rcirc-handler-" cmd))))
+        (cl-loop with i = cmd-end
+                 repeat 14
+                 while (eql i (string-match " +\\([^: ][^ ]*\\)" text i))
+                 do (progn (push (match-string 1 text) args)
+                           (setq i (match-end 0)))
+                 finally
+                 (progn (if (eql i (string-match " +:?" text i))
+                            (push (substring text (match-end 0)) args)
+                          (cl-assert (= i (length text))))
+                        (cl-callf nreverse args)))
+        (cond ((and-let* ((batch-id (rcirc-get-tag "batch"))
+                          (type (cadr (assoc batch-id rcirc-batch-attributes)))
+                          (attr (assoc type rcirc-supported-batch-types))
+                          ((eq (cadr attr) 'deferred)))
+                 ;; handle deferred batch messages later
+                 (push (list cmd process sender args text rcirc-message-tags)
+                       (alist-get batch-id rcirc-batched-messages
+                                  nil nil #'string=))
+                 t))
+              ((not (fboundp handler))
+               (rcirc-handler-generic process cmd sender args text))
+              ((funcall handler process sender args text)))
+        (run-hook-with-args 'rcirc-receive-message-functions
+                            process cmd sender args text))
+    (message "UNHANDLED: %s" text))))
+
 ;;; rcirc, write such as not to require rcirc at startup
-;; (autoload 'rcirc "~/src/emacs/lisp/net/rcirc" t)
 (require 'rcirc-emojis)
 
 (use-package rcirc-menu :after rcirc
