@@ -73,6 +73,8 @@
 	 utf-8 "frodo" "Alex")
 	("Montag in Zürich" "https://campaignwiki.org/wiki/MontagInZ%c3%bcrich"
 	 utf-8 "frodo" "Alex")
+	("Die Wilde Gestade" "https://campaignwiki.org/wiki/Die_Wilde_Gestade"
+	 utf-8 "frodo" "Alex")
 	("Dschungel von Chult" "https://campaignwiki.org/wiki/DschungelvonChult"
 	 utf-8 "frodo" "Alex")
 	("Die Zeit der Waldbrände" "https://campaignwiki.org/wiki/Die_Zeit_der_Waldbr%c3%a4nde"
