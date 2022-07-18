@@ -2,6 +2,12 @@
 
 (ivy-mode 1)
 
+;; add recent files to the buffer list
+(recentf-mode 1)
+(setq ivy-use-virtual-buffers t)
+;; (length file-name-history) ⇒ 100
+(setq history-length 1000)
+
 (global-set-key (kbd "C-o") 'swiper); line based
 (define-key swiper-map (kbd "C-w") 'ivy-yank-word); more like isearch
 (global-set-key (kbd "M-x") 'counsel-M-x)
