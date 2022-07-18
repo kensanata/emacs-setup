@@ -60,7 +60,7 @@
 	("Oddmuse Wiki" "https://oddmuse.org/wiki"
 	 utf-8 "ham" nil)
 	("Alex" "https://alexschroeder.ch/wiki"
-	 utf-8 "question" "Alex Schroeder")
+	 utf-8 "question" "Alex")
 	("Software" "https://alexschroeder.ch/software"
 	 utf-8 "question" "Alex Schroeder")
 	("Food" "https://communitywiki.org/food"
