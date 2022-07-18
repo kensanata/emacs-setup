@@ -102,12 +102,9 @@
 	 :port 6697 :encryption tls
 	 :channels ("#emacs" "#emacsconf"
 		    "#rcirc" "#elpher" "#gemini"
-		    "#wiki"
-		    "#oddmuse"
-		    "#phoebe"
+		    "#wiki" "#oddmuse" "#phoebe"
 		    "#perl" "#awk"
-		    "#fennel"
-		    "##fediverse-lisp"
+		    "#fennel" "#lisp" "##fediverse-lisp"
 		    "#retro"))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
@@ -141,7 +138,7 @@
       rcirc-decode-coding-system 'undecided
       ;; add Gemini
       rcirc-url-regexp "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\|gemini\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)[-a-z0-9_=#$@~%&*+\\/[:word:]]\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-      rcirc-ignore-list '())
+      rcirc-ignore-list '("judybot" "rudybot"))
 
 (add-hook 'rcirc-menu-mode-hook
 	  'asc:rcirc-menu-start)
