@@ -118,7 +118,7 @@
 (setq
  gemini-write-use-auth-source nil
  gemini-write-tokens
- '(("alexschroeder.ch" . "hello")
+ '(("alexschroeder.ch" . "diary")
    ("communitywiki.org" . "fSu1Fbsa")
    ("transjovian.org" . "hello")
    ("toki.transjovian.org" . "hello")
