@@ -90,8 +90,8 @@
 	 (local-set-key (kbd "C-c C-t") 'oddmuse-tag)
 	 (font-lock-add-keywords
 	  nil
-	  '(("!!\\S-.*?\\S-?!!" . 'bold)
-	    ("!\\S-.*?\\S-?!" 0 '(face bold nobreak t)))
+	  '(("!!\\Sw.*?\\S-?!!" . 'bold)
+	    ("!\\Sw.*?\\S-?!" 0 '(face bold nobreak t)))
 	  'append))
 	((member oddmuse-wiki '("Rasiermesserküste" "Wilderlande" "MondscheinSaga"))
 	 ;; see spell-conf.el
