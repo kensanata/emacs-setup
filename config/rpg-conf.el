@@ -6,6 +6,14 @@
   (message "%sd6: %d" n r)
   r)
 
+(defun d20 (&optional n)
+  "Roll N d20. Defaults to 1."
+  (interactive "P")
+  (setq n (or n 1)
+	r (loop repeat n collecting (1+ (random 20))))
+  (message "%sd6: %S" n r)
+  r)
+
 (defun rpg-nightling ()
   "Insert nightling stats (elves, dwarves, goblins)."
   (interactive)
