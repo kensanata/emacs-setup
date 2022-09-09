@@ -64,6 +64,86 @@
                             process cmd sender args text))
     (message "UNHANDLED: %s" text))))
 
+(eval-after-load 'rcirc
+  '(progn
+     ;; Install a bugfix for Emacs 28.1, commit 5df658a96a4b
+     (defmacro rcirc-define-command (command arguments &rest body)
+       "Define a new client COMMAND in BODY that takes ARGUMENTS.
+ARGUMENTS may designate optional arguments using a single
+`&optional' symbol.  Just like `defun', a string at the beginning
+of BODY is interpreted as the documentation string.  Following
+that, an interactive form can specified."
+       (declare (debug (symbolp (&rest symbolp) def-body))
+		(indent defun))
+       (cl-check-type command symbol)
+       (cl-check-type arguments list)
+       (let* ((fn-name (intern (concat "rcirc-cmd-" (symbol-name command))))
+              (total (length (remq '&optional arguments)))
+              (required (- (length arguments) (length (memq '&optional arguments))))
+              (optional (- total required))
+              (regexp (with-temp-buffer
+			(insert "\\`")
+			(when arguments
+			  (dotimes (_ (1- (length arguments)))
+			    (insert "\\(?:\\(.+?\\)[[:space:]]+"))
+			  (dotimes (i (1- (length arguments)))
+			    (if (< i optional)
+				(insert "\\)?")
+                              (insert "\\)"))))
+			(insert "\\(.*?\\)")
+			(insert "[[:space:]]*\\'")
+			(buffer-string)))
+              (argument (make-symbol "arglist"))
+              documentation
+              interactive-spec)
+	 (when (stringp (car body))
+	   (setq documentation (pop body)))
+	 (when (eq (car-safe (car-safe body)) 'interactive)
+	   (setq interactive-spec (cadr (pop body))))
+	 `(progn
+	    (defun ,fn-name (,argument &optional process target)
+              ,(concat documentation
+                       "\n\nNote: If PROCESS or TARGET are nil, the values given"
+                       "\nby `rcirc-buffer-process' and `rcirc-target' will be used.")
+              (interactive ,(if (stringp interactive-spec)
+				;; HACK: Necessary to wrap the result of
+				;; the interactive spec in a list.
+				`(list (call-interactively
+					(lambda (&rest args)
+					  (interactive ,interactive-spec)
+					  args)))
+                              `(list ,interactive-spec)))
+              (unless (if (listp ,argument)
+			  (<= ,required (length ,argument) ,total)
+			(string-match ,regexp ,argument))
+		(user-error "Malformed input (%s): %S" ',command ,argument))
+              (push ,(upcase (symbol-name command)) rcirc-pending-requests)
+              (let ((process (or process (rcirc-buffer-process)))
+		    (target (or target rcirc-target)))
+		(ignore target process)
+		(let (,@(cl-loop
+			 for i from 0 for arg in (delq '&optional arguments)
+			 collect `(,arg (if (listp ,argument)
+					    (nth ,i ,argument)
+					  (match-string ,(1+ i) ,argument)))))
+		  ,@body)))
+	    (add-to-list 'rcirc-client-commands ,(concat "/" (symbol-name command))))))
+
+     ;; and redefine the JOIN command
+     (rcirc-define-command join (channels)
+       "Join CHANNELS.
+CHANNELS is a comma- or space-separated string of channel names."
+       (interactive "sJoin channels: ")
+       (let* ((split-channels (split-string channels "[ ,]" t))
+              (buffers (mapcar (lambda (ch)
+				 (rcirc-get-buffer-create process ch))
+                               split-channels))
+              (channels (mapconcat 'identity split-channels ",")))
+	 (rcirc-send-string process "JOIN" channels)
+	 (when (not (eq (selected-window) (minibuffer-window)))
+	   (dolist (b buffers) ;; order the new channel buffers in the buffer list
+             (switch-to-buffer b)))))))
+
 ;;; rcirc, write such as not to require rcirc at startup
 (require 'rcirc-emojis)
 
