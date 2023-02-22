@@ -2,15 +2,31 @@
   "Roll N d6. Defaults to 1."
   (interactive "P")
   (setq n (or n 1)
-	r (loop repeat n sum (1+ (random 6))))
+	r (cl-loop repeat n sum (1+ (random 6))))
   (message "%sd6: %d" n r)
+  r)
+
+(defun d8 (&optional n)
+  "Roll N d8. Defaults to 1."
+  (interactive "P")
+  (setq n (or n 1)
+	r (cl-loop repeat n sum (1+ (random 8))))
+  (message "%sd8: %d" n r)
+  r)
+
+(defun d10 (&optional n)
+  "Roll N d10. Defaults to 1."
+  (interactive "P")
+  (setq n (or n 1)
+	r (cl-loop repeat n sum (1+ (random 10))))
+  (message "%sd10: %d" n r)
   r)
 
 (defun d20 (&optional n)
   "Roll N d20. Defaults to 1."
   (interactive "P")
   (setq n (or n 1)
-	r (loop repeat n collecting (1+ (random 20))))
+	r (cl-loop repeat n collecting (1+ (random 20))))
   (message "%sd6: %S" n r)
   r)
 
@@ -462,3 +478,29 @@ Torchbearers, men-at-arms, those kind of people."
     "The elves of the sea picked me up as a kid and taught me the way of the sword."
     "Uaaargh. Uuugh. Nuk nuk. Gaaah. Nuk nak nuk nuk. Graaaaa!")
   "Claims made by people who will fight.")
+
+
+;; (cl-loop for x from 18 to 31 do
+;;   (cl-loop for y from 50 to 75 do
+;;     (insert (format "%02d%02d ocean\n" x y))))
+
+(defun text-map-typer ()
+  (interactive)
+  (let ((done nil))
+    (while (not done)
+      (re-search-forward "[0-9][0-9][0-9][0-9] ")
+      (cl-case (read-char "Draw: ")
+	(?q (setq done t))
+	(?c (insert "clear"))
+	(?e (insert "empty"))
+	(?g (insert "grass"))
+	(?s (insert "swamp"))
+	(?d (insert "desert"))
+	(?w (insert "water"))
+	(?o (insert "ocean"))
+	(?f (insert "forest"))
+	(?h (insert "hills"))
+	(?m (insert "mountains"))
+	(?v (insert "volcano")))
+      (unless done
+	(delete-region (point) (line-end-position))))))
