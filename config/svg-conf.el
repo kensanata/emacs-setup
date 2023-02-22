@@ -18,11 +18,15 @@
       (let ((n (string-to-number (match-string 1))))
 	(replace-match (format "step%d" (1+ n)))))))
 
-(defun as:round-numbers (start end)
+(defun asc:round-numbers (start end)
   (interactive "r")
-  (goto-char start)
-  (save-excursion
-    (while (re-search-forward "\\([0-9]+\\.[0-9][0-9]+\\)" end t)
-      (let ((n (string-to-number (match-string 1))))
-	(replace-match (format "%.1f" n))))))
+  (let ((scale (if current-prefix-arg
+		   (read-number "Scale: ")
+		 1))
+	(end (copy-marker end)))
+    (goto-char start)
+    (save-excursion
+      (while (re-search-forward "[0-9]+\\(\\.[0-9]+\\)?\\(e[+-]?[0-9]+\\)?" end t)
+	(let ((n (round (* scale (string-to-number (match-string 0))))))
+	  (replace-match (format "%d" n)))))))
     
