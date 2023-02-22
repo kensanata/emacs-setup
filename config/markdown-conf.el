@@ -45,20 +45,6 @@
 	    "</body>\n"
 	    "</html>\n"))
 
-;; I write a lot of Markdown but then I want to post the text on
-;; Google+ so here's a quick export.
-(defun as/markdown-region-to-google (start end)
-  (interactive "r")
-  (goto-char start)
-  (while (search-forward "*" end t)
-    (goto-char (match-beginning 0))
-    (cond ((looking-at "\\b\\*\\*\\|\\*\\*\\b")
-	   (delete-char 1)
-	   (forward-char 1))
-	  ((looking-at "\\b\\*\\|\\*\\b")
-	   (delete-char 1)
-	   (insert "_")))))
-
 ;; And here's a transformation to Wiki Creole which can be useful when
 ;; translating my GGGG for Emacs Wiki.
 (defun as/markdown-region-to-creole (start end)
