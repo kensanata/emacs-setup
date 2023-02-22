@@ -21,6 +21,7 @@
  rmail-secondary-file-regexp "spam\\|sent\\|archive$"
  ;; where mail I want to keep goes
  rmail-default-file "/home/alex/mail/archive"
+ rmail-archive-file "/home/alex/mail/archive"
  ;; I don't differentiate between spam and trash anymore because I'm
  ;; relying on my provider's spam filter. I'm not running a local spam
  ;; filter.
@@ -77,6 +78,7 @@ messages.  Results will be put into the default search file." t)
 (defun asc:fetch-mail ()
   "Run mail retrieval scripts."
   (interactive)
+  (message "Fetching mail…")
   (make-process
    :name "fetch-mail" :buffer (get-buffer-create "*Fetch Mail*")
    :command (list "mpop" "-Q" "-a")
@@ -88,15 +90,15 @@ messages.  Results will be put into the default search file." t)
 		 (file-attributes
 		  (concat rmail-spool-directory (user-login-name))))
 		0)
-	     (message "New mail!")
-	   (message "No new mail.")))))))
+	     (message "Fetching mail…done, new mail found")
+	   (message "Fetching mail…done, none found")))))))
 
 (defun asc:archive-mail ()
-  "It will move the current message to ‘rmail-default-file’
+  "It will move the current message to ‘rmail-archive-file’
 This command will not run unless in an RMAIL buffer visiting
 ‘rmail-file-name’."
   (interactive)
-  (rmail-output rmail-default-file))
+  (rmail-output rmail-archive-file))
 
 (defun asc:trash-mail ()
   "It will move the current message to ‘rmail-trash-file’
