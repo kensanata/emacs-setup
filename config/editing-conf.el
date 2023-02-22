@@ -1,3 +1,5 @@
+(setq-default indent-tabs-mode nil)
+
 (defun increment-number-at-point (&optional num)
   "Increment number at point by 1.
 Works with numerical arguments, too.
