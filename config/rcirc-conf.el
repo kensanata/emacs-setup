@@ -250,7 +250,7 @@ CHANNELS is a comma- or space-separated string of channel names."
 (require 'cl-lib)
 (defun rcirc-colors-Y (color)
   (let ((gamma 2.2))
-    (destructuring-bind (r g b) (color-name-to-rgb color)
+    (cl-destructuring-bind (r g b) (color-name-to-rgb color)
       (let* ((r1 (expt r gamma))
 	     (g1 (expt g gamma))
 	     (b1 (expt b gamma)))
