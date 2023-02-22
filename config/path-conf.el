@@ -3,7 +3,12 @@
   (if (file-exists-p init-file)
       (with-temp-buffer
 	(insert-file-contents init-file)
+	(goto-char (point-min))
 	(while (re-search-forward "export \\([A-Z_]+\\)=\"\\(.*\\)\"" nil t)
+	  (message "Setting %s=%s" (match-string 1) (match-string 2))
+	  (setenv (match-string 1) (match-string 2)))
+	(goto-char (point-min))
+	(while (re-search-forward "setenv \\([A-Z_]+\\) \"\\(.*\\)\"" nil t)
 	  (message "Setting %s=%s" (match-string 1) (match-string 2))
 	  (setenv (match-string 1) (match-string 2)))
 	(when (getenv "PERLBREW_MANPATH")
