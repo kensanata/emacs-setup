@@ -160,8 +160,8 @@ Marked numbers are highlighted using the face `query-replace'.
 Once you have marked all the numbers you want to work with, you
 can increment them all by a certain amount using \\[number-mark-add],
 or you can distribute a certain amount using \\[number-mark-distribute]."
-  nil
-  "N"
+  :init-value nil
+  :lighter "N"
   (list (cons (kbd "M-<right>") 'number-move-right)
 	(cons (kbd "M-<left>") 'number-move-left)
 	(cons (kbd "M-<up>") 'number-move-up)
