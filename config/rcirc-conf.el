@@ -180,12 +180,15 @@ CHANNELS is a comma- or space-separated string of channel names."
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
       '(("irc.libera.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#emacs" "#emacsconf"
-		    "#rcirc" "#elpher" "#gemini"
-		    "#wiki" "#oddmuse" "#phoebe"
-		    "#perl" "#awk"
-		    "#fennel" "#lisp" "##fediverse-lisp"
-		    "#retro"))
+	 :channels ("#emacs"
+		    "#wiki" "#oddmuse"
+		    ;; ""#rcirc"  #emacsconf"
+		    ;; "#elpher"
+		    ;; "#perl" "#phoebe" "#gemini"
+		    ;; "#fennel"
+		    ;; "#lisp" "##fediverse-lisp"
+		    ;; "#retro" "#awk"
+		    ))
 	;; SDF gopher moved to tilde.chat
 	;; ("irc.sdf.org" :channels ("#gopher"))
 	;; Tilde chat is often unreachable
