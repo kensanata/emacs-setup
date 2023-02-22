@@ -1,3 +1,8 @@
+(use-package "corfu"
+  :ensure t
+  :defer t
+  :config (puni-global-mode))
+
 (setq-default indent-tabs-mode nil)
 
 (defun increment-number-at-point (&optional num)
