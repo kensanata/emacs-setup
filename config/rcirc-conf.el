@@ -202,12 +202,10 @@ CHANNELS is a comma- or space-separated string of channel names."
 	;; ("irc.esper.net"
 	;;  :port 6697 :encryption tls
 	;;  :channels ("#merveilles" "#uxn"))
-	("irc.otherworlders.org"
-	 :port 6667 ;; no encryption
-	 :channels ("#halberds-and-helmets"
-		    "#lonestar"
-		    "#montag"
-		    "#fudge"))
+	("campaignwiki.org"
+	 :port 6697 :encryption tls
+	 :channels ("#welcome"
+		    "#montag"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
