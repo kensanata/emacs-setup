@@ -20,7 +20,7 @@
  'text-mode-hook
  (lambda ()
    (font-lock-add-keywords
-    nil '(("\\<\\(will\\)\\>" . 'font-lock-warning-face)))))
+    nil '(("\\<\\(will\\|ll\\)\\>" . 'font-lock-warning-face)))))
 
 (add-hook 'text-mode-hook 'abbrev-mode)
 
