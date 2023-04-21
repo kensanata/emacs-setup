@@ -6,12 +6,15 @@
   (setq c-basic-offset 2
 	tab-width 2))
 
-;; This is not working out for me.
-;; 
-;; (eval-after-load 'sgml-mode
-;;   '(progn
-;;      (require 'tagedit)
-;;      (tagedit-add-paredit-like-keybindings)
-;;      (add-hook 'html-mode-hook (lambda ()
-;; 				 (tagedit-mode 1)
-;; 				 (tagedit-add-experimental-features)))))
+(defun asc:html-tag ()
+  "Insert a tag appropriate after a keyword."
+  (let ((end (point))
+        tag)
+    (backward-word-strictly)
+    (setq tag (buffer-substring (point) end))
+    (insert "<")
+    (forward-word-strictly)
+    (insert ">")
+    (save-excursion
+      (insert "</" tag ">"))))
+
