@@ -6,9 +6,6 @@
 	    (local-set-key "E" 'emms-play-dired)
 	    (local-set-key (kbd "C-c w") 'wdired-change-to-wdired-mode)))
 
-;; Homebrew: brew install coreutils gives us GNU ls
-(add-to-list 'exec-path "/usr/local/opt/coreutils/libexec/gnubin")
-
 (setq dired-recursive-deletes 'always
       dired-recursive-copies 'always
       dired-deletion-confirmer 'y-or-n-p

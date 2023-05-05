@@ -1,3 +1,6 @@
+
+(setq mhtml-tag-relative-indent 'ignore)
+
 (add-hook 'html-mode-hook 'asc:init-html-mode)
 
 (defun asc:init-html-mode ()
@@ -18,3 +21,18 @@
     (save-excursion
       (insert "</" tag ">"))))
 
+(defun asc:html-escape (start end)
+  "HTML escape the region.
+Turns < & > → &lt; &amp; &gt;."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (let ((m (make-marker)))
+      (set-marker m end)
+      (while (< (point) m)
+        (case (char-after)
+          (?< (delete-char 1) (insert "&lt;"))
+          (?& (delete-char 1) (insert "&amp;"))
+          (?> (delete-char 1) (insert "&gt;"))
+          (t (forward-char))))
+      (set-marker m nil))))
