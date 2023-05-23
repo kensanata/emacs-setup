@@ -2,6 +2,7 @@
 ;; (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
 (use-package swiper :ensure t
+  :commands (swiper-from-isearch)
   :bind ("C-c o" . swiper-thing-at-point)
   :bind ("C-o" . swiper)
   :bind ("C-M-o" . swiper-all))
