@@ -1,5 +1,5 @@
 (use-package magit :ensure t
-  :bind ("C-c o" . magit))
+  :bind ("C-c g" . magit))
 
 (use-package git-gutter :ensure t)
 (global-git-gutter-mode +1)
