@@ -34,3 +34,16 @@ With a universal argument (just C-u), ask by how much."
 				1 font-lock-warning-face prepend))))
 
 (add-hook 'find-file-hook 'highlight-fixme t)
+
+;; Sort strings separated by |
+(defun asc:sort-pipeline ()
+  "Sort string enclosed by double quotes.
+Sortable terms are separated by pipe symbols.
+Example: \"b|a\" turns into \"a|b\"."
+  (interactive)
+  (let* ((start (progn (search-backward "\"" nil t) (forward-char 1) (point)))
+         (end (progn (search-forward "\"" nil t) (backward-char 1) (point)))
+         (str (buffer-substring start end))
+         (lst (split-string str "|")))
+    (delete-region start end)
+    (insert (mapconcat 'identity (sort lst 'string<) "|"))))
