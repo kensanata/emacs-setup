@@ -56,3 +56,8 @@ whitespace. This replaces all whitespace with a literal space."
       (dolist (word (sort words 'string<))
 	(insert word " ")))
     (delete-char -1)))
+
+(defun goto-random-line ()
+  "Go to a random line in the buffer."
+  (interactive)
+  (goto-line (1+ (random (count-lines (point-min) (point-max))))))
