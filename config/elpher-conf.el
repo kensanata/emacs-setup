@@ -13,7 +13,7 @@
   :bind ("C-c e" . elpher))
 
 (global-set-key (kbd "C-c u") #'browse-url)
-(setq browse-url-browser-function 'elpher-browse-url-elpher)
+(setq browse-url-handlers '(("." . elpher-browse-url-elpher)))
 
 (use-package gemini-write
   :after elpher
