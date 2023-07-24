@@ -124,7 +124,7 @@ deleted."
       message-sendmail-f-is-evil t
       message-sendmail-envelope-from 'header
       sendmail-program "msmtp"
-      message-default-headers "Fcc: /home/alex/mail/sent"
+      ;; message-default-headers "Fcc: /home/alex/mail/sent"
       message-auto-save-directory "/home/alex/mail/drafts"
       message-confirm-send t
       message-hidden-headers '("^References:" "^X-Draft-From:" "^In-Reply-To:"))
