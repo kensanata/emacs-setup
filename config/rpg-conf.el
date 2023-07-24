@@ -504,3 +504,19 @@ Torchbearers, men-at-arms, those kind of people."
 	(?v (insert "volcano")))
       (unless done
 	(delete-region (point) (line-end-position))))))
+
+;; Random Arabic names
+
+(defun insert-random-arabic-person ()
+  "Insert a person with a random Arabic name."
+  (interactive)
+  (let* ((gender (if (zerop (random 2)) "♂" "♀"))
+         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (name (save-window-excursion
+                 (find-file (format "~/Documents/RPG/Names/Arabic %s Names.txt"
+                                    (if (string= gender "♂") "Masculine" "Feminine")))
+                 (goto-random-line)
+                 (buffer-substring (line-beginning-position) (line-end-position)))))
+    (setq name (car (split-string name " - "))
+          name (car (split-string name ", ")))
+    (insert name ", " age " " gender)))
