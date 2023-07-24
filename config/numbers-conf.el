@@ -57,6 +57,13 @@ number by the same amount."
 	(delete-region (overlay-start o) (overlay-end o))
 	(insert (number-to-string (+ num amount)))))))
 
+(defun number-add (amount)
+  "Add a number to the current number."
+  (interactive "nAdd how much? ")
+  (let ((num (number-at-point)))
+    (kill-region (match-beginning 0) (match-end 0))
+    (insert (number-to-string (+ num amount)))))
+
 (defun number-mark-distribute (amount)
   "Distribute a number to all marked numbers."
   (interactive "nDistribute how much? ")
