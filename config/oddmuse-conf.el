@@ -47,6 +47,8 @@
 	 utf-8 "frodo" "Alex")
 	("Gridmapper" "https://campaignwiki.org/wiki/Gridmapper"
 	 utf-8 "frodo" "Alex")
+	("Für eine Handvoll Goldstücke" "https://campaignwiki.org/wiki/FuerEineHandvollGoldstuecke"
+	 utf-8 "frodo" "Alex")
 	("Drei Wälder" "https://campaignwiki.org/wiki/Drei_W%c3%a4lder"
 	 utf-8 "frodo" "Alex")
 	("Rasiermesserküste" "https://campaignwiki.org/wiki/Rasiermesserk%c3%bcste"
