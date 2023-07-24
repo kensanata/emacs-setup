@@ -24,6 +24,21 @@
 	      (add-to-list 'exec-path path)))))
     (message "Did not find %s" init-file)))
 
+;; fish
+(let ((init-file "~/.config/fish/config.fish"))
+  (if (file-exists-p init-file)
+      (with-temp-buffer
+	(insert-file-contents init-file)
+	(goto-char (point-min))
+        (when (search-forward "set -x PATH" nil t)
+          (let ((end (line-end-position))
+                (paths))
+            (while (re-search-forward "[~/]\\S-+" end t)
+              (let ((path (expand-file-name (match-string 0))))
+                (add-to-list 'paths path)))
+            (setq exec-path (nconc (reverse paths) exec-path)))))
+    (message "Did not find %s" init-file)))
+
 ;; ~/.local
 
 (setenv "MANPATH"
