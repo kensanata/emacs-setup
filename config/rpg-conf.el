@@ -505,7 +505,7 @@ Torchbearers, men-at-arms, those kind of people."
       (unless done
 	(delete-region (point) (line-end-position))))))
 
-;; Random Arabic names
+;; Random names
 
 (defun insert-random-arabic-person ()
   "Insert a person with a random Arabic name."
@@ -519,4 +519,34 @@ Torchbearers, men-at-arms, those kind of people."
                  (buffer-substring (line-beginning-position) (line-end-position)))))
     (setq name (car (split-string name " - "))
           name (car (split-string name ", ")))
+    (insert name ", " age " " gender)))
+
+(defun insert-random-turkish-person ()
+  "Insert a person with a random Turkish name."
+  (interactive)
+  (let* ((gender (if (zerop (random 2)) "♂" "♀"))
+         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (name (save-window-excursion
+                 (find-file (format "~/Documents/RPG/Names/Turkish %s Names.txt"
+                                    (if (string= gender "♂") "Male" "Female")))
+                 (goto-random-line)
+                 (buffer-substring (line-beginning-position) (line-end-position)))))
+    (setq name (car (split-string name " - "))
+          name (car (split-string name ", ")))
+    (insert name ", " age " " gender)))
+
+(defun insert-random-icelandic-person ()
+  "Insert a person with a random Icelandic name."
+  (interactive)
+  (let* ((gender (if (zerop (random 2)) "♂" "♀"))
+         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (name (save-window-excursion
+                (find-file "~/Documents/RPG/Names/Icelandic Names.txt")
+                (goto-random-line)
+                (while (not (save-excursion (search-forward gender (line-end-position) t)))
+                  (goto-random-line))
+                (buffer-substring (line-beginning-position)
+                                  (progn
+                                    (1- (skip-chars-forward "^\t"))
+                                    (point))))))
     (insert name ", " age " " gender)))
