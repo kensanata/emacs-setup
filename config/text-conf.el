@@ -60,4 +60,5 @@ whitespace. This replaces all whitespace with a literal space."
 (defun goto-random-line ()
   "Go to a random line in the buffer."
   (interactive)
-  (goto-line (1+ (random (count-lines (point-min) (point-max))))))
+  (goto-char (point-min))
+  (forward-line (random (count-lines (point-min) (point-max)))))
