@@ -89,9 +89,13 @@
   (interactive)
   (if elpher-client-certificate
       (elpher-forget-current-certificate)
-    (let ((chosen-certificate (elpher-choose-client-certificate)))
-      (when chosen-certificate
-	(setq elpher-client-certificate chosen-certificate)))))
+    (let ((chosen-certificate
+           (with-local-quit
+             (elpher-acquire-client-certificate
+              (elpher-address-to-url (elpher-page-address elpher-current-page))))))
+      (unless chosen-certificate
+        (error "Gemini server requires a client certificate and none was provided"))
+      (setq-local elpher-client-certificate chosen-certificate))))
 
 (defun asc:elpher-search-en.wikipedia.org (terms)
   (interactive "sTerms: ")
