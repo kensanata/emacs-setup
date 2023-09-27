@@ -46,4 +46,5 @@
 		(getenv "MANPATH")))
 (setenv "PATH"
 	(concat "/home/alex/.local/bin" path-separator
+                "/usr/local/go/bin" path-separator
 		(getenv "PATH")))
