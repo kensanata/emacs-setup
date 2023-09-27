@@ -1,5 +1,5 @@
 (when (find-font (font-spec :name "Iosevka Term"))
-  (dolist (face '(default fixed-pitch))
+  (dolist (face '(default fixed-pitch fixed-pitch-serif))
     (set-face-attribute
      face nil
      :family "Iosevka Term"
