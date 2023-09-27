@@ -511,7 +511,7 @@ Torchbearers, men-at-arms, those kind of people."
   "Insert a person with a random Arabic name."
   (interactive)
   (let* ((gender (if (zerop (random 2)) "♂" "♀"))
-         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (age (cl-case (random 3) (0 "young") (1 "middle age") (2 "old")))
          (name (save-window-excursion
                  (find-file (format "~/Documents/RPG/Names/Arabic %s Names.txt"
                                     (if (string= gender "♂") "Masculine" "Feminine")))
@@ -525,7 +525,7 @@ Torchbearers, men-at-arms, those kind of people."
   "Insert a person with a random Turkish name."
   (interactive)
   (let* ((gender (if (zerop (random 2)) "♂" "♀"))
-         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (age (cl-case (random 3) (0 "young") (1 "middle age") (2 "old")))
          (name (save-window-excursion
                  (find-file (format "~/Documents/RPG/Names/Turkish %s Names.txt"
                                     (if (string= gender "♂") "Male" "Female")))
@@ -539,7 +539,7 @@ Torchbearers, men-at-arms, those kind of people."
   "Insert a person with a random Icelandic name."
   (interactive)
   (let* ((gender (if (zerop (random 2)) "♂" "♀"))
-         (age (case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (age (cl-case (random 3) (0 "young") (1 "middle age") (2 "old")))
          (name (save-window-excursion
                 (find-file "~/Documents/RPG/Names/Icelandic Names.txt")
                 (goto-random-line)
