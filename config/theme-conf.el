@@ -45,6 +45,7 @@
  '(rcirc-prompt ((t (:inherit bold))))
  '(dictionary-reference-face ((t (:inherit default))))
  '(idle-highlight ((t (:background "gray30"))))
+ '(highlight ((t (:background "gray30"))))
  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
  '(wgrep-done-face ((t (:inherit default))))
  '(wgrep-face ((t (:inherit default))))
