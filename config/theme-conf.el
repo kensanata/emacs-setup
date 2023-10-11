@@ -72,6 +72,10 @@
 ;; always use the dark theme
 (enable-theme 'brutalist-dark)
 
+;; somehow this doesn't work as part of the theme, above?
+(set-face-foreground 'error "tomato")
+(set-face-background 'highlight "grey30")
+
 ;; (require 'solar)
 
 ;; ;; set these to your current location
