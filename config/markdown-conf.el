@@ -5,6 +5,26 @@
     'markdown-add-xhtml-header-and-footer
     'as/markdown-add-xhtml-header-and-footer))
 
+(add-hook 'markdown-mode-hook 'asc:markdown-init)
+
+(defun asc:markdown-init ()
+  (local-set-key (kbd "C-c C-c C-p") 'asc:markdown-publish))
+
+(defun asc:markdown-publish (name add-changes)
+  "Publish the page on my blog."
+  (interactive
+   (list (read-string "Name of the page: "
+                      (string-replace ".md" "" (buffer-name)))
+         (y-or-n-p "Add to list of changes: ")))
+  (let* ((url (concat "https://alexschroeder.ch/save/" name))
+         (url-request-method "POST")
+         (url-request-coding-system 'utf-8)
+         (url-request-data
+          (mm-url-encode-multipart-form-data
+           `((body . ,(buffer-substring-no-properties (point-min) (point-max)))
+             (notify . ,(if add-changes "on" ""))))))
+    (url-retrieve url (lambda (status) (message "%S" status)))))
+
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
 
