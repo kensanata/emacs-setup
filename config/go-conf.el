@@ -18,6 +18,7 @@
 (add-hook 'godoc-mode-hook 'asc:go-init)
 
 (defun asc:go-init ()
+  (setq fill-column 120)
   (local-set-key (kbd "C-h f") 'asc:godoc))
 
 (defun asc:godoc ()
