@@ -19,11 +19,21 @@
   (let* ((url (concat "https://alexschroeder.ch/save/" name))
          (url-request-method "POST")
          (url-request-coding-system 'utf-8)
+         (url-request-extra-headers
+          '(("Content-Type" . "application/x-www-form-urlencoded; charset=utf-8")
+            ("Connection" . "close")))
          (url-request-data
-          (mm-url-encode-multipart-form-data
-           `((body . ,(buffer-substring-no-properties (point-min) (point-max)))
-             (notify . ,(if add-changes "on" ""))))))
-    (url-retrieve url (lambda (status) (message "%S" status)))))
+          (mm-url-encode-www-form-urlencoded
+           `(("body" . ,(buffer-substring-no-properties (point-min) (point-max)))
+             ("notify" . ,(if add-changes "on" ""))))))
+    (when (url-basic-auth url)
+      (add-to-list 'url-request-extra-headers
+                   (cons "Authorization" (url-basic-auth url))))
+    (url-retrieve url (lambda (status &rest ignore)
+                        (let ((kill-this-buffer (current-buffer)))
+                          (if (and (integerp status) (not (< status 300)))
+                              (error "Oh no: %d 😱" status)
+                            (message "No idea if this worked")))))))
 
 ;; The text files in my Dropbox folder are Markdown files.
 (add-to-list 'auto-mode-alist '("/Dropbox/.*\\.txt\\'" . markdown-mode))
