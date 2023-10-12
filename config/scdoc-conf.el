@@ -13,3 +13,6 @@
 
 ;; The text files in man folders are scdoc sources
 (add-to-list 'auto-mode-alist '("man/.*\\.[0-9]+.txt\\'" . scdoc-mode))
+
+;; Somebody should add support for xref.
+
