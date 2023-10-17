@@ -75,6 +75,8 @@
 ;; somehow this doesn't work as part of the theme, above?
 (set-face-foreground 'error "tomato")
 (set-face-background 'highlight "grey30")
+(set-face-background 'idle-highlight "grey30")
+(set-face-foreground 'mode-line-inactive "grey30")
 
 ;; (require 'solar)
 
