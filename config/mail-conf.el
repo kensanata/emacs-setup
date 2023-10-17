@@ -161,9 +161,6 @@ everything belonging to this multipart message is not decoded
 correctly. This function fixes the situation."
   (interactive)
   (rmail-edit-current-message)
-  (when (search-forward "\n\nContent-Type: multipart" nil t)
-    (let ((multipart-start (line-beginning-position)))
-      (re-search-backward "^--.*\n")
-      (delete-region (match-end 0) multipart-start)
-      (insert "Content-Description: encrypted message\n")
-      (rmail-cease-edit))))
+  (when (search-forward "\nContent-Type: multipart\n\nContent-Type: " nil t)
+    (replace-match "\nContent-Type: "))
+  (rmail-cease-edit))
