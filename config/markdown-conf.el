@@ -10,6 +10,18 @@
 (defun asc:markdown-init ()
   (local-set-key (kbd "C-c C-c C-p") 'asc:markdown-publish))
 
+(advice-add 'markdown-link-url :filter-return #'asc:markdown-link-url)
+
+(defun asc:markdown-link-url (url)
+  "Add .md to URL if that makes sense."
+  (setq filename (url-unhex-string url))
+  (let ((markdown (concat url ".md")))
+    (cond ((file-exists-p filename)
+           filename)
+          ((file-exists-p markdown)
+           markdown)
+          (t url))))
+
 (defun asc:markdown-publish (name add-changes)
   "Publish the page on my blog."
   (interactive
