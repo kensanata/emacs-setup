@@ -14,8 +14,8 @@
 
 (defun asc:markdown-link-url (url)
   "Add .md to URL if that makes sense."
-  (setq filename (url-unhex-string url))
-  (let ((markdown (concat url ".md")))
+  (let* ((filename (url-unhex-string url))
+         (markdown (concat filename ".md")))
     (cond ((file-exists-p filename)
            filename)
           ((file-exists-p markdown)
