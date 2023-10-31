@@ -103,3 +103,10 @@ This is used for `asc:image-dired-exif-mode'."
   (find-file (concat (file-name-sans-extension
 		      (dired-file-name-at-point))
 		     ".txt")))
+
+(defun asc:ansi-color-apply-on-buffer ()
+  "Decode ANSI escape codes in the buffer."
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(defalias 'asc:root 'tramp-revert-buffer-with-sudo)
