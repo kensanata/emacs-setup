@@ -7,7 +7,9 @@
     (funcall mode -1)))
 
 ;; active some other bling
-;; (toggle-frame-fullscreen) 
+;; (toggle-frame-fullscreen)
+(setq initial-frame-alist
+      '((top . 1) (left . 1) (width . 100) (height . 25)))
 (show-paren-mode 1)
 (winner-mode 1)
 (windmove-default-keybindings)
