@@ -10,6 +10,10 @@
         (mark " " (name 16 -1)
               " " filename)))
 
+;; some buffers should be full-size
+(setq special-display-buffer-names
+      '("*compilation*" "*Help*" "*Completions*")
+      special-display-function 'display-buffer-same-window)
 
 ;; midnight
 (midnight-mode 1)
