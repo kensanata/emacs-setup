@@ -1,15 +1,22 @@
 ;; (setq custom-theme-directory "~/.emacs.d/emacs-setup/lib")
 ;; (load-theme 'pink-bliss t t)
 
-(use-package brutalist-theme)
+(use-package brutalist-theme :ensure t)
 
 ;; Use M-x enable-theme and M-x disable-theme
 (load-theme 'brutalist t t)
-(load-theme 'brutalist-dark t t)
+(enable-theme 'brutalist)
 
 (custom-theme-set-faces
  'brutalist
  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+ '(default ((t (:family "Iosevka Term" :height 180))))
+ '(fixed-pitch ((t (:inherit default))))
+ '(fixed-pitch-serif ((t (:inherit default))))
+ '(variable-pitch ((t (:family "Iosevka Etoile"))))
+ '(completions-highlight ((t (:background "light gray"))))
+ '(idle-highlight ((t (:background "light gray"))))
+ '(markdown-blockquote-face ((t (:foreground "dim gray"))))
  '(rcirc-my-nick ((t (:foreground "blue"))))
  '(rcirc-dim-nick ((t (:foreground "dim gray"))))
  '(rcirc-prompt ((t (:inherit bold))))
@@ -17,60 +24,63 @@
  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
  '(wgrep-done-face ((t (:inherit default))))
  '(wgrep-face ((t (:inherit default))))
- '(wgrep-file-face ((t (:inherit default)))))
+ '(wgrep-file-face ((t (:inherit default))))
+ '(tex-verbatim ((t (:foreground "dim gray")))))
 
 (custom-theme-set-variables
  'brutalist
  '(ansi-color-names-vector
    ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"]))
 
-(custom-theme-set-faces
- 'brutalist-dark
- ;; don't actually make the other modelines unreadable
- '(mode-line-inactive ((t (:foreground "gray70"))))
- ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
- '(message-header-cc ((t (:inherit bold))))
- '(message-header-name ((t (:inherit default))))
- '(message-header-newsgroup ((t (:inherit default))))
- '(message-header-other ((t (:inherit default))))
- '(message-header-subject ((t (:inherit bold))))
- '(message-header-to ((t (:inherit bold))))
- '(message-header-xheader ((t (:inherit default))))
- '(message-cited-text-1 ((t (:inherit default))))
- '(message-cited-text-2 ((t (:inherit default))))
- '(message-cited-text-3 ((t (:inherit default))))
- '(message-cited-text-4 ((t (:inherit default))))
- '(rcirc-my-nick ((t (:foreground "light blue"))))
- '(rcirc-dim-nick ((t (:foreground "gray70"))))
- '(rcirc-prompt ((t (:inherit bold))))
- '(dictionary-reference-face ((t (:inherit default))))
- '(idle-highlight ((t (:background "gray30"))))
- '(highlight ((t (:background "gray30"))))
- '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
- '(wgrep-done-face ((t (:inherit default))))
- '(wgrep-face ((t (:inherit default))))
- '(wgrep-file-face ((t (:inherit default))))
- '(j-adverb-face ((t (:inherit bold))))
- '(j-conjunction-face ((t (:inherit bold))))
- '(j-other-face ((t (:inherit bold))))
- '(j-verb-face ((t (:inherit bold))))
- '(js2-error ((t (:inherit shadow))))
- '(js2-warning ((t (:background "grey40"))))
- '(swiper-line-face ((t (:background "grey40"))))
- '(mastodon-boost-fave-face ((t (:inherit success))))
- '(mastodon-boosted-face ((t (:inherit bold))))
- '(mastodon-cw-face ((t (:inherit bold))))
- '(mastodon-display-name-face ((t (:inherit font-lock-string-face))))
- '(mastodon-handle-face ((t (:inherit font-lock-comment-face))))
- '(warning ((t (:inherit bold)))))
+;; (load-theme 'brutalist-dark t t)
 
-(custom-theme-set-variables
- 'brutalist-dark
- '(ansi-color-names-vector
-   ["black" "salmon" "yellow green" "light goldenrod" "steel blue" "orchid" "turquoise" "#eeeee8"]))
+;; (custom-theme-set-faces
+;;  'brutalist-dark
+;;  ;; don't actually make the other modelines unreadable
+;;  '(mode-line-inactive ((t (:foreground "gray70"))))
+;;  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
+;;  '(message-header-cc ((t (:inherit bold))))
+;;  '(message-header-name ((t (:inherit default))))
+;;  '(message-header-newsgroup ((t (:inherit default))))
+;;  '(message-header-other ((t (:inherit default))))
+;;  '(message-header-subject ((t (:inherit bold))))
+;;  '(message-header-to ((t (:inherit bold))))
+;;  '(message-header-xheader ((t (:inherit default))))
+;;  '(message-cited-text-1 ((t (:inherit default))))
+;;  '(message-cited-text-2 ((t (:inherit default))))
+;;  '(message-cited-text-3 ((t (:inherit default))))
+;;  '(message-cited-text-4 ((t (:inherit default))))
+;;  '(rcirc-my-nick ((t (:foreground "light blue"))))
+;;  '(rcirc-dim-nick ((t (:foreground "gray70"))))
+;;  '(rcirc-prompt ((t (:inherit bold))))
+;;  '(dictionary-reference-face ((t (:inherit default))))
+;;  '(idle-highlight ((t (:background "gray30"))))
+;;  '(highlight ((t (:background "gray30"))))
+;;  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
+;;  '(wgrep-done-face ((t (:inherit default))))
+;;  '(wgrep-face ((t (:inherit default))))
+;;  '(wgrep-file-face ((t (:inherit default))))
+;;  '(j-adverb-face ((t (:inherit bold))))
+;;  '(j-conjunction-face ((t (:inherit bold))))
+;;  '(j-other-face ((t (:inherit bold))))
+;;  '(j-verb-face ((t (:inherit bold))))
+;;  '(js2-error ((t (:inherit shadow))))
+;;  '(js2-warning ((t (:background "grey40"))))
+;;  '(swiper-line-face ((t (:background "grey40"))))
+;;  '(mastodon-boost-fave-face ((t (:inherit success))))
+;;  '(mastodon-boosted-face ((t (:inherit bold))))
+;;  '(mastodon-cw-face ((t (:inherit bold))))
+;;  '(mastodon-display-name-face ((t (:inherit font-lock-string-face))))
+;;  '(mastodon-handle-face ((t (:inherit font-lock-comment-face))))
+;;  '(warning ((t (:inherit bold)))))
+
+;; (custom-theme-set-variables
+;;  'brutalist-dark
+;;  '(ansi-color-names-vector
+;;    ["black" "salmon" "yellow green" "light goldenrod" "steel blue" "orchid" "turquoise" "#eeeee8"]))
 
 ;; always use the dark theme
-(enable-theme 'brutalist-dark)
+;; (enable-theme 'brutalist-dark)
 
 ;; somehow this doesn't work as part of the theme, above?
 (set-face-foreground 'error "tomato")
