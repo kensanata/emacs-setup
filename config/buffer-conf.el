@@ -12,7 +12,7 @@
 
 ;; some buffers should be full-size
 (setq special-display-buffer-names
-      '("*compilation*" "*Help*" "*Completions*")
+      '("*compilation*" "*Help*" "*Completions*" "*grep*" "*occur*" "*info")
       special-display-function 'display-buffer-same-window)
 
 ;; midnight
