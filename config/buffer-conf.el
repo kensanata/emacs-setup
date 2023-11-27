@@ -14,6 +14,3 @@
 (setq special-display-buffer-names
       '("*compilation*" "*Help*" "*Completions*" "*grep*" "*occur*" "*info")
       special-display-function 'display-buffer-same-window)
-
-;; midnight
-(midnight-mode 1)
