@@ -1,123 +1,80 @@
-;; (setq custom-theme-directory "~/.emacs.d/emacs-setup/lib")
-;; (load-theme 'pink-bliss t t)
+;;; Code:
 
-(use-package brutalist-theme :ensure t)
+;; I no longer know how custom themes work. It seems I cannot extend
+;; themes in the ways I want them to. So now I'm falling back to using
+;; defface all over the place.
+(face-spec-set 'default '((t (:family "Iosevka Term" :height 180 :background "#ffe" :foreground "#111"))))
+(face-spec-set 'fixed-pitch '((t (:family "Iosevka Term"))))
+(face-spec-set 'fixed-pitch-serif '((t (:family "Iosevka Term"))))
+(face-spec-set 'variable-pitch '((t (:family "Iosevka Etoile"))))
 
-;; Use M-x enable-theme and M-x disable-theme
-(load-theme 'brutalist t t)
-(enable-theme 'brutalist)
+(face-spec-set 'error '((t (:foreground "tomato"))))
+(face-spec-set 'region '((t (:background "#eeb"))))
+(face-spec-set 'secondary-selection '((t (:background "#ffa"))))
+(face-spec-set 'mode-line-inactive '((t (:foreground "grey30"))))
+(face-spec-set 'mode-line-highlight '((t (:foreground "dim gray"))))
+(face-spec-set 'query-replace '((t (:background "dark gray" :foreground "#ffe"))))
+(face-spec-set 'git-gutter:added '((t (:foreground "#111"))))
+(face-spec-set 'git-gutter:deleted '((t (:foreground "#111"))))
+(face-spec-set 'git-gutter:modified '((t (:foreground "#111"))))
+(face-spec-set 'git-gutter:separator '((t (:foreground "#111"))))
 
-(custom-theme-set-faces
- 'brutalist
- ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
- '(default ((t (:family "Iosevka Term" :height 180))))
- '(fixed-pitch ((t (:inherit default))))
- '(fixed-pitch-serif ((t (:inherit default))))
- '(variable-pitch ((t (:family "Iosevka Etoile"))))
- '(completions-highlight ((t (:background "light gray"))))
- '(idle-highlight ((t (:background "light gray"))))
- '(markdown-blockquote-face ((t (:foreground "dim gray"))))
- '(rcirc-my-nick ((t (:foreground "blue"))))
- '(rcirc-dim-nick ((t (:foreground "dim gray"))))
- '(rcirc-prompt ((t (:inherit bold))))
- '(dictionary-reference-face ((t (:inherit default))))
- '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
- '(wgrep-done-face ((t (:inherit default))))
- '(wgrep-face ((t (:inherit default))))
- '(wgrep-file-face ((t (:inherit default))))
- '(tex-verbatim ((t (:foreground "dim gray")))))
+(face-spec-set 'highlight '((t (:foreground "grey30"))))
+(face-spec-set 'idle-highlight '((t (:background "light gray"))))
 
-(custom-theme-set-variables
- 'brutalist
- '(ansi-color-names-vector
-   ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"]))
+(face-spec-set 'completions-highlight '((t (:background "light gray"))))
 
-;; (load-theme 'brutalist-dark t t)
+(face-spec-set 'dictionary-reference-face '((t (:inherit default))))
 
-;; (custom-theme-set-faces
-;;  'brutalist-dark
-;;  ;; don't actually make the other modelines unreadable
-;;  '(mode-line-inactive ((t (:foreground "gray70"))))
-;;  ;; rcirc-my-nick needs to have a foreground for `rcirc-colors' to work
-;;  '(message-header-cc ((t (:inherit bold))))
-;;  '(message-header-name ((t (:inherit default))))
-;;  '(message-header-newsgroup ((t (:inherit default))))
-;;  '(message-header-other ((t (:inherit default))))
-;;  '(message-header-subject ((t (:inherit bold))))
-;;  '(message-header-to ((t (:inherit bold))))
-;;  '(message-header-xheader ((t (:inherit default))))
-;;  '(message-cited-text-1 ((t (:inherit default))))
-;;  '(message-cited-text-2 ((t (:inherit default))))
-;;  '(message-cited-text-3 ((t (:inherit default))))
-;;  '(message-cited-text-4 ((t (:inherit default))))
-;;  '(rcirc-my-nick ((t (:foreground "light blue"))))
-;;  '(rcirc-dim-nick ((t (:foreground "gray70"))))
-;;  '(rcirc-prompt ((t (:inherit bold))))
-;;  '(dictionary-reference-face ((t (:inherit default))))
-;;  '(idle-highlight ((t (:background "gray30"))))
-;;  '(highlight ((t (:background "gray30"))))
-;;  '(wgrep-delete-face ((t (:inherit font-lock-comment-face :strike-through t))))
-;;  '(wgrep-done-face ((t (:inherit default))))
-;;  '(wgrep-face ((t (:inherit default))))
-;;  '(wgrep-file-face ((t (:inherit default))))
-;;  '(j-adverb-face ((t (:inherit bold))))
-;;  '(j-conjunction-face ((t (:inherit bold))))
-;;  '(j-other-face ((t (:inherit bold))))
-;;  '(j-verb-face ((t (:inherit bold))))
-;;  '(js2-error ((t (:inherit shadow))))
-;;  '(js2-warning ((t (:background "grey40"))))
-;;  '(swiper-line-face ((t (:background "grey40"))))
-;;  '(mastodon-boost-fave-face ((t (:inherit success))))
-;;  '(mastodon-boosted-face ((t (:inherit bold))))
-;;  '(mastodon-cw-face ((t (:inherit bold))))
-;;  '(mastodon-display-name-face ((t (:inherit font-lock-string-face))))
-;;  '(mastodon-handle-face ((t (:inherit font-lock-comment-face))))
-;;  '(warning ((t (:inherit bold)))))
+(face-spec-set 'eglot-highlight-symbol-face '((t (:background "light gray"))))
 
-;; (custom-theme-set-variables
-;;  'brutalist-dark
-;;  '(ansi-color-names-vector
-;;    ["black" "salmon" "yellow green" "light goldenrod" "steel blue" "orchid" "turquoise" "#eeeee8"]))
+(face-spec-set 'eshell-prompt '((t (:foreground "#111"))))
 
-;; always use the dark theme
-;; (enable-theme 'brutalist-dark)
+(face-spec-set 'font-lock-builtin-face '((t (:foreground "#111"))))
+(face-spec-set 'font-lock-comment-face '((t (:foreground "dim gray"))))
+(face-spec-set 'font-lock-comment-delimiter-face '((t (:inherit font-lock-comment-face))))
+(face-spec-set 'font-lock-constant-face '((t (:inherit bold :foreground "#111"))))
+(face-spec-set 'font-lock-doc-face '((t (:inherit font-lock-comment-face :slant italic))))
+(face-spec-set 'font-lock-function-name-face '((t (:foreground "#111"))))
+(face-spec-set 'font-lock-keyword-face '((t (:inherit font-lock-constant-face :foreground "#111"))))
+(face-spec-set 'font-lock-preprocessor-face '((t (:inherit italic))))
+(face-spec-set 'font-lock-reference-face '((t (:inherit default))))
+(face-spec-set 'font-lock-string-face '((t (:foreground "steel blue"))))
+(face-spec-set 'font-lock-type-face '((t (:inherit underline :foreground "#111"))))
+(face-spec-set 'font-lock-variable-name-face '((t (:foreground "#111"))))
+(face-spec-set 'font-lock-variable-use-face '((t (:foreground "#111"))))
+(face-spec-set 'font-lock-warning-face '((t (:foreground "tomato"))))
 
-;; somehow this doesn't work as part of the theme, above?
-(set-face-foreground 'error "tomato")
-(set-face-background 'highlight "grey30")
-(set-face-background 'idle-highlight "grey30")
-(set-face-foreground 'mode-line-inactive "grey30")
+(face-spec-set 'isearch '((t (:foreground "#111" :background "#cfc"))))
+(face-spec-set 'isearch-fail '((t (:foreground "#111" :background "#fdd"))))
+(face-spec-set 'isearch-group-1 '((t (:foreground "#111" :background "#bfb"))))
+(face-spec-set 'isearch-group-2 '((t (:foreground "#111" :background "#9d9"))))
+(face-spec-set 'lazy-highlight '((t (:foreground "#111" :background "#dfd"))))
 
-;; (require 'solar)
+(face-spec-set 'magit-bisect-bad '((t (:foreground "#111" :bold t))))
+(face-spec-set 'magit-bisect-good '((t (:foreground "#111" :bold t))))
+(face-spec-set 'magit-bisect-skip '((t (:foreground "#111" :bold t))))
+(face-spec-set 'magit-branch-remote '((t (:foreground "#111" :bold t))))
+(face-spec-set 'magit-branch-warning '((t (:foreground "tomato"))))
+(face-spec-set 'magit-header-line '((t (:foreground "#111"))))
+(face-spec-set 'magit-section-heading '((t (:foreground "#111" :bold t))))
+(face-spec-set 'magit-section-highlight '((t (:foreground "#111"))))
+(face-spec-set 'magit-sequence-head '((t (:foreground "#111"))))
 
-;; ;; set these to your current location
-;; (setq calendar-latitude [47 22 north]
-;;       calendar-longitude [8 33 east])
+(face-spec-set 'markdown-blockquote-face '((t (:foreground "dim gray"))))
 
-;; (defun enable-appropriate-brutalist-theme ()
-;;   "Enable the brutalist or brutalist-dark theme
-;; depending on the time of day."
-;;   (interactive)
-;;   (let* ((date (calendar-current-date))
-;; 	 (data (solar-sunrise-sunset date))
-;; 	 (sunrise (car (car data)))
-;; 	 (sunset (car (cadr data)))
-;; 	 (time (decode-time))
-;; 	 (now (+ (nth 2 time) (/ (nth 1 time) 60.0))))
-;;     (cond ((< now sunrise)
-;; 	   (message "%dh and %02dmin to go until sunrise"
-;; 		    (truncate (- sunrise now))
-;; 		    (round (mod (* 60 (- sunrise now)) 60))))
-;; 	  ((< now sunset)
-;; 	   (message "%dh and %02dmin to go until sunset"
-;; 		    (truncate (- sunset now))
-;; 		    (round (mod (* 60 (- sunset now)) 60))))
-;; 	  (t
-;; 	   (message "%dh and %02dmin to go until sunrise"
-;; 		    (truncate (- (+ 24 sunrise) now))
-;; 		    (- 60 (round (mod (* 60 (- (+ 24 sunrise) now)) 60))))))
-;;     (if (and (< sunrise now) (< now sunset))
-;; 	(enable-theme 'brutalist)
-;;       (enable-theme 'brutalist-dark))))
+(face-spec-set 'rcirc-my-nick '((t (:foreground "steel blue"))))
+(face-spec-set 'rcirc-dim-nick '((t (:foreground "dim gray"))))
+(face-spec-set 'rcirc-prompt '((t (:inherit bold))))
 
-;; (enable-appropriate-brutalist-theme)
+(face-spec-set 'sh-quoted-exec '((t (:foreground "tomato"))))
+
+(face-spec-set 'wgrep-delete-face '((t (:inherit font-lock-comment-face :strike-through t))))
+(face-spec-set 'wgrep-done-face '((t (:inherit default))))
+(face-spec-set 'wgrep-face '((t (:inherit default))))
+(face-spec-set 'wgrep-file-face '((t (:inherit default))))
+
+(face-spec-set 'tex-verbatim '((t (:foreground "dim gray"))))
+
+(setq ansi-color-names-vector
+      ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"])
