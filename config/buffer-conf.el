@@ -12,11 +12,12 @@
 
 ;; some buffers should be full-size
 (setq special-display-buffer-names
-      '("*compilation*" "*Help*" "*Completions*" "*grep*" "*occur*" "*info")
+      '("*compilation*" "*Help*" "*grep*" "*occur*" "*info")
       special-display-function 'display-buffer-same-window)
 
 (defvar asc:file-names-seen nil
-  "List of file names seen.")
+  "List of file names seen.
+A good candidate to add to `desktop-globals-to-save'.")
 
 (defun asc:file-names-seen-update ()
   "Add the current file name to `asc:file-names-seen'."
