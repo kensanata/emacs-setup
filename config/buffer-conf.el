@@ -70,7 +70,8 @@ A good candidate to add to `desktop-globals-to-save'.")
                   (format "Switch to (%s): " default)
                   candidates
                   (lambda (s)
-                    (not (or (string= (substring s 0 1) " ")
+                    (not (or (string= s "")
+                             (string= (substring s 0 1) " ")
                              (eq this-buffer-name s))))
                   nil nil
                   'switch-buffer-or-find-file-history
