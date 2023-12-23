@@ -27,3 +27,5 @@
 
 ;; on Windows, the menu button is not mapped to M-x
 (global-set-key (kbd "<apps>") 'execute-extended-command)
+
+(global-set-key (kbd "<f9>") 'compile)

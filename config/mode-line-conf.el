@@ -31,31 +31,3 @@ variable is nil.")
 
 ;; Use F12 to toggle modelines
 (global-set-key (kbd "<f12>") 'hidden-mode-line-mode)
-
-;; Center the window by adding a very wide fringe
-(define-minor-mode center-window-mode
-  "Minor mode to center the window using wide fringes."
-  :init-value nil
-  :global t
-  :group 'editing-basics
-  (if (not center-window-mode)
-      (set-fringe-style nil);; default
-    (set-fringe-mode
-     (/ (- (frame-pixel-width)
-           (* (+ fill-column 4)
-	      (frame-char-width)))
-        2))))
-
-;; We need to run this code once Emacs is done initializing
-;; (run-with-idle-timer 0 nil 'center-window-mode 1)
-
-;; Use F9 to toggle centering
-(global-set-key (kbd "<f9>") 'center-window-mode)
-
-(defun disable-center-window-mode ()
-  "Disable `center-window-mode' uncoditionally."
-  (center-window-mode 0))
-
-;; disable center-window-mode for some modes
-(add-hook 'dired-mode-hook 'disable-center-window-mode)
-(add-hook 'programming-mode-hook 'disable-center-window-mode)
