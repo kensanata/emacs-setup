@@ -213,6 +213,9 @@ CHANNELS is a comma- or space-separated string of channel names."
 	;;  :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
 	;;  :channels ("#kensanata/elisp"
 	;; 	    "#kensanata/oddmuse"))
+        ("m455.casa"
+         :port 6697 :encryption tls
+         :channels ("#basement"))
 	("localhost"
 	 :channels ("&bitlbee")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
