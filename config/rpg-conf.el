@@ -550,3 +550,13 @@ Torchbearers, men-at-arms, those kind of people."
                                     (1- (skip-chars-forward "^\t"))
                                     (point))))))
     (insert name ", " age " " gender)))
+
+(defun insert-random-elf-person ()
+  "Insert a person with a random elven name."
+  (interactive)
+  (let* ((gender (if (zerop (random 2)) "♂" "♀"))
+         (age (cl-case (random 3) (0 "young") (1 "middle age") (2 "old")))
+         (name (with-temp-buffer
+                 (shell-command "hex-describe rule --table schroeder --rule 'elf name' --limit 1" t)
+                 (buffer-substring (point-min) (1- (point-max))))))
+    (insert name ", " age " " gender)))
