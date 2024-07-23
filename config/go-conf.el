@@ -3,17 +3,6 @@
 
 (add-to-list 'exec-path (expand-file-name "~/go/bin"))
 
-(use-package eglot
-  :after go-mode
-  :config (add-hook 'go-mode-hook 'eglot-ensure))
-
-;; (custom-set-variables '(eglot-ignored-server-capabilites '(list :documentHighlightProvider :hoverProvider :signatureHelpProvider)))
-
-(setq-default eglot-workspace-configuration
-    '((:gopls .
-        ((staticcheck . t)
-         (matcher . "CaseSensitive")))))
-
 (add-hook 'go-mode-hook 'asc:go-init)
 (add-hook 'godoc-mode-hook 'asc:go-init)
 
