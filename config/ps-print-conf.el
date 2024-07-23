@@ -15,8 +15,8 @@
 		      (bold-italic . "Iosevka-BoldOblique"))
 	       (size . 10.0)
 	       (line-height . 12.5)
-	       (space-width . 5.99906)
-	       (avg-char-width . 5.99906)))
+	       (space-width . 4.99949)
+	       (avg-char-width . 4.99949)))
 	    ps-font-info-database))))
 
 (global-set-key (kbd "C-c p") 'ps-print-buffer)
