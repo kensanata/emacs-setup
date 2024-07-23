@@ -214,6 +214,7 @@ CHANNELS is a comma- or space-separated string of channel names."
 	;;  :channels ("#kensanata/elisp"
 	;; 	    "#kensanata/oddmuse"))
         ("m455.casa"
+         :user-name "kensanata"
          :port 6697 :encryption tls
          :channels ("#basement"))
 	("localhost"
