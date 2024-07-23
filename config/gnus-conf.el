@@ -19,7 +19,8 @@
       ;; You need to replace this key ID with your own key ID!
       mml2015-signers '("0DD06A9B3268")
       ;; Set to '(nnnil) if you don't have local news!
-      gnus-select-method '(nntp "localhost")
+      ;; Alternatively: '(nntp "localhost")
+      gnus-select-method '(nnnil)
       ;; These are other news servers and IMAP accounts.
       gnus-secondary-select-methods
       '((nntp "cosmic.voyage"))
