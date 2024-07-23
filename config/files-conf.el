@@ -18,3 +18,7 @@ This is useful for the output of where-was-it."
 	(setq n (1+ n)))
       (message "Moved %d files." n))))
 
+(defun asc:find-file-as-root (filename &optional wildcards)
+  "Find file as root, using su."
+  (interactive (find-file-read-args "Find file as root: " nil))
+  (find-file (concat "/sudo:root@melanobombus:" filename) wildcards))
