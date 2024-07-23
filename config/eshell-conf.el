@@ -2,11 +2,14 @@
 
 (defun eshell-here (&optional arg)
   (interactive "P")
-  (if (and arg (buffer-file-name))
-      (let ((dir (file-name-directory (buffer-file-name))))
-	(eshell)
-	(cd dir))
-    (eshell arg)))
+  (cond ((and arg (buffer-file-name))
+         (let ((dir (file-name-directory (buffer-file-name))))
+	   (eshell)
+	   (eshell/cd dir)
+           (eshell-reset)))
+        ((process-live-p (get-buffer-process (get-buffer "*compilation*")))
+         (pop-to-buffer "*compilation*"))
+        (t (eshell arg))))
 
 (global-set-key (kbd "C-x 4 C-z") 'eshell-other-window)
 
