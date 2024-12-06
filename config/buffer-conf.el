@@ -45,16 +45,7 @@ A good candidate to add to `desktop-globals-to-save'.")
         (this-buffer-name (buffer-name (current-buffer))))
     ;; build filename list (reversed!)
     (dolist (full-name asc:file-names-seen)
-      ;; file-directory-p invokes tramp, which asks for passwords…
-      (let* ((name (if (and (or (not (fboundp 'tramp-tramp-file-p))
-                                (not (tramp-tramp-file-p full-name)))
-                            (file-directory-p full-name))
-                       ;; parent directory with a slash…
-                       (file-name-as-directory
-                        (file-name-nondirectory
-                         (directory-file-name full-name)))
-                     ;; filename
-                     (file-name-nondirectory full-name)))
+      (let* ((name (file-name-nondirectory full-name))
              (full-names (assoc name file-names-alist)))
         (setq file-names (cons name file-names))
         (if full-names
