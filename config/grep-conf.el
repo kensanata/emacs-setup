@@ -1,18 +1,10 @@
 ;; default to case insensitive
 (eval-after-load "grep"
-  '(grep-apply-setting 'grep-command "grep --color -niH -e "))
+  '(grep-apply-setting 'grep-command "rg --no-heading "))
 
 (defun grep-word-at-point (word)
-  "Grep for thing at point.
-Per default, the same extension is used as the file-name of the
-current buffer. Use a prefix argument to override either."
+  "Grep for thing at point."
   (interactive (list (thing-at-point 'symbol)))
-  (let* ((file-name (buffer-file-name))
-	 (extension (and file-name (file-name-extension file-name)))
-	 (pattern (if extension (concat "*." extension) "*")))
-    (when current-prefix-arg
-      (setq word (read-string "Grep for: " word)
-	    pattern (read-string "Files to grep: " pattern)))
-    (grep (format "grep --color -niH -e \"%s\" %s" word pattern))))
+  (grep (format "rg --no-heading \"%s\" #" word)))
 
 (global-set-key (kbd "C-c s") 'grep-word-at-point)
