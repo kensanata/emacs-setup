@@ -171,8 +171,8 @@ CHANNELS is a comma- or space-separated string of channel names."
       rcirc-nick-prefix-chars "~&@%+!"
       rcirc-timeout-seconds 1200
       rcirc-authinfo (with-temp-buffer
-		       (when (file-readable-p "~/.rcirc-authinfo")
-			 (insert-file-contents-literally "~/.rcirc-authinfo")
+		       (when (file-readable-p "~/.emacs.d/.rcirc-authinfo")
+			 (insert-file-contents-literally "~/.emacs.d/.rcirc-authinfo")
 			 (read (current-buffer))))
       rcirc-server-alist
       ;; host chat.freenode.net but see https://alexschroeder.ch/wiki/2017-07-15_Freenode_IPv6
