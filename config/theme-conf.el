@@ -45,6 +45,8 @@
 (face-spec-set 'font-lock-variable-use-face '((t (:foreground "#111"))))
 (face-spec-set 'font-lock-warning-face '((t (:foreground "tomato"))))
 
+(face-spec-set 'dired-directory '((t (:inherit font-lock-string-face))))
+
 (face-spec-set 'isearch '((t (:foreground "#111" :background "#cfc"))))
 (face-spec-set 'isearch-fail '((t (:foreground "#111" :background "#fdd"))))
 (face-spec-set 'isearch-group-1 '((t (:foreground "#111" :background "#bfb"))))
