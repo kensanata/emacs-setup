@@ -123,7 +123,7 @@ deleted."
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       message-sendmail-f-is-evil t
       message-sendmail-envelope-from 'header
-      sendmail-program "msmtp"
+      sendmail-program "/usr/bin/msmtp"
       message-default-headers "Fcc: /home/alex/mail/sent"
       message-auto-save-directory "/home/alex/mail/drafts"
       message-confirm-send t
