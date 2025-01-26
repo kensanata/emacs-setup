@@ -12,7 +12,7 @@
 
 ;; (custom-set-variables '(eglot-ignored-server-capabilites '(list :documentHighlightProvider :hoverProvider :signatureHelpProvider)))
 
-(setq-default eglot-workspace-configuration
-    '((:gopls .
-        ((staticcheck . t)
-         (matcher . "CaseSensitive")))))
+;; (setq-default eglot-workspace-configuration
+;;     '((:gopls .
+;;         ((staticcheck . t)
+;;          (matcher . "CaseSensitive")))))
