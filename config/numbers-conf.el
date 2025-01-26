@@ -57,6 +57,16 @@ number by the same amount."
 	(delete-region (overlay-start o) (overlay-end o))
 	(insert (number-to-string (+ num amount)))))))
 
+(defun number-mark-multiply (factor)
+  "Multiply all marked numbers with a factor."
+  (interactive "nMultiply by how much? ")
+  (dolist (o (overlays-in (point-min) (point-max)))
+    (when (overlay-get o 'number)
+      (let ((num (string-to-number (buffer-substring (overlay-start o) (overlay-end o)))))
+	(goto-char (overlay-start o))
+	(delete-region (overlay-start o) (overlay-end o))
+	(insert (number-to-string (* num factor)))))))
+
 (defun number-add (amount)
   "Add a number to the current number."
   (interactive "nAdd how much? ")
