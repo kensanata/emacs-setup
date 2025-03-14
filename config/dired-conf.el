@@ -20,27 +20,7 @@
 
 (add-hook 'image-dired-thumbnail-mode-hook
 	  (lambda ()
-	    (local-set-key (kbd "t l") 'asc:file-label-edit)
-	    (local-set-key (kbd "t a") 'asc:add-to-album)
 	    (local-set-key (kbd "S-SPC") 'image-dired-display-previous-thumbnail-original)))
-
-(defun asc:file-label-edit ()
-  "Edit the text file for the image at point.
-This is used for `image-dired'."
-  (interactive)
-  (find-file (concat (file-name-sans-extension
-		      (image-dired-original-file-name))
-		     ".txt")))
-
-(defun asc:add-to-album ()
-  "Show current thumbnail, tag it with 'album', and add a label."
-  (interactive)
-  (image-dired-display-thumbnail-original-image)
-  (let ((tag "album"))
-    (image-dired-write-tags (list (cons (image-dired-original-file-name) tag))))
-  (image-dired-update-property
-   'tags (image-dired-list-tags (image-dired-original-file-name)))
-  (asc:file-label-edit))
 
 (setq image-dired-thumb-margin 5)
 
@@ -92,17 +72,8 @@ Use the apostrophe to edit the text files matching the image file."
 			    file)))
 	  (progress-reporter-update prog (setq i (1+ i))))
 	(progress-reporter-done prog))
-      (dired-virtual-mode)
-      (local-set-key (kbd "'") 'asc:label-edit))
+      (dired-virtual-mode))
     (switch-to-buffer (current-buffer))))
-
-(defun asc:label-edit ()
-  "Edit the text file for the image at point.
-This is used for `asc:image-dired-exif-mode'."
-  (interactive)
-  (find-file (concat (file-name-sans-extension
-		      (dired-file-name-at-point))
-		     ".txt")))
 
 (defun asc:ansi-color-apply-on-buffer ()
   "Decode ANSI escape codes in the buffer."

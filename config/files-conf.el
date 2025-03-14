@@ -21,4 +21,4 @@ This is useful for the output of where-was-it."
 (defun asc:find-file-as-root (filename &optional wildcards)
   "Find file as root, using su."
   (interactive (find-file-read-args "Find file as root: " nil))
-  (find-file (concat "/sudo:root@melanobombus:" filename) wildcards))
+  (find-file (concat "/sudo:root@localhost:" filename) wildcards))
