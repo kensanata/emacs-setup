@@ -5,6 +5,8 @@
     'markdown-add-xhtml-header-and-footer
     'as/markdown-add-xhtml-header-and-footer))
 
+(setq markdown-enable-wiki-links t)
+
 (add-hook 'markdown-mode-hook 'asc:markdown-init)
 
 (defun asc:markdown-init ()
