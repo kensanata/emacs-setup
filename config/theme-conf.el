@@ -3,7 +3,7 @@
 ;; I no longer know how custom themes work. It seems I cannot extend
 ;; themes in the ways I want them to. So now I'm falling back to using
 ;; defface all over the place.
-(face-spec-set 'default '((t (:family "Iosevka" :height 180 :background "#ffe" :foreground "#111"))))
+(face-spec-set 'default '((t (:family "Iosevka" :height 120 :background "#ffe" :foreground "#111"))))
 (face-spec-set 'fixed-pitch '((t (:family "Iosevka Term"))))
 (face-spec-set 'fixed-pitch-serif '((t (:family "Iosevka Term"))))
 (face-spec-set 'variable-pitch '((t (:family "Iosevka Etoile"))))
