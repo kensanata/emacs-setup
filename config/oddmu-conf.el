@@ -33,3 +33,10 @@
   (let ((name (completing-read "Link: " oddmu-pages)))
     (insert (format "[%s](%s)" name (gethash name oddmu-pages)))))
 
+(defun oddmu-notify ()
+  "Call \"oddmu notify\" for the current file."
+  (interactive)
+  (unless (equal (file-name-extension (buffer-file-name)) "md")
+    (error "This only works for Markdown files."))
+  (with-parsed-tramp-file-name (file-name-sans-extension (buffer-file-name)) nil
+    (shell-command (format "oddmu notify \"%s\"" localname))))
