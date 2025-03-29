@@ -174,13 +174,15 @@
 	   (scroll-down)
 	 (backward-delete-char-untabify 1)))))
 
-;;; mode invisible
+;;; get history, if possible
 
-(defadvice my-invisible-preference (after rcirc-connect activate)
-  "When connecting to a server, set the user mode to +i (invisible)."
-  (let ((process ad-return-value)
-	(nick (or nick rcirc-default-nick)))
-    (rcirc-send-string process (concat "MODE " nick " +i"))))
+(defadvice rcirc-handler-JOIN (after asc:chat-history activate)
+  "When connecting to campaignwiki.org, get the channel history."
+  ;; (process sender args _text)
+  (when (and (equal (rcirc-server-name process) "campaignwiki.org")
+             (equal sender (with-rcirc-process-buffer process rcirc-nick)))
+    (let ((channel (car args)))
+      (rcirc-send-privmsg process "norn" (format "log %s" channel)))))
 
 ;; rcirc /op
 
