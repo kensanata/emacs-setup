@@ -34,45 +34,20 @@
       ;; port 6697 7000 7070 according to http://freenode.net/kb/answer/chat
       '(("irc.libera.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#emacs"
-		    "#wiki" "#oddmuse"
-		    ;; ""#rcirc"  #emacsconf"
-		    ;; "#elpher"
-		    ;; "#perl" "#phoebe" "#gemini"
-		    ;; "#fennel"
-		    ;; "#lisp" "##fediverse-lisp"
-		    ;; "#retro" "#awk"
-		    ))
-	;; SDF gopher moved to tilde.chat
-	;; ("irc.sdf.org" :channels ("#gopher"))
-	;; Tilde chat is often unreachable
+	 :channels ("#emacs" "#wiki" "#oddmuse"))
 	("irc.tilde.chat"
 	 :port 6697 :encryption tls
-	 :channels ("#rpg" "#ijirait" "#gemini" "#spartan" "#smolnet" "#netnews"))
-	;; "#gopher" "#cosmic"))
-	;; ("flame.de.eu.darkmyst.org"
-	;;  :port 6697 :encryption tls
-	;;  :channels ("#rpg-hub"))
-	;; ("irc.esper.net"
-	;;  :port 6697 :encryption tls
-	;;  :channels ("#merveilles" "#uxn"))
+	 :channels ("#netnews"))
 	("campaignwiki.org"
 	 :port 6697 :encryption tls
-	 :channels ("#welcome"
-		    "#montag"))
+	 :channels ("#welcome" "#talknix" "#montag" "#norn"))
 	("irc.oftc.net"
 	 :port 6697 :encryption tls
 	 :channels ("#bitlbee"))
-	;; ("irc.gitter.im" :port 6697 :encryption tls
-	;;  :password ,(nth 3 (assoc "gitter" rcirc-authinfo))
-	;;  :channels ("#kensanata/elisp"
-	;; 	    "#kensanata/oddmuse"))
         ("m455.casa"
          :user-name "kensanata"
          :port 6697 :encryption tls
-         :channels ("#basement"))
-	("localhost"
-	 :channels ("&bitlbee")))
+         :channels ("#basement")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-decode-coding-system 'undecided
       ;; add Gemini
