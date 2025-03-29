@@ -29,3 +29,7 @@
 (global-set-key (kbd "<apps>") 'execute-extended-command)
 
 (global-set-key (kbd "<f9>") 'compile)
+
+;; no more negative arguments?
+(global-set-key (kbd "M--") 'text-scale-decrease)
+(global-set-key (kbd "M-+") 'text-scale-increase)
