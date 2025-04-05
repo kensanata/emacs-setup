@@ -48,11 +48,10 @@
          :user-name "kensanata"
          :port 6697 :encryption tls
          :channels ("#basement")))
+	("localhost"
+	 :channels ("&bitlbee")))
       rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
-      rcirc-decode-coding-system 'undecided
-      ;; add Gemini
-      rcirc-url-regexp "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\|gemini\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)[-a-z0-9_=#$@~%&*+\\/[:word:]]\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-      rcirc-ignore-list '("judybot" "rudybot"))
+      rcirc-decode-coding-system 'undecided)
 
 (add-hook 'rcirc-menu-mode-hook
 	  'asc:rcirc-menu-start)
