@@ -1,6 +1,4 @@
-;; default to case insensitive
-(eval-after-load "grep"
-  '(grep-apply-setting 'grep-command "rg --no-heading "))
+(use-package "grep")
 
 (defun grep-word-at-point (word)
   "Grep for thing at point."
