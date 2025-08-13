@@ -30,8 +30,10 @@
 
 (face-spec-set 'eshell-prompt '((t (:foreground "#111"))))
 
-(face-spec-set 'ediff-odd-diff-A '((t (:background "light gray"))))
-(face-spec-set 'ediff-even-diff-B '((t (:background "light gray"))))
+(face-spec-set 'ediff-odd-diff-A '((t (:background "#eee"))))
+(face-spec-set 'ediff-even-diff-A '((t (:background "#eee"))))
+(face-spec-set 'ediff-odd-diff-B '((t (:background "#eee"))))
+(face-spec-set 'ediff-even-diff-B '((t (:background "#eee"))))
 
 (face-spec-set 'font-lock-builtin-face '((t (:foreground "#111"))))
 (face-spec-set 'font-lock-comment-face '((t (:foreground "dim gray"))))
