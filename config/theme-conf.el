@@ -52,6 +52,10 @@
 
 (face-spec-set 'dired-directory '((t (:inherit font-lock-string-face))))
 
+(face-spec-set 'hbut-face '((t (:foreground "steel blue" :underline t))))
+(face-spec-set 'hbut-flash '((t (:foreground "#111" :background "#ffe" :inverse-video t))))
+(face-spec-set 'hbut-item-face '((t (:background "grey30"))))
+
 (face-spec-set 'isearch '((t (:foreground "#111" :background "#cfc"))))
 (face-spec-set 'isearch-fail '((t (:foreground "#111" :background "#fdd"))))
 (face-spec-set 'isearch-group-1 '((t (:foreground "#111" :background "#bfb"))))
